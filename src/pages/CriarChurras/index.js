@@ -44,6 +44,7 @@ export default function CriarChurras() {
                 placeholderTextColor="#DEDEDE"
                 keyboardType="number-pad"
                 maxLength={3}
+                onEndEditing={() => countHomem === 0 ? setCountHomem(1) : null}
               />
               <TouchableOpacity
                 onPress={() =>
@@ -75,6 +76,7 @@ export default function CriarChurras() {
                 placeholderTextColor="#DEDEDE"
                 keyboardType="number-pad"
                 maxLength={3}
+                onEndEditing={() => countMulher === 0 ? setCountMulher(1) : null}
               />
               <TouchableOpacity
                 onPress={() =>
@@ -106,6 +108,7 @@ export default function CriarChurras() {
                 placeholderTextColor="#DEDEDE"
                 keyboardType="number-pad"
                 maxLength={3}
+                onEndEditing={() => countCrianca === 0 ? setCountCrianca(1) : null}
               />
               <TouchableOpacity
                 onPress={() =>
