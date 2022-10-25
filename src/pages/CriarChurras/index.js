@@ -10,7 +10,7 @@ import {
 import homemLogo from '../../../assets/homem.png';
 import mulherLogo from '../../../assets/mulher.png';
 import criancaLogo from '../../../assets/crianca.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Checkbox from 'expo-checkbox';
 
 export default function CriarChurras() {
@@ -37,8 +37,76 @@ export default function CriarChurras() {
   const [vinho, setVinho] = useState(false);
   const [whisky, setWhisky] = useState(false);
 
+  const [checkboxBebidas, setCheckboxBebidas] = useState(null);
 
-  function calcularChurras() {}
+  const [bebidas, setBebidas] = useState([
+    {
+      nome: 'refrigerante',
+      value: false,
+    },
+    {
+      nome: 'cerveja',
+      value: false,
+    },
+    {
+      nome: 'agua',
+      value: false,
+    },
+    {
+      nome: 'suco',
+      value: false,
+    },
+    {
+      nome: 'vinho',
+      value: false,
+    },
+    {
+      nome: 'whisky',
+      value: false,
+    },
+  ]);
+
+  const [localidade, setLocalidade] = useState({
+    rua: '',
+    numero: '',
+    bairro: '',
+  });
+
+  function calcularChurras() {
+    console.log('teste');
+  }
+
+  useEffect(() => {
+    setCheckboxBebidas(
+      bebidas.map((bebida, index) => {
+        return (
+          <View>
+            <Checkbox
+              value={bebida.value}
+              onValueChange={() => {
+                console.log('teste');
+                let bebidasTemp = bebidas;
+                if (bebida.value) {
+                  bebidasTemp[index].value = false;
+                  setBebidas(bebidasTemp);
+                } else {
+                  bebidasTemp[index].value = true;
+                  console.log(bebidasTemp);
+                  setBebidas(bebidasTemp);
+                  console.log(bebidas);
+                }
+              }}
+              color={bebida.value ? '#EED0A2' : undefined}
+            />
+            <Text style={styles.carneNome}>{bebida.nome}</Text>
+          </View>
+        );
+      })
+    );
+    console.log('mudou');
+  }, [bebidas]);
+
+  console.log(bebidas);
 
   return (
     <ScrollView>
@@ -148,6 +216,7 @@ export default function CriarChurras() {
                     value={maminha}
                     onValueChange={setMaminha}
                     color={maminha ? '#EED0A2' : undefined}
+                    style={styles.checkbox}
                   />
                   <Text style={styles.carneNome}>Maminha</Text>
                 </View>
@@ -233,6 +302,8 @@ export default function CriarChurras() {
           <Text style={styles.viewTitulo}>Bebidas</Text>
           <View style={styles.checkboxesBebidas}>
             <View style={styles.checkboxesLeft}>
+              {/*checkboxBebidas */}
+
               <View style={styles.checkboxLabelBebidas}>
                 <Checkbox
                   value={refrigerante}
@@ -285,6 +356,45 @@ export default function CriarChurras() {
               </View>
             </View>
           </View>
+        </View>
+        <View style={styles.viewLocalidade}>
+          <Text style={styles.viewTitulo}>Localidade</Text>
+          <View style={styles.inputLocal}>
+            <View style={styles.inputsRua}>
+              <TextInput
+                style={[styles.inputsLocal, { width: '68%' }]}
+                placeholder="Digite a rua."
+                value={localidade.rua}
+                onChangeText={(valor) =>
+                  setLocalidade({ ...localidade, rua: valor })
+                }
+              />
+              <TextInput
+                style={[styles.inputsLocal, { width: '28%' }]}
+                placeholder="Número."
+                keyboardType="number-pad"
+                value={localidade.numero}
+                onChangeText={(valor) =>
+                  setLocalidade({ ...localidade, numero: valor })
+                }
+              />
+            </View>
+            <TextInput
+              style={styles.inputsLocal}
+              placeholder="Digite o bairro."
+              value={localidade.bairro}
+              onChangeText={(valor) =>
+                setLocalidade({ ...localidade, bairro: valor })
+              }
+            />
+          </View>
+        </View>
+        <View style={styles.viewCalcular}>
+          <TouchableOpacity
+            style={styles.buttonCalcular}
+            onPress={() => calcularChurras()}>
+            <Text style={styles.textCalcular}>Calcular</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -416,5 +526,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 10,
+  },
+  viewLocalidade: {
+    display: 'flex',
+    width: '90%',
+    backgroundColor: '#340C0C',
+    borderRadius: 20,
+    paddingTop: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 10,
+    marginTop: 20,
+  },
+  inputLocal: {
+    display: 'flex',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  inputsRua: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  inputsLocal: {
+    backgroundColor: '#FFF',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 40,
+    borderRadius: 10,
+    fontWeight: 'bold',
+  },
+  viewCalcular: {
+    width: '90%',
+  },
+  buttonCalcular: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#DF1D1D',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#FFF',
+    borderRadius: 20,
+    paddingTop: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 10,
+    marginTop: 20,
+  },
+  textCalcular: {
+    display: 'flex',
+    fontWeight: 'bold',
+    color: '#FFF',
+    fontSize: 20,
   },
 });
