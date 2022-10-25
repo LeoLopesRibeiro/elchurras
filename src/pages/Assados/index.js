@@ -33,7 +33,7 @@ function Assados(){
                   return(
                       <View style={styles.view} key={index}>
                         <View style={styles.teste}>
-                          <Image source={require(itens.icon)} style={{ width: 30, height: 30 }}/>
+                          {/* <Image source={require(itens.icon)} style={{ width: 30, height: 30 }}/> */}
                           <Text style={styles.textMap}>{itens.nome}</Text>
                         </View>
                         <View style={styles.viewMap} >
