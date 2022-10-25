@@ -34,8 +34,8 @@ export default function Locacao() {
 
 
   return(
-    <View>
+      <View>
 
-    </View>
+      </View>
   )
 }

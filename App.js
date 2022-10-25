@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Locacao from './src/pages/Locacao';
+import { NavigationContainer } from '@react-navigation/native';
+import Routes from './routes';
 
 export default function App() {
 return(
-        <View>
-       <Locacao/>
-    </View>
+  <NavigationContainer>
+    <Routes></Routes>
+  </NavigationContainer>
 )
 }
 
