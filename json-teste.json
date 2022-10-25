@@ -1,0 +1,39 @@
+{
+  "carnes": [
+    { "icon": "./assets/carne", "nome": "picanha", "kg": 10, "preco": 100 },
+    { "icon": "./assets/carne", "nome": "linguiça", "kg": 10, "preco": 100 },
+    { "icon": "./assets/carne", "nome": "coxinha", "kg": 10, "preco": 100 }
+  ],
+  "bebidas": [
+    {
+      "icon": "./assets/cerveja",
+      "nome": "cerveja",
+      "garrafas": 1,
+      "preco": 30
+    },
+    { "icon": "./assets/agua", "nome": "agua", "garrafas": 3, "preco": 10 },
+    {
+      "icon": "./assets/refrigerante",
+      "nome": "refrigerante",
+      "garrafas": 2,
+      "preco": 20
+    }
+  ],
+  "outros": {
+    "geral": [
+      { "icon": "./assets/carvao", "nome": "carvão", "kg": 10, "preco": 30 },
+      {
+        "icon": "./assets/sal_grosso",
+        "nome": "sal grosso",
+        "kg": 1,
+        "preco": 10
+      }
+    ],
+    "acompanhamentos": [
+      { "icon": "./assets/arroz", "nome": "arroz", "kg": 10, "preco": 50 },
+      { "icon": "./assets/farofa", "nome": "farofa", "kg": 1, "preco": 10 },
+      { "icon": "./assets/pao", "nome": "pão", "kg": 1, "preco": 10 }
+    ]
+  },
+  "locacao": { "rua": "blabla", "numero": "10", "bairro": "tururu" }
+}

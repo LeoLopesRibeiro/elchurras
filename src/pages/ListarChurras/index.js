@@ -25,13 +25,10 @@ export default function ListarChurras({ navigation }) {
         setListaChurras(JSON.parse(jsonValue));
       }
 
-      console.log(jsonValue);
     } catch (err) {
       console.log(err);
     }
   }
-
-  console.log(listaChurras)
 
   useEffect(() => {
     setChurrasData();

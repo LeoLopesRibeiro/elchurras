@@ -6,107 +6,106 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
-import homemLogo from '../../../assets/homem.png';
-import mulherLogo from '../../../assets/mulher.png';
-import criancaLogo from '../../../assets/crianca.png';
-import { useState, useEffect } from 'react';
-import Checkbox from 'expo-checkbox';
+} from "react-native";
+import { useState, useEffect } from "react";
+import Checkbox from "expo-checkbox";
+import api from "../../services/api";
+const homem =  require("../../../assets/homem.png")
+const mulher =  require("../../../assets/mulher.png")
+const crianca =  require("../../../assets/crianca.png")
 
 export default function CriarChurras() {
   const [countHomem, setCountHomem] = useState(0);
   const [countMulher, setCountMulher] = useState(0);
   const [countCrianca, setCountCrianca] = useState(0);
 
-  const [maminha, setMaminha] = useState(false);
-  const [cupim, setCupim] = useState(false);
-  const [picanha, setPicanha] = useState(false);
-
-  const [linguica, setLinguica] = useState(false);
-  const [paleta, setPaleta] = useState(false);
-  const [bisteca, setBisteca] = useState(false);
-
-  const [coxa, setCoxa] = useState(false);
-  const [coracao, setCoracao] = useState(false);
-  const [asa, setAsa] = useState(false);
-
-  const [refrigerante, setRefrigerante] = useState(false);
-  const [cerveja, setCerveja] = useState(false);
-  const [agua, setAgua] = useState(false);
-  const [suco, setSuco] = useState(false);
-  const [vinho, setVinho] = useState(false);
-  const [whisky, setWhisky] = useState(false);
-
-  const [checkboxBebidas, setCheckboxBebidas] = useState(null);
-
-  const [bebidas, setBebidas] = useState([
-    {
-      nome: 'refrigerante',
-      value: false,
-    },
-    {
-      nome: 'cerveja',
-      value: false,
-    },
-    {
-      nome: 'agua',
-      value: false,
-    },
-    {
-      nome: 'suco',
-      value: false,
-    },
-    {
-      nome: 'vinho',
-      value: false,
-    },
-    {
-      nome: 'whisky',
-      value: false,
-    },
-  ]);
-
-  const [localidade, setLocalidade] = useState({
-    rua: '',
-    numero: '',
-    bairro: '',
-  });
-
-  function calcularChurras() {
-    console.log('teste');
+  const images = {
+    homem,
+    mulher,
+    crianca
   }
 
-  useEffect(() => {
-    setCheckboxBebidas(
-      bebidas.map((bebida, index) => {
-        return (
-          <View>
-            <Checkbox
-              value={bebida.value}
-              onValueChange={() => {
-                console.log('teste');
-                let bebidasTemp = bebidas;
-                if (bebida.value) {
-                  bebidasTemp[index].value = false;
-                  setBebidas(bebidasTemp);
-                } else {
-                  bebidasTemp[index].value = true;
-                  console.log(bebidasTemp);
-                  setBebidas(bebidasTemp);
-                  console.log(bebidas);
-                }
-              }}
-              color={bebida.value ? '#EED0A2' : undefined}
-            />
-            <Text style={styles.carneNome}>{bebida.nome}</Text>
-          </View>
-        );
-      })
-    );
-    console.log('mudou');
-  }, [bebidas]);
+  const jsonteste = JSON.parse(
+    '{"carnes": [{"icon":"./assets/carne","nome": "picanha","kg": 10,"preco": 100},{"icon":  "./assets/carne","nome": "linguiça","kg": 10,"preco": 100},{"icon":"./assets/carne","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":"./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":"./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{	"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{	"icon": "homem","nome": "carvão","kg": 10,"preco": 30},{	"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{	"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{	"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{	"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro": "tururu"}}'
+  );
 
-  console.log(bebidas);
+  console.log(jsonteste.outros.geral[0].icon);
+
+  const icon = jsonteste.outros.geral[0].icon;
+
+  const [bovino, setBovino] = useState({
+    maminha: {
+      value: false,
+    },
+    cupim: {
+      value: false,
+    },
+    picanha: {
+      value: false,
+    },
+  });
+
+  const [suino, setSuino] = useState({
+    linguica: {
+      nome: "Linguiça",
+      value: false,
+    },
+    paleta: {
+      value: false,
+    },
+    bisteca: {
+      value: false,
+    },
+  });
+
+  const [frango, setFrango] = useState({
+    coxa: {
+      value: false,
+    },
+    coracao: {
+      nome: "Coração",
+      value: false,
+    },
+    asa: {
+      value: false,
+    },
+  });
+
+  const [bebidas, setBebidas] = useState({
+    refrigerante: {
+      value: false,
+    },
+    cerveja: {
+      value: false,
+    },
+    agua: {
+      nome: "Água",
+      value: false,
+    },
+    suco: {
+      value: false,
+    },
+    vinho: {
+      value: false,
+    },
+    whisky: {
+      value: false,
+    },
+  });
+
+  const [localidade, setLocalidade] = useState({
+    rua: "",
+    numero: "",
+    bairro: "",
+  });
+
+  async function calcularChurras() {
+    const response = await api.get(
+      `geocode?q=${localidade.numero}+${localidade.rua}+${localidade.bairro}&lang=pt-br&apiKey=gNuRT103voDtjaiyCV_rdniV-szQ4iKt7WpFbQBTT64`
+    );
+
+    console.log(response);
+  }
 
   return (
     <ScrollView>
@@ -116,13 +115,17 @@ export default function CriarChurras() {
           <View style={styles.inputs}>
             <View style={styles.viewInput}>
               <View style={styles.viewImage}>
-                <Image style={styles.inputImage} source={homemLogo} />
+                <Image
+                  style={styles.inputImage}
+                  source={images[icon]}
+                />
               </View>
               <View style={styles.inputField}>
                 <TouchableOpacity
                   onPress={() =>
                     setCountHomem(countHomem != 0 ? countHomem - 1 : 0)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>-</Text>
                 </TouchableOpacity>
                 <TextInput
@@ -138,20 +141,25 @@ export default function CriarChurras() {
                 <TouchableOpacity
                   onPress={() =>
                     setCountHomem(countHomem != 999 ? countHomem + 1 : 999)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>+</Text>
                 </TouchableOpacity>
               </View>
             </View>
             <View style={styles.viewInput}>
               <View style={styles.viewImage}>
-                <Image style={styles.inputImage} source={mulherLogo} />
+                <Image
+                  style={styles.inputImage}
+                  source={require("../../../assets/mulher.png")}
+                />
               </View>
               <View style={styles.inputField}>
                 <TouchableOpacity
                   onPress={() =>
                     setCountMulher(countMulher != 0 ? countMulher - 1 : 0)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>-</Text>
                 </TouchableOpacity>
                 <TextInput
@@ -167,20 +175,25 @@ export default function CriarChurras() {
                 <TouchableOpacity
                   onPress={() =>
                     setCountMulher(countMulher != 999 ? countMulher + 1 : 999)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>+</Text>
                 </TouchableOpacity>
               </View>
             </View>
             <View style={styles.viewInput}>
               <View style={styles.viewImage}>
-                <Image style={styles.inputImage} source={criancaLogo} />
+                <Image
+                  style={styles.inputImage}
+                  source={require("../../../assets/crianca.png")}
+                />
               </View>
               <View style={styles.inputField}>
                 <TouchableOpacity
                   onPress={() =>
                     setCountCrianca(countCrianca != 0 ? countCrianca - 1 : 0)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>-</Text>
                 </TouchableOpacity>
                 <TextInput
@@ -198,7 +211,8 @@ export default function CriarChurras() {
                     setCountCrianca(
                       countCrianca != 999 ? countCrianca + 1 : 999
                     )
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>+</Text>
                 </TouchableOpacity>
               </View>
@@ -211,89 +225,94 @@ export default function CriarChurras() {
             <View style={styles.carne}>
               <Text style={styles.carneTitulo}>Bovino:</Text>
               <View style={styles.checkboxes}>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={maminha}
-                    onValueChange={setMaminha}
-                    color={maminha ? '#EED0A2' : undefined}
-                    style={styles.checkbox}
-                  />
-                  <Text style={styles.carneNome}>Maminha</Text>
-                </View>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={cupim}
-                    onValueChange={setCupim}
-                    color={cupim ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Cupim</Text>
-                </View>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={picanha}
-                    onValueChange={setPicanha}
-                    color={picanha ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Picanha</Text>
-                </View>
+                {Object.keys(bovino).map((key) => {
+                  return (
+                    <View key={key} style={styles.checkboxLabel}>
+                      <Checkbox
+                        value={bovino[key].value}
+                        onValueChange={() => {
+                          if (bovino[key].value) {
+                            setBovino({
+                              ...bovino,
+                              [key]: { ...bovino[key], value: false },
+                            });
+                          } else {
+                            setBovino({
+                              ...bovino,
+                              [key]: { ...bovino[key], value: true },
+                            });
+                          }
+                        }}
+                        color={bovino[key].value ? "#EED0A2" : undefined}
+                      />
+                      <Text style={styles.bebidaNome}>
+                        {bovino[key].nome ? bovino[key].nome : key}
+                      </Text>
+                    </View>
+                  );
+                })}
               </View>
             </View>
             <View style={styles.carne}>
               <Text style={styles.carneTitulo}>Suino:</Text>
               <View style={styles.checkboxes}>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={linguica}
-                    onValueChange={setLinguica}
-                    color={linguica ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Linguiça</Text>
-                </View>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={paleta}
-                    onValueChange={setPaleta}
-                    color={paleta ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Paleta</Text>
-                </View>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={bisteca}
-                    onValueChange={setBisteca}
-                    color={bisteca ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Bisteca</Text>
-                </View>
+                {Object.keys(suino).map((key) => {
+                  return (
+                    <View key={key} style={styles.checkboxLabel}>
+                      <Checkbox
+                        value={suino[key].value}
+                        onValueChange={() => {
+                          if (suino[key].value) {
+                            setSuino({
+                              ...suino,
+                              [key]: { ...suino[key], value: false },
+                            });
+                          } else {
+                            setSuino({
+                              ...suino,
+                              [key]: { ...suino[key], value: true },
+                            });
+                          }
+                        }}
+                        color={suino[key].value ? "#EED0A2" : undefined}
+                      />
+                      <Text style={styles.bebidaNome}>
+                        {suino[key].nome ? suino[key].nome : key}
+                      </Text>
+                    </View>
+                  );
+                })}
               </View>
             </View>
             <View style={styles.carne}>
               <Text style={styles.carneTitulo}>Frango:</Text>
               <View style={styles.checkboxes}>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={coxa}
-                    onValueChange={setCoxa}
-                    color={coxa ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Coxa</Text>
-                </View>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={coracao}
-                    onValueChange={setCoracao}
-                    color={coracao ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Coração</Text>
-                </View>
-                <View style={styles.checkboxLabel}>
-                  <Checkbox
-                    value={asa}
-                    onValueChange={setAsa}
-                    color={asa ? '#EED0A2' : undefined}
-                  />
-                  <Text style={styles.carneNome}>Asa</Text>
-                </View>
+                {Object.keys(frango).map((key) => {
+                  return (
+                    <View key={key} style={styles.checkboxLabel}>
+                      <Checkbox
+                        value={frango[key].value}
+                        onValueChange={() => {
+                          if (frango[key].value) {
+                            setFrango({
+                              ...frango,
+                              [key]: { ...frango[key], value: false },
+                            });
+                          } else {
+                            setFrango({
+                              ...frango,
+                              [key]: { ...frango[key], value: true },
+                            });
+                          }
+                        }}
+                        color={frango[key].value ? "#EED0A2" : undefined}
+                      />
+                      <Text style={styles.bebidaNome}>
+                        {frango[key].nome ? frango[key].nome : key}
+                      </Text>
+                    </View>
+                  );
+                })}
               </View>
             </View>
           </View>
@@ -302,58 +321,56 @@ export default function CriarChurras() {
           <Text style={styles.viewTitulo}>Bebidas</Text>
           <View style={styles.checkboxesBebidas}>
             <View style={styles.checkboxesLeft}>
-              {/*checkboxBebidas */}
-
-              <View style={styles.checkboxLabelBebidas}>
-                <Checkbox
-                  value={refrigerante}
-                  onValueChange={setRefrigerante}
-                  color={refrigerante ? '#EED0A2' : undefined}
-                />
-                <Text style={styles.carneNome}>Refrigerante</Text>
-              </View>
-              <View style={styles.checkboxLabelBebidas}>
-                <Checkbox
-                  value={cerveja}
-                  onValueChange={setCerveja}
-                  color={cerveja ? '#EED0A2' : undefined}
-                />
-                <Text style={styles.carneNome}>Cerveja</Text>
-              </View>
-              <View style={styles.checkboxLabelBebidas}>
-                <Checkbox
-                  value={agua}
-                  onValueChange={setAgua}
-                  color={agua ? '#EED0A2' : undefined}
-                />
-                <Text style={styles.carneNome}>Água</Text>
-              </View>
+              {Object.keys(bebidas).map((key, index) => {
+                if (index < 3) {
+                  return (
+                    <View key={key} style={styles.checkboxLabelBebidas}>
+                      <Checkbox
+                        value={bebidas[key].value}
+                        onValueChange={() => {
+                          if (bebidas[key].value) {
+                            setBebidas({
+                              ...bebidas,
+                              [key]: { ...bebidas[key], value: false },
+                            });
+                          } else {
+                            setBebidas({
+                              ...bebidas,
+                              [key]: { ...bebidas[key], value: true },
+                            });
+                          }
+                        }}
+                        color={bebidas[key].value ? "#EED0A2" : undefined}
+                      />
+                      <Text style={styles.bebidaNome}>
+                        {bebidas[key].nome ? bebidas[key].nome : key}
+                      </Text>
+                    </View>
+                  );
+                }
+              })}
             </View>
             <View style={styles.checkboxesRight}>
-              <View style={styles.checkboxLabelBebidas}>
-                <Checkbox
-                  value={vinho}
-                  onValueChange={setVinho}
-                  color={vinho ? '#EED0A2' : undefined}
-                />
-                <Text style={styles.carneNome}>Vinho</Text>
-              </View>
-              <View style={styles.checkboxLabelBebidas}>
-                <Checkbox
-                  value={suco}
-                  onValueChange={setSuco}
-                  color={suco ? '#EED0A2' : undefined}
-                />
-                <Text style={styles.carneNome}>Suco</Text>
-              </View>
-              <View style={styles.checkboxLabelBebidas}>
-                <Checkbox
-                  value={whisky}
-                  onValueChange={setWhisky}
-                  color={whisky ? '#EED0A2' : undefined}
-                />
-                <Text style={styles.carneNome}>Whisky</Text>
-              </View>
+              {Object.keys(bebidas).map((key, index) => {
+                if (index > 2) {
+                  return (
+                    <View key={key} style={styles.checkboxLabelBebidas}>
+                      <Checkbox
+                        value={bebidas[key].value}
+                        onValueChange={() => {
+                          if (bebidas[key].value) {
+                            setBebidas({ ...bebidas, [key]: { value: false } });
+                          } else {
+                            setBebidas({ ...bebidas, [key]: { value: true } });
+                          }
+                        }}
+                        color={bebidas[key].value ? "#EED0A2" : undefined}
+                      />
+                      <Text style={styles.bebidaNome}>{key}</Text>
+                    </View>
+                  );
+                }
+              })}
             </View>
           </View>
         </View>
@@ -362,7 +379,7 @@ export default function CriarChurras() {
           <View style={styles.inputLocal}>
             <View style={styles.inputsRua}>
               <TextInput
-                style={[styles.inputsLocal, { width: '68%' }]}
+                style={[styles.inputsLocal, { width: "68%" }]}
                 placeholder="Digite a rua."
                 value={localidade.rua}
                 onChangeText={(valor) =>
@@ -370,7 +387,7 @@ export default function CriarChurras() {
                 }
               />
               <TextInput
-                style={[styles.inputsLocal, { width: '28%' }]}
+                style={[styles.inputsLocal, { width: "28%" }]}
                 placeholder="Número."
                 keyboardType="number-pad"
                 value={localidade.numero}
@@ -392,7 +409,8 @@ export default function CriarChurras() {
         <View style={styles.viewCalcular}>
           <TouchableOpacity
             style={styles.buttonCalcular}
-            onPress={() => calcularChurras()}>
+            onPress={() => calcularChurras()}
+          >
             <Text style={styles.textCalcular}>Calcular</Text>
           </TouchableOpacity>
         </View>
@@ -403,18 +421,18 @@ export default function CriarChurras() {
 
 const styles = StyleSheet.create({
   criarChurras: {
-    display: 'flex',
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: '#FFF',
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: "#FFF",
     paddingTop: 30,
     paddingBottom: 30,
   },
   viewConvidados: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    alignItems: "center",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -422,25 +440,25 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   viewTitulo: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 35,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
   inputs: {
     marginTop: 30,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   viewImage: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     width: 90,
     height: 90,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 50,
   },
   inputImage: {
@@ -448,25 +466,25 @@ const styles = StyleSheet.create({
     height: 80,
   },
   inputField: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   input: {
-    color: '#FFF',
-    fontWeight: 'bold',
+    color: "#FFF",
+    fontWeight: "bold",
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   add_dec: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   viewCarnes: {
-    display: 'flex',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -475,39 +493,40 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   inputCarnes: {
-    display: 'flex',
+    display: "flex",
   },
   carne: {
-    display: 'flex',
-    textAlign: 'left',
+    display: "flex",
+    textAlign: "left",
     marginBottom: 20,
   },
   carneTitulo: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   checkboxes: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   },
   checkboxLabel: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '35%',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    width: "35%",
+    alignItems: "center",
     marginTop: 10,
   },
   carneNome: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 5,
+    textTransform: "capitalize",
   },
   viewBebidas: {
-    display: 'flex',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -516,21 +535,28 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   checkboxesBebidas: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   checkboxLabelBebidas: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 10,
     marginBottom: 10,
   },
+  bebidaNome: {
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 5,
+    textTransform: "capitalize",
+  },
   viewLocalidade: {
-    display: 'flex',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -539,34 +565,34 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   inputLocal: {
-    display: 'flex',
+    display: "flex",
     marginTop: 20,
     marginBottom: 10,
   },
   inputsRua: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 15,
   },
   inputsLocal: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     paddingLeft: 10,
     paddingRight: 10,
     height: 40,
     borderRadius: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   viewCalcular: {
-    width: '90%',
+    width: "90%",
   },
   buttonCalcular: {
-    width: '100%',
+    width: "100%",
     height: 50,
-    backgroundColor: '#DF1D1D',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: '#FFF',
+    backgroundColor: "#DF1D1D",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#FFF",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -575,9 +601,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   textCalcular: {
-    display: 'flex',
-    fontWeight: 'bold',
-    color: '#FFF',
+    display: "flex",
+    fontWeight: "bold",
+    color: "#FFF",
     fontSize: 20,
   },
 });
