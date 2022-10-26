@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   viewTittle:{
   display: 'flex',
   flexDirection: 'column',
-  width:  '70%',
+  width:  '60%',
   marginLeft: 10,
 },
  textAcougue:{

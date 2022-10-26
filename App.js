@@ -8,7 +8,6 @@ import { StackRoutes } from './routes2';
 export default function App() {
 return(
     <StackRoutes></StackRoutes>
-
 )
 }
 

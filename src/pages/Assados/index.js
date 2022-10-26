@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, Image, Link } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useFonts, Poppins_700Bold} from '@expo-google-fonts/poppins';
-import '../../../assets/vaca.png'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import '../../../assets/vaca.png';
 
 function Assados({navigation}){
 
@@ -60,7 +59,7 @@ function Assados({navigation}){
          <View>
             <Text style={styles.textTotal}>Total: </Text>
             <TouchableOpacity onPress={goToReceitas}>
-              <Text>Receitas</Text>
+              <Text style={styles.receitas}>Receitas</Text>
             </TouchableOpacity>
          </View>
 
@@ -123,6 +122,10 @@ const styles = StyleSheet.create({
       fontSize: 25,
       textTransform: 'capitalize',
       marginLeft: 10,
+      fontFamily: 'Poppins_700Bold',
+    },
+    receitas:{
+      color: '#fff',
       fontFamily: 'Poppins_700Bold',
     }
 

@@ -6,7 +6,6 @@ import Bebidas from "./src/pages/Bebidas";
 import Header from "./src/components/Header";
 import Outros from "./src/pages/Outros";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { StackRoutes } from "./routes2";
 const Tab = createBottomTabNavigator()
 function Routes(){
     return(
