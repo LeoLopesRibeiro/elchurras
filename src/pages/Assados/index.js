@@ -1,13 +1,23 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Link } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useFonts, Poppins_700Bold} from '@expo-google-fonts/poppins';
 import '../../../assets/vaca.png'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function Assados(){
+function Assados({navigation}){
 
+  function goToReceitas() {
+    navigation.navigate('Receitas');
+  }
+
+  const images = {
+  bovino: require("../../../assets/vaca.png"),
+  suino: require("../../../assets/porco.png"),
+  frango: require("../../../assets/galinha.png"),
+  }
 
     useEffect(()=>{
-    const teste =  '{"carnes": [{"icon":  "../../../assets/vaca.png","nome": "picanha","kg": 10,"preco": 100},{"icon":  "../../../assets/vaca.png","nome": "linguiça","kg": 10,"preco": 100},{"icon":"../../../assets/vaca.png","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":  "./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":  "./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{"icon": "./assets/carvao","nome": "carvão","kg": 10,"preco": 30},{"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro":"tururu"}}'
+    const teste =  '{"carnes": [{"icon":  "bovino","nome": "picanha","kg": 10,"preco": 100},{"icon":  "suino","nome": "linguiça","kg": 10,"preco": 100},{"icon":"frango","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":  "./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":  "./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{"icon": "./assets/carvao","nome": "carvão","kg": 10,"preco": 30},{"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro":"tururu"}}'
     const Json = JSON.parse(teste);
 
     setTeste1(Json)
@@ -33,7 +43,7 @@ function Assados(){
                   return(
                       <View style={styles.view} key={index}>
                         <View style={styles.teste}>
-                          {/* <Image source={require(itens.icon)} style={{ width: 30, height: 30 }}/> */}
+                          <Image source={images[itens.icon]} style={{ width: 30, height: 30 }}/>
                           <Text style={styles.textMap}>{itens.nome}</Text>
                         </View>
                         <View style={styles.viewMap} >
@@ -47,7 +57,12 @@ function Assados(){
               null
             )
           }
-         
+         <View>
+            <Text style={styles.textTotal}>Total: </Text>
+            <TouchableOpacity onPress={goToReceitas}>
+              <Text>Receitas</Text>
+            </TouchableOpacity>
+         </View>
 
         </View>
     </View>
@@ -102,6 +117,13 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       borderBottomColor: '#EED0A2'
 
+    },
+    textTotal:{
+      color: '#fff',
+      fontSize: 25,
+      textTransform: 'capitalize',
+      marginLeft: 10,
+      fontFamily: 'Poppins_700Bold',
     }
 
  
