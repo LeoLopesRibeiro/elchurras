@@ -10,26 +10,34 @@ import {
 import { useState, useEffect } from "react";
 import Checkbox from "expo-checkbox";
 import api from "../../services/api";
-const homem =  require("../../../assets/homem.png")
-const mulher =  require("../../../assets/mulher.png")
-const crianca =  require("../../../assets/crianca.png")
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function CriarChurras() {
   const [countHomem, setCountHomem] = useState(0);
   const [countMulher, setCountMulher] = useState(0);
   const [countCrianca, setCountCrianca] = useState(0);
 
-  const images = {
-    homem,
-    mulher,
-    crianca
+  const [date, setDate] = useState(new Date());
+  const [exibirCalendario, setExibirCalendario] = useState(false);
+
+  function dateHandler(event, selectedDate) {
+    setDate(selectedDate);
+    setExibirCalendario(false)
   }
 
-  const jsonteste = JSON.parse(
-    '{"carnes": [{"icon":"./assets/carne","nome": "picanha","kg": 10,"preco": 100},{"icon":  "./assets/carne","nome": "linguiça","kg": 10,"preco": 100},{"icon":"./assets/carne","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":"./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":"./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{	"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{	"icon": "homem","nome": "carvão","kg": 10,"preco": 30},{	"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{	"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{	"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{	"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro": "tururu"}}'
-  );
+  function showDatepicker() {
+    setExibirCalendario(true);
+  }
 
-  console.log(jsonteste.outros.geral[0].icon);
+  const images = {
+    homem: require("../../../assets/homem.png"),
+    mulher: require("../../../assets/mulher.png"),
+    crianca: require("../../../assets/crianca.png"),
+  };
+
+  const jsonteste = JSON.parse(
+    '{"carnes": [{"icon":"./assets/carne","nome": "picanha","kg": 10,"preco": 100},{"icon":  "./assets/carne","nome": "linguiça","kg": 10,"preco": 100},{"icon":"./assets/carne","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":"./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":"./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{	"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{	"icon": "homem","nome": "carvão","kg": 10,"preco": 30},{	"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{	"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{	"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{	"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "miguel martins mendes","numero": "10","bairro": "jardim santa tereza"}}'
+  );
 
   const icon = jsonteste.outros.geral[0].icon;
 
@@ -101,10 +109,10 @@ export default function CriarChurras() {
 
   async function calcularChurras() {
     const response = await api.get(
-      `geocode?q=${localidade.numero}+${localidade.rua}+${localidade.bairro}&lang=pt-br&apiKey=gNuRT103voDtjaiyCV_rdniV-szQ4iKt7WpFbQBTT64`
+      `geocode?q=${localidade.numero}+${localidade.rua}+${localidade.bairro}+embu das artes&lang=pt-br&apiKey=gNuRT103voDtjaiyCV_rdniV-szQ4iKt7WpFbQBTT64`
     );
 
-    console.log(response);
+    console.log(response.data.items[0]);
   }
 
   return (
@@ -117,7 +125,7 @@ export default function CriarChurras() {
               <View style={styles.viewImage}>
                 <Image
                   style={styles.inputImage}
-                  source={images[icon]}
+                  source={require("../../../assets/homem.png")}
                 />
               </View>
               <View style={styles.inputField}>
@@ -374,36 +382,59 @@ export default function CriarChurras() {
             </View>
           </View>
         </View>
-        <View style={styles.viewLocalidade}>
-          <Text style={styles.viewTitulo}>Localidade</Text>
-          <View style={styles.inputLocal}>
-            <View style={styles.inputsRua}>
-              <TextInput
-                style={[styles.inputsLocal, { width: "68%" }]}
-                placeholder="Digite a rua."
-                value={localidade.rua}
-                onChangeText={(valor) =>
-                  setLocalidade({ ...localidade, rua: valor })
-                }
+        <View style={styles.viewOutros}>
+          <Text style={styles.viewTitulo}>Outros</Text>
+          <View style={styles.viewData}>
+            <Text style={styles.textLocalidade}>Data do evento:</Text>
+            <TouchableOpacity
+              style={styles.buttonDate}
+              onPress={showDatepicker}
+            >
+              <Text>Selecionar data do evento</Text>
+            </TouchableOpacity>
+            {exibirCalendario && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode="date"
+                is24Hour={true}
+                display="default"
+                onChange={dateHandler}
+                
               />
+            )}
+          </View>
+          <View style={styles.viewLocalidade}>
+            <Text style={styles.textLocalidade}>Localidade:</Text>
+            <View style={styles.inputLocal}>
+              <View style={styles.inputsRua}>
+                <TextInput
+                  style={[styles.inputsLocal, { width: "68%" }]}
+                  placeholder="Digite a rua."
+                  value={localidade.rua}
+                  onChangeText={(valor) =>
+                    setLocalidade({ ...localidade, rua: valor })
+                  }
+                />
+                <TextInput
+                  style={[styles.inputsLocal, { width: "28%" }]}
+                  placeholder="Número."
+                  keyboardType="number-pad"
+                  value={localidade.numero}
+                  onChangeText={(valor) =>
+                    setLocalidade({ ...localidade, numero: valor })
+                  }
+                />
+              </View>
               <TextInput
-                style={[styles.inputsLocal, { width: "28%" }]}
-                placeholder="Número."
-                keyboardType="number-pad"
-                value={localidade.numero}
+                style={styles.inputsLocal}
+                placeholder="Digite o bairro."
+                value={localidade.bairro}
                 onChangeText={(valor) =>
-                  setLocalidade({ ...localidade, numero: valor })
+                  setLocalidade({ ...localidade, bairro: valor })
                 }
               />
             </View>
-            <TextInput
-              style={styles.inputsLocal}
-              placeholder="Digite o bairro."
-              value={localidade.bairro}
-              onChangeText={(valor) =>
-                setLocalidade({ ...localidade, bairro: valor })
-              }
-            />
           </View>
         </View>
         <View style={styles.viewCalcular}>
@@ -553,7 +584,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     textTransform: "capitalize",
   },
-  viewLocalidade: {
+  viewOutros: {
     display: "flex",
     width: "90%",
     backgroundColor: "#340C0C",
@@ -564,9 +595,22 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginTop: 20,
   },
+  viewData: {
+    marginTop: 15,
+    marginBottom: 20,
+  },
+  viewLocalidade: {
+    display: "flex",
+    width: "100%",
+  },
+  textLocalidade: {
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
   inputLocal: {
     display: "flex",
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 10,
   },
   inputsRua: {

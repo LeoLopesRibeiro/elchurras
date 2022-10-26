@@ -1,12 +1,40 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 
 export default function ListarChurras({ navigation }) {
   const [listaChurras, setListaChurras] = useState([]);
 
+  const usuario = {
+    nome: "gustavo",
+    icon: "teste",
+    churras: [
+      {
+        responsavel: "gustavo",
+        data: "26/11/2022",
+        custos_mais: {
+          carnes: [
+            {
+              nome: "picanha",
+              preco: "30",
+            },
+          ],
+        },
+      },
+      {
+        responsavel: "gustavo",
+        data: "16/11/2022",
+        custos_mais: {},
+      },
+    ],
+  };
+
   function goToCriarChurras() {
     navigation.navigate("CriarChurras");
+  }
+
+  function goToCustos(custos) {
+    console.log(custos);
   }
 
   async function setChurrasData() {
@@ -24,15 +52,13 @@ export default function ListarChurras({ navigation }) {
       if (jsonValue != null) {
         setListaChurras(JSON.parse(jsonValue));
       }
-
     } catch (err) {
       console.log(err);
     }
   }
 
   useEffect(() => {
-    setChurrasData();
-    getChurrasData();
+    setListaChurras(usuario.churras);
   }, []);
 
   return (
@@ -41,9 +67,19 @@ export default function ListarChurras({ navigation }) {
         {listaChurras.length != 0 ? (
           listaChurras.map((churras, index) => {
             return (
-              <View>
-                <Text>Churras</Text>
-              </View>
+              <TouchableOpacity
+                key={index}
+                onPress={() => goToCustos(churras.custos_mais)}
+                style={styles.churrasCriado}
+                activeOpacity={0.8}
+              >
+                <Image
+                  source={require("../../../assets/carne.png")}
+                  style={styles.imagemCarne}
+                />
+                <Text style={styles.dataChurras}>Data do evento: {churras.data}</Text>
+                <Text style={styles.responsavelChurras}>Responsável: {churras.responsavel}</Text>
+              </TouchableOpacity>
             );
           })
         ) : (
@@ -67,11 +103,40 @@ const styles = StyleSheet.create({
     display: "flex",
     height: "100%",
     alignItems: "center",
-    justifyContent: "space-around",
     backgroundColor: "#FFF",
+    paddingTop: 50,
+    paddingBottom: 50,
   },
   listaChurras: {
-
+    width: "100%",
+    alignItems: "center",
+  },
+  churrasCriado: {
+    width: "80%",
+    backgroundColor: "#340C0C",
+    padding: 20,
+    marginBottom: 20,
+    display: "flex",
+    alignItems: "center",
+    borderRadius: 10
+  },
+  imagemCarne: {
+    width: 52,
+    height: 43,
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  dataChurras: {
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+  responsavelChurras: {
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 14,
+    textTransform: "capitalize",
+    marginTop: 10
   },
   buttonCriar: {
     width: 130,
@@ -80,6 +145,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     borderRadius: 10,
+    marginTop: 50,
   },
   buttonMais: {
     fontSize: 50,
