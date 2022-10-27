@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   whiteBackground: {
-    height: 150,
+    height: 100,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

@@ -21,7 +21,12 @@ export function StackRoutes() {
           name="Receitas"
           component={Receitas}
           options={{
-            title: "Receitas",
+            title: "El Churras",
+            headerStyle: {
+              backgroundColor: '#340C0C',
+              color: "red"
+            },
+            headerTintColor: '#fff',
           }}
         />
       </Navigator>
