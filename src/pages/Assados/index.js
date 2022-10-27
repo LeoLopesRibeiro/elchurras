@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   textNumero:{
-    color: "#fff",
+    color: "#ffffff",
     fontFamily: "Poppins_700Bold",
     
   },

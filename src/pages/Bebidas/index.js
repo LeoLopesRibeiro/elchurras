@@ -60,8 +60,9 @@ function Bebidas() {
           </View>
 
           <View style={styles.ViewResultado}>
-            <View style={styles.ViewTotal}>
+          <View style={styles.ViewTotal}>
               <Text style={styles.textTotal}>Total: </Text>
+              <Text style={styles.textNumero}>R$: 90,00 </Text>
             </View>
             <View style={styles.viewReceitas}>
             </View>
@@ -137,13 +138,14 @@ const styles = StyleSheet.create({
   },
   ViewResultado: {
     display: "flex",
-    flexDirection: "row",
     padding: 10,
     justifyContent: "space-between",
   },
   ViewTotal: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   viewReceitas: {
     display: "flex",
@@ -154,6 +156,11 @@ const styles = StyleSheet.create({
     height: "100%",
     flexDirection: "column",
     justifyContent: "space-between",
+  },
+  textNumero:{
+    color: "#ffffff",
+    fontFamily: "Poppins_700Bold",
+    
   },
 });
 export default Bebidas;
