@@ -21,8 +21,8 @@ export default function CriarChurras() {
   const [exibirCalendario, setExibirCalendario] = useState(false);
 
   function dateHandler(event, selectedDate) {
+    setExibirCalendario(false);
     setDate(selectedDate);
-    setExibirCalendario(false)
   }
 
   function showDatepicker() {
@@ -43,12 +43,15 @@ export default function CriarChurras() {
 
   const [bovino, setBovino] = useState({
     maminha: {
+      nome: "Maminha",
       value: false,
     },
     cupim: {
+      nome: "Cupim",
       value: false,
     },
     picanha: {
+      nome: "Picanha",
       value: false,
     },
   });
@@ -57,17 +60,21 @@ export default function CriarChurras() {
     linguica: {
       nome: "Linguiça",
       value: false,
+      preco: 5,
     },
     paleta: {
+      nome: "Paleta",
       value: false,
     },
     bisteca: {
+      nome: "Bisteca",
       value: false,
     },
   });
 
   const [frango, setFrango] = useState({
     coxa: {
+      nome: "Coxa",
       value: false,
     },
     coracao: {
@@ -75,15 +82,18 @@ export default function CriarChurras() {
       value: false,
     },
     asa: {
+      nome: "Asa",
       value: false,
     },
   });
 
   const [bebidas, setBebidas] = useState({
     refrigerante: {
+      nome: "Refrigerante",
       value: false,
     },
     cerveja: {
+      nome: "Cerveja",
       value: false,
     },
     agua: {
@@ -91,12 +101,15 @@ export default function CriarChurras() {
       value: false,
     },
     suco: {
+      nome: "Suco",
       value: false,
     },
     vinho: {
+      nome: "Vinho",
       value: false,
     },
     whisky: {
+      nome: "Whisky",
       value: false,
     },
   });
@@ -105,14 +118,46 @@ export default function CriarChurras() {
     rua: "",
     numero: "",
     bairro: "",
+    cidade: "",
   });
 
   async function calcularChurras() {
-    const response = await api.get(
-      `geocode?q=${localidade.numero}+${localidade.rua}+${localidade.bairro}+embu das artes&lang=pt-br&apiKey=gNuRT103voDtjaiyCV_rdniV-szQ4iKt7WpFbQBTT64`
-    );
+    const dataSelecionada = {
+      dia: date.toJSON().substring(8, 10),
+      mes: date.toJSON().substring(5, 7),
+      ano: date.toJSON().substring(0, 4),
+    };
 
-    console.log(response.data.items[0]);
+    const carnesSelecionadas = [];
+    const bebidasSelecionadas = [];
+
+    Object.keys(bovino).forEach((key) => {
+      if (bovino[key].value == true) {
+        carnesSelecionadas.push(bovino[key]);
+      }
+    });
+
+    Object.keys(suino).forEach((key) => {
+      if (suino[key].value == true) {
+        carnesSelecionadas.push(suino[key]);
+      }
+    });
+
+    Object.keys(frango).forEach((key) => {
+      if (frango[key].value == true) {
+        carnesSelecionadas.push(frango[key]);
+      }
+    });
+
+    Object.keys(bebidas).forEach((key) => {
+      if (bebidas[key].value == true) {
+        bebidasSelecionadas.push(bebidas[key]);
+      }
+    });
+
+    console.log(carnesSelecionadas);
+    console.log(bebidasSelecionadas);
+    console.log(dataSelecionada);
   }
 
   return (
@@ -253,9 +298,7 @@ export default function CriarChurras() {
                         }}
                         color={bovino[key].value ? "#EED0A2" : undefined}
                       />
-                      <Text style={styles.bebidaNome}>
-                        {bovino[key].nome ? bovino[key].nome : key}
-                      </Text>
+                      <Text style={styles.carneNome}>{bovino[key].nome}</Text>
                     </View>
                   );
                 })}
@@ -284,9 +327,7 @@ export default function CriarChurras() {
                         }}
                         color={suino[key].value ? "#EED0A2" : undefined}
                       />
-                      <Text style={styles.bebidaNome}>
-                        {suino[key].nome ? suino[key].nome : key}
-                      </Text>
+                      <Text style={styles.bebidaNome}>{suino[key].nome}</Text>
                     </View>
                   );
                 })}
@@ -315,9 +356,7 @@ export default function CriarChurras() {
                         }}
                         color={frango[key].value ? "#EED0A2" : undefined}
                       />
-                      <Text style={styles.bebidaNome}>
-                        {frango[key].nome ? frango[key].nome : key}
-                      </Text>
+                      <Text style={styles.bebidaNome}>{frango[key].nome}</Text>
                     </View>
                   );
                 })}
@@ -350,9 +389,7 @@ export default function CriarChurras() {
                         }}
                         color={bebidas[key].value ? "#EED0A2" : undefined}
                       />
-                      <Text style={styles.bebidaNome}>
-                        {bebidas[key].nome ? bebidas[key].nome : key}
-                      </Text>
+                      <Text style={styles.bebidaNome}>{bebidas[key].nome}</Text>
                     </View>
                   );
                 }
@@ -367,14 +404,20 @@ export default function CriarChurras() {
                         value={bebidas[key].value}
                         onValueChange={() => {
                           if (bebidas[key].value) {
-                            setBebidas({ ...bebidas, [key]: { value: false } });
+                            setBebidas({
+                              ...bebidas,
+                              [key]: { ...bebidas[key], value: false },
+                            });
                           } else {
-                            setBebidas({ ...bebidas, [key]: { value: true } });
+                            setBebidas({
+                              ...bebidas,
+                              [key]: { ...bebidas[key], value: true },
+                            });
                           }
                         }}
                         color={bebidas[key].value ? "#EED0A2" : undefined}
                       />
-                      <Text style={styles.bebidaNome}>{key}</Text>
+                      <Text style={styles.bebidaNome}>{bebidas[key].nome}</Text>
                     </View>
                   );
                 }
@@ -390,7 +433,9 @@ export default function CriarChurras() {
               style={styles.buttonDate}
               onPress={showDatepicker}
             >
-              <Text>Selecionar data do evento</Text>
+              <Text style={styles.textButtonDate}>
+                Selecionar data do evento
+              </Text>
             </TouchableOpacity>
             {exibirCalendario && (
               <DateTimePicker
@@ -400,7 +445,6 @@ export default function CriarChurras() {
                 is24Hour={true}
                 display="default"
                 onChange={dateHandler}
-                
               />
             )}
           </View>
@@ -432,6 +476,14 @@ export default function CriarChurras() {
                 value={localidade.bairro}
                 onChangeText={(valor) =>
                   setLocalidade({ ...localidade, bairro: valor })
+                }
+              />
+              <TextInput
+                style={styles.inputsLocal}
+                placeholder="Digite a cidade."
+                value={localidade.cidade}
+                onChangeText={(valor) =>
+                  setLocalidade({ ...localidade, cidade: valor })
                 }
               />
             </View>
@@ -595,6 +647,21 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginTop: 20,
   },
+  buttonDate: {
+    width: "100%",
+    height: 40,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    marginTop: 10,
+    backgroundColor: "#DF1D1D",
+    borderRadius: 10,
+  },
+  textButtonDate: {
+    color: "#FFF",
+    fontWeight: "bold",
+  },
   viewData: {
     marginTop: 15,
     marginBottom: 20,
@@ -617,7 +684,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 15,
   },
   inputsLocal: {
     backgroundColor: "#FFF",
@@ -626,6 +692,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     fontWeight: "bold",
+    marginBottom: 15,
   },
   viewCalcular: {
     width: "90%",
