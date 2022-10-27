@@ -1,8 +1,14 @@
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { useState, useEffect } from "react";
 import api from "../../service/api";
-import carne from '../../../assets/carne.png'
-import Constants from "expo-constants";
+import carne from "../../../assets/carne.png";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 import * as Location from "expo-location";
@@ -19,7 +25,7 @@ function Outros() {
     arroz: require("../../../assets/arroz.png"),
     farofa: require("../../../assets/farofa.png"),
     pao: require("../../../assets/pao.png"),
-  }
+  };
 
   useEffect(() => {
     (async () => {
@@ -42,8 +48,6 @@ function Outros() {
       );
       setAcougue(responseAcougue.data.items);
       setMercado(responseMercado.data.items);
-
-
     })();
   }, []);
 
@@ -74,7 +78,10 @@ function Outros() {
                 return (
                   <View style={styles.view} key={index}>
                     <View style={styles.teste}>
-                      <Image source={images[itens.icon]} style={{ width: 30, height: 30 }}/>
+                      <Image
+                        source={images[itens.icon]}
+                        style={{ width: 30, height: 30 }}
+                      />
                       <Text style={styles.textMap}>{itens.nome}</Text>
                     </View>
                     <View style={styles.viewMap}>
@@ -95,7 +102,10 @@ function Outros() {
                 return (
                   <View style={styles.view} key={index}>
                     <View style={styles.teste}>
-                      <Image source={images[itens.icon]} style={{ width: 30, height: 30 }}/>
+                      <Image
+                        source={images[itens.icon]}
+                        style={{ width: 30, height: 30 }}
+                      />
                       <Text style={styles.textMap}>{itens.nome}</Text>
                     </View>
                     <View style={styles.viewMap}>
@@ -111,65 +121,82 @@ function Outros() {
           <View style={styles.viewAcompanhamentos}>
             <Text style={styles.Locais}>Locais indicados para compra</Text>
           </View>
+          {acougue.length == 0 && mercado.length == 0 ? (
+            <View style={styles.indicator}>
+              <ActivityIndicator size="large" color="#FFF" />
+            </View>
+          ) : null}
           {acougue.length != 0
             ? acougue.map((itens, index) => {
                 return (
                   <View style={styles.view} key={index}>
                     <View style={styles.viewImage}>
-                      <Image source={require('../../../assets/carne.png')} style={{ width: 30, height: 30 }}/>
-                    <View style={styles.viewTittle}>
-                      <Text style={styles.textAcougue}>{itens.title}</Text>
-                        <Text style={styles.textAcougueGrande}>{itens.address.street}, {itens.address.houseNumber}, {itens.address.district}</Text>
-
+                      <Image
+                        source={require("../../../assets/carne.png")}
+                        style={{ width: 30, height: 30 }}
+                      />
+                      <View style={styles.viewTittle}>
+                        <Text style={styles.textAcougue}>{itens.title}</Text>
+                        <Text style={styles.textAcougueGrande}>
+                          {itens.address.street}, {itens.address.houseNumber},{" "}
+                          {itens.address.district}
+                        </Text>
+                      </View>
                     </View>
+                    <View style={styles.viewMap}>
+                      <Text style={styles.textAcougueGrande}>
+                        Distância: {itens.distance}m
+                      </Text>
+                      {itens.contacts != undefined ? (
+                        <Text style={styles.textAcougueGrande}>
+                          Tel: {itens.contacts[0].phone[0].value}
+                        </Text>
+                      ) : null}
                     </View>
-                        <View style={styles.viewMap} >
-                          <Text style={styles.textAcougueGrande}>Distância: {itens.distance}m</Text>
-                        { itens.contacts != undefined ?
-                            <Text style={styles.textAcougueGrande}>Tel: {itens.contacts[0].phone[0].value}</Text>
-                          
-                            : null}
-                        </View>
-          
                   </View>
                 );
               })
             : null}
-             {mercado.length != 0
+          {mercado.length != 0
             ? mercado.map((itens, index) => {
                 return (
                   <View style={styles.view} key={index}>
-                    
                     <View style={styles.viewImage}>
-                      <Image source={require('../../../assets/mercado.png')} style={{ width: 30, height: 30 }}/>
-                    <View style={styles.viewTittle}>
-                      <Text style={styles.textAcougue}>{itens.title}</Text>
-                        <Text style={styles.textAcougueGrande}>{itens.address.street}, {itens.address.houseNumber}, {itens.address.district}</Text>
-
+                      <Image
+                        source={require("../../../assets/mercado.png")}
+                        style={{ width: 30, height: 30 }}
+                      />
+                      <View style={styles.viewTittle}>
+                        <Text style={styles.textAcougue}>{itens.title}</Text>
+                        <Text style={styles.textAcougueGrande}>
+                          {itens.address.street}, {itens.address.houseNumber},{" "}
+                          {itens.address.district}
+                        </Text>
+                      </View>
                     </View>
+                    <View style={styles.viewMap}>
+                      <Text style={styles.textAcougueGrande}>
+                        Distância: {itens.distance}m
+                      </Text>
+                      {itens.contacts != undefined ? (
+                        <Text style={styles.textAcougueGrande}>
+                          Tel: {itens.contacts[0].phone[0].value}
+                        </Text>
+                      ) : null}
                     </View>
-                        <View style={styles.viewMap} >
-                          <Text style={styles.textAcougueGrande}>Distância: {itens.distance}m</Text>
-                        { itens.contacts != undefined ?
-                            <Text style={styles.textAcougueGrande}>Tel: {itens.contacts[0].phone[0].value}</Text>
-                          
-                            : null}
-                        </View>
-          
                   </View>
                 );
               })
             : null}
-         <View style={styles.ViewResultado}>
-          <View style={styles.ViewTotal}>
+          <View style={styles.ViewResultado}>
+            <View style={styles.ViewTotal}>
               <Text style={styles.textTotal}>Total: </Text>
               <Text style={styles.textNumero}>R$: 90,00 </Text>
             </View>
-            <View style={styles.viewReceitas}>
-            </View>
+            <View style={styles.viewReceitas}></View>
           </View>
-      </View>
         </View>
+      </View>
     </ScrollView>
   );
 }
@@ -187,7 +214,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   whiteBackground: {
-    height: 150,
+    height: 100,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -205,8 +232,8 @@ const styles = StyleSheet.create({
   },
   viewMap: {
     display: "flex",
-    flexDirection: 'column',
-    alignItems: 'flex-end', 
+    flexDirection: "column",
+    alignItems: "flex-end",
   },
   teste: {
     display: "flex",
@@ -235,77 +262,85 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  viewTittle:{
-  display: 'flex',
-  flexDirection: 'column',
-  width:  '60%',
-  marginLeft: 10,
-},
- textAcougue:{
-   color: '#fff',
-  fontFamily: 'Poppins_700Bold',
-  fontSize: 12,
-  marginBottom: 3,
-},
- Locais:{
- fontSize: 18,
-  color: '#fff',
-  fontFamily: 'Poppins_700Bold',
-
-},
-viewCarne:{
-  height: '100%',
-  width: '30px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-},
-textAcougueGrande:{
-  color: '#fff',
-  fontFamily: 'Poppins_700Bold',
-  fontSize: 9,
-  marginBottom: 3,
-},
-viewImage:{
-  display: "flex",
-  flexDirection: 'row',
-  alignItems: 'center',
-},  textTotal: {
-  color: "#fff",
-  fontSize: 25,
-  textTransform: "capitalize",
-  marginLeft: 10,
-  fontFamily: "Poppins_700Bold",
-},
-receitas: {
-  color: "#fff",
-  fontFamily: "Poppins_700Bold",
-},
-ViewResultado: {
-  display: "flex",
-  padding: 10,
-  justifyContent: "space-between",
-},
-ViewTotal: {
-  display: "flex",
-  justifyContent: 'space-between',
-  flexDirection: 'row',
-  alignItems: 'center',
-},
-viewReceitas: {
-  display: "flex",
-  justifyContent: "flex-end",
-},
-viewAlinhamento: {
-  display: "flex",
-  height: "100%",
-  flexDirection: "column",
-  justifyContent: "space-between",
-},
-textNumero:{
-  color: "#ffffff",
-  fontFamily: "Poppins_700Bold",
-  
-},
+  viewTittle: {
+    display: "flex",
+    flexDirection: "column",
+    width: "60%",
+    marginLeft: 10,
+  },
+  textAcougue: {
+    color: "#fff",
+    fontFamily: "Poppins_700Bold",
+    fontSize: 12,
+    marginBottom: 3,
+  },
+  Locais: {
+    fontSize: 18,
+    color: "#fff",
+    fontFamily: "Poppins_700Bold",
+  },
+  viewCarne: {
+    height: "100%",
+    width: "30px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textAcougueGrande: {
+    color: "#fff",
+    fontFamily: "Poppins_700Bold",
+    fontSize: 9,
+    marginBottom: 3,
+  },
+  viewImage: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textTotal: {
+    color: "#fff",
+    fontSize: 25,
+    textTransform: "capitalize",
+    fontFamily: "Poppins_700Bold",
+  },
+  receitas: {
+    color: "#fff",
+    fontFamily: "Poppins_700Bold",
+  },
+  ViewResultado: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: 20,
+    paddingRight: 10,
+    paddingLeft: 20
+  },
+  ViewTotal: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  viewReceitas: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  viewAlinhamento: {
+    display: "flex",
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  textNumero: {
+    color: "#ffffff",
+    fontFamily: "Poppins_700Bold",
+  },
+  indicator: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 10,
+    paddingTop: 10
+  }
 });
 export default Outros;

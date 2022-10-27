@@ -75,7 +75,7 @@ function Bebidas() {
 
 const styles = StyleSheet.create({
   cor: {
-    height: "80%",
+    height: "90%",
     backgroundColor: "#340C0C",
   },
   text: {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   whiteBackground: {
     backgroundColor: "#fff",
-    height: 150,
+    height: 100,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   viewAlinhamento: {
     display: "flex",
-    height: "100%",
+    height: "97%",
     flexDirection: "column",
     justifyContent: "space-between",
   },
