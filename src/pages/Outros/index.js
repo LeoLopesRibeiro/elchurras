@@ -160,8 +160,15 @@ function Outros() {
                 );
               })
             : null}
-        </View>
+        <View style={styles.ViewResultado}>
+            <View style={styles.ViewTotal}>
+              <Text style={styles.textTotal}>Total: </Text>
+            </View>
+            <View style={styles.viewReceitas}>
+            </View>
+          </View>
       </View>
+        </View>
     </ScrollView>
   );
 }
@@ -262,6 +269,36 @@ viewImage:{
   display: "flex",
   flexDirection: 'row',
   alignItems: 'center',
-}
+},  textTotal: {
+  color: "#fff",
+  fontSize: 25,
+  textTransform: "capitalize",
+  marginLeft: 10,
+  fontFamily: "Poppins_700Bold",
+},
+receitas: {
+  color: "#fff",
+  fontFamily: "Poppins_700Bold",
+},
+ViewResultado: {
+  display: "flex",
+  flexDirection: "row",
+  marginTop: 20,
+  justifyContent: "space-between",
+},
+ViewTotal: {
+  display: "flex",
+  justifyContent: "flex-end",
+},
+viewReceitas: {
+  display: "flex",
+  justifyContent: "flex-end",
+},
+viewAlinhamento: {
+  display: "flex",
+  height: "100%",
+  flexDirection: "column",
+  justifyContent: "space-between",
+},
 });
 export default Outros;
