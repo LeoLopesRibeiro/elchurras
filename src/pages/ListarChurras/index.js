@@ -11,7 +11,11 @@ export default function ListarChurras({ navigation }) {
     churras: [
       {
         responsavel: "gustavo",
-        data: "26/11/2022",
+        data: {
+          dia: "30",
+          mes: "10",
+          ano: "2022",
+        },
         custos_mais: {
           carnes: [
             {
@@ -23,7 +27,11 @@ export default function ListarChurras({ navigation }) {
       },
       {
         responsavel: "gustavo",
-        data: "16/11/2022",
+        data: {
+          dia: "05",
+          mes: "11",
+          ano: "2022",
+        },
         custos_mais: {},
       },
     ],
@@ -77,8 +85,13 @@ export default function ListarChurras({ navigation }) {
                   source={require("../../../assets/carne.png")}
                   style={styles.imagemCarne}
                 />
-                <Text style={styles.dataChurras}>Data do evento: {churras.data}</Text>
-                <Text style={styles.responsavelChurras}>Responsável: {churras.responsavel}</Text>
+                <Text style={styles.dataChurras}>
+                  Data do evento: {churras.data.dia}/{churras.data.mes}/
+                  {churras.data.ano}
+                </Text>
+                <Text style={styles.responsavelChurras}>
+                  Responsável: {churras.responsavel}
+                </Text>
               </TouchableOpacity>
             );
           })
@@ -118,7 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     display: "flex",
     alignItems: "center",
-    borderRadius: 10
+    borderRadius: 10,
   },
   imagemCarne: {
     width: 52,
@@ -136,7 +149,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     textTransform: "capitalize",
-    marginTop: 10
+    marginTop: 10,
   },
   buttonCriar: {
     width: 130,

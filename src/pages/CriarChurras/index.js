@@ -6,13 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import Checkbox from 'expo-checkbox';
-import api from '../../services/api';
-import DateTimePicker from '@react-native-community/datetimepicker';
+} from "react-native";
+import { useState, useEffect } from "react";
+import Checkbox from "expo-checkbox";
+import api from "../../services/api";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function CriarChurras() {
+export default function CriarChurras({ navigation }) {
   const [countHomem, setCountHomem] = useState(0);
   const [countMulher, setCountMulher] = useState(0);
   const [countCrianca, setCountCrianca] = useState(0);
@@ -30,9 +30,9 @@ export default function CriarChurras() {
   }
 
   const images = {
-    homem: require('../../../assets/homem.png'),
-    mulher: require('../../../assets/mulher.png'),
-    crianca: require('../../../assets/crianca.png'),
+    homem: require("../../../assets/homem.png"),
+    mulher: require("../../../assets/mulher.png"),
+    crianca: require("../../../assets/crianca.png"),
   };
 
   const jsonteste = JSON.parse(
@@ -43,19 +43,19 @@ export default function CriarChurras() {
 
   const [bovino, setBovino] = useState({
     maminha: {
-      nome: 'Maminha',
+      nome: "Maminha",
       value: false,
       preco: 0.042,
       kg: 0,
     },
     cupim: {
-      nome: 'Cupim',
+      nome: "Cupim",
       value: false,
       preco: 0.035,
       kg: 0,
     },
     picanha: {
-      nome: 'Picanha',
+      nome: "Picanha",
       value: false,
       preco: 0.06,
       kg: 0,
@@ -64,19 +64,19 @@ export default function CriarChurras() {
 
   const [suino, setSuino] = useState({
     linguica: {
-      nome: 'Linguiça',
+      nome: "Linguiça",
       value: false,
       preco: 0.032,
       kg: 0,
     },
     lombo: {
-      nome: 'Lombo',
+      nome: "Lombo",
       value: false,
       preco: 0.04,
       kg: 0,
     },
     costela: {
-      nome: 'Costela',
+      nome: "Costela",
       value: false,
       preco: 0.03,
       kg: 0,
@@ -85,19 +85,19 @@ export default function CriarChurras() {
 
   const [frango, setFrango] = useState({
     coxa: {
-      nome: 'Coxa',
+      nome: "Coxa",
       value: false,
       preco: 0.02,
       kg: 0,
     },
     coracao: {
-      nome: 'Coração',
+      nome: "Coração",
       value: false,
       preco: 0.036,
       kg: 0,
     },
     asa: {
-      nome: 'Asa',
+      nome: "Asa",
       value: false,
       preco: 0.023,
       kg: 0,
@@ -106,42 +106,42 @@ export default function CriarChurras() {
 
   const [bebidas, setBebidas] = useState({
     refrigerante: {
-      nome: 'Refrigerante',
+      nome: "Refrigerante",
       value: false,
       preco: 7.5,
       garrafa: 2000,
       alcolico: false,
     },
     cerveja: {
-      nome: 'Cerveja',
+      nome: "Cerveja",
       value: false,
       preco: 6,
       garrafa: 330,
       alcolico: true,
     },
     agua: {
-      nome: 'Água',
+      nome: "Água",
       value: false,
       preco: 2,
       garrafa: 500,
       alcolico: false,
     },
     suco: {
-      nome: 'Suco',
+      nome: "Suco",
       value: false,
       preco: 6,
       garrafa: 1000,
       alcolico: false,
     },
     vinho: {
-      nome: 'Vinho',
+      nome: "Vinho",
       value: false,
       preco: 45,
       garrafa: 750,
       alcolico: true,
     },
     whisky: {
-      nome: 'Whisky',
+      nome: "Whisky",
       value: false,
       preco: 80,
       garrafa: 1000,
@@ -150,10 +150,10 @@ export default function CriarChurras() {
   });
 
   const [localidade, setLocalidade] = useState({
-    rua: '',
-    numero: '',
-    bairro: '',
-    cidade: '',
+    rua: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
   });
 
   async function calcularChurras() {
@@ -215,8 +215,8 @@ export default function CriarChurras() {
     let alcolico = false;
     let quantBebidasAlcolicas = 0;
 
-    bebidasSelecionadas.forEach((bebidas) => {
-      if (bebidas.alcolico == true) {
+    bebidasSelecionadas.forEach((bebida) => {
+      if (bebida.alcolico == true) {
         alcolico = true;
         quantBebidasAlcolicas++;
       }
@@ -227,31 +227,39 @@ export default function CriarChurras() {
       let litrosBebidasPorCrianca =
         litrosCrianca / bebidasSelecionadas.length - quantBebidasAlcolicas;
 
-      console.log(litrosBebidasPorAdulto)
-      console.log(litrosBebidasPorCrianca)
-
       bebidasSelecionadas.forEach((bebida) => {
         if (bebida.alcolico == true) {
-          bebida.garrafa = Math.ceil(litrosBebidasPorAdulto / bebida.garrafa);   
+          bebida.garrafa = Math.ceil(litrosBebidasPorAdulto / bebida.garrafa);
         } else {
-          console.log(bebida)
-          console.log(bebida.garrafa)
-          bebida.garrafa = Math.ceil(litrosBebidasPorAdulto + litrosBebidasPorCrianca / bebida.garrafa);
+          bebida.garrafa = Math.ceil(
+            (litrosBebidasPorAdulto + litrosBebidasPorCrianca) / bebida.garrafa
+          );
         }
-      });
 
+        bebida.preco = Number((bebida.preco * bebida.garrafa).toFixed(2));
+      });
     } else {
       let litrosTotais = litrosAdulto + litrosCrianca;
       let litrosPorBebida = litrosTotais / bebidasSelecionadas.length;
 
-      bebidasSelecionadas.forEach((bebidas) => {
-        bebidas.garrafa = Math.ceil(litrosPorBebida / bebidas.garrafa);
+      bebidasSelecionadas.forEach((bebida) => {
+        bebida.garrafa = Math.ceil(litrosPorBebida / bebida.garrafa);
 
-        bebidas.preco = Number((bebidas.preco * bebidas.garrafa).toFixed(2));
+        bebida.preco = Number((bebida.preco * bebida.garrafa).toFixed(2));
       });
     }
 
     console.log(bebidasSelecionadas);
+    const resultado = {
+      responsavel: "Gustavo",
+      data: dataSelecionada,
+      custos_outros: {
+        carnes: [],
+        bebidas: [],
+        outros: [],
+        locacao: localidade,
+      },
+    };
   }
 
   return (
@@ -264,14 +272,15 @@ export default function CriarChurras() {
               <View style={styles.viewImage}>
                 <Image
                   style={styles.inputImage}
-                  source={require('../../../assets/homem.png')}
+                  source={require("../../../assets/homem.png")}
                 />
               </View>
               <View style={styles.inputField}>
                 <TouchableOpacity
                   onPress={() =>
                     setCountHomem(countHomem != 0 ? countHomem - 1 : 0)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>-</Text>
                 </TouchableOpacity>
                 <TextInput
@@ -287,7 +296,8 @@ export default function CriarChurras() {
                 <TouchableOpacity
                   onPress={() =>
                     setCountHomem(countHomem != 999 ? countHomem + 1 : 999)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>+</Text>
                 </TouchableOpacity>
               </View>
@@ -296,14 +306,15 @@ export default function CriarChurras() {
               <View style={styles.viewImage}>
                 <Image
                   style={styles.inputImage}
-                  source={require('../../../assets/mulher.png')}
+                  source={require("../../../assets/mulher.png")}
                 />
               </View>
               <View style={styles.inputField}>
                 <TouchableOpacity
                   onPress={() =>
                     setCountMulher(countMulher != 0 ? countMulher - 1 : 0)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>-</Text>
                 </TouchableOpacity>
                 <TextInput
@@ -319,7 +330,8 @@ export default function CriarChurras() {
                 <TouchableOpacity
                   onPress={() =>
                     setCountMulher(countMulher != 999 ? countMulher + 1 : 999)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>+</Text>
                 </TouchableOpacity>
               </View>
@@ -328,14 +340,15 @@ export default function CriarChurras() {
               <View style={styles.viewImage}>
                 <Image
                   style={styles.inputImage}
-                  source={require('../../../assets/crianca.png')}
+                  source={require("../../../assets/crianca.png")}
                 />
               </View>
               <View style={styles.inputField}>
                 <TouchableOpacity
                   onPress={() =>
                     setCountCrianca(countCrianca != 0 ? countCrianca - 1 : 0)
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>-</Text>
                 </TouchableOpacity>
                 <TextInput
@@ -353,7 +366,8 @@ export default function CriarChurras() {
                     setCountCrianca(
                       countCrianca != 999 ? countCrianca + 1 : 999
                     )
-                  }>
+                  }
+                >
                   <Text style={styles.add_dec}>+</Text>
                 </TouchableOpacity>
               </View>
@@ -384,7 +398,7 @@ export default function CriarChurras() {
                             });
                           }
                         }}
-                        color={bovino[key].value ? '#EED0A2' : undefined}
+                        color={bovino[key].value ? "#EED0A2" : undefined}
                       />
                       <Text style={styles.carneNome}>{bovino[key].nome}</Text>
                     </View>
@@ -413,7 +427,7 @@ export default function CriarChurras() {
                             });
                           }
                         }}
-                        color={suino[key].value ? '#EED0A2' : undefined}
+                        color={suino[key].value ? "#EED0A2" : undefined}
                       />
                       <Text style={styles.bebidaNome}>{suino[key].nome}</Text>
                     </View>
@@ -442,7 +456,7 @@ export default function CriarChurras() {
                             });
                           }
                         }}
-                        color={frango[key].value ? '#EED0A2' : undefined}
+                        color={frango[key].value ? "#EED0A2" : undefined}
                       />
                       <Text style={styles.bebidaNome}>{frango[key].nome}</Text>
                     </View>
@@ -475,7 +489,7 @@ export default function CriarChurras() {
                             });
                           }
                         }}
-                        color={bebidas[key].value ? '#EED0A2' : undefined}
+                        color={bebidas[key].value ? "#EED0A2" : undefined}
                       />
                       <Text style={styles.bebidaNome}>{bebidas[key].nome}</Text>
                     </View>
@@ -503,7 +517,7 @@ export default function CriarChurras() {
                             });
                           }
                         }}
-                        color={bebidas[key].value ? '#EED0A2' : undefined}
+                        color={bebidas[key].value ? "#EED0A2" : undefined}
                       />
                       <Text style={styles.bebidaNome}>{bebidas[key].nome}</Text>
                     </View>
@@ -519,7 +533,8 @@ export default function CriarChurras() {
             <Text style={styles.textLocalidade}>Data do evento:</Text>
             <TouchableOpacity
               style={styles.buttonDate}
-              onPress={showDatepicker}>
+              onPress={showDatepicker}
+            >
               <Text style={styles.textButtonDate}>
                 Selecionar data do evento
               </Text>
@@ -540,7 +555,7 @@ export default function CriarChurras() {
             <View style={styles.inputLocal}>
               <View style={styles.inputsRua}>
                 <TextInput
-                  style={[styles.inputsLocal, { width: '68%' }]}
+                  style={[styles.inputsLocal, { width: "68%" }]}
                   placeholder="Digite a rua."
                   value={localidade.rua}
                   onChangeText={(valor) =>
@@ -548,7 +563,7 @@ export default function CriarChurras() {
                   }
                 />
                 <TextInput
-                  style={[styles.inputsLocal, { width: '28%' }]}
+                  style={[styles.inputsLocal, { width: "28%" }]}
                   placeholder="Número."
                   keyboardType="number-pad"
                   value={localidade.numero}
@@ -579,7 +594,8 @@ export default function CriarChurras() {
         <View style={styles.viewCalcular}>
           <TouchableOpacity
             style={styles.buttonCalcular}
-            onPress={() => calcularChurras()}>
+            onPress={() => calcularChurras()}
+          >
             <Text style={styles.textCalcular}>Calcular</Text>
           </TouchableOpacity>
         </View>
@@ -590,18 +606,18 @@ export default function CriarChurras() {
 
 const styles = StyleSheet.create({
   criarChurras: {
-    display: 'flex',
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: '#FFF',
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: "#FFF",
     paddingTop: 30,
     paddingBottom: 30,
   },
   viewConvidados: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    alignItems: "center",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -609,25 +625,25 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   viewTitulo: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 35,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
   inputs: {
     marginTop: 30,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   viewImage: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     width: 90,
     height: 90,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 50,
   },
   inputImage: {
@@ -635,25 +651,25 @@ const styles = StyleSheet.create({
     height: 80,
   },
   inputField: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   input: {
-    color: '#FFF',
-    fontWeight: 'bold',
+    color: "#FFF",
+    fontWeight: "bold",
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   add_dec: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   viewCarnes: {
-    display: 'flex',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -662,40 +678,40 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   inputCarnes: {
-    display: 'flex',
+    display: "flex",
   },
   carne: {
-    display: 'flex',
-    textAlign: 'left',
+    display: "flex",
+    textAlign: "left",
     marginBottom: 20,
   },
   carneTitulo: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   checkboxes: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   },
   checkboxLabel: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '35%',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    width: "35%",
+    alignItems: "center",
     marginTop: 10,
   },
   carneNome: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 5,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
   viewBebidas: {
-    display: 'flex',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -704,28 +720,28 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   checkboxesBebidas: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   checkboxLabelBebidas: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 10,
     marginBottom: 10,
   },
   bebidaNome: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 5,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
   viewOutros: {
-    display: 'flex',
-    width: '90%',
-    backgroundColor: '#340C0C',
+    display: "flex",
+    width: "90%",
+    backgroundColor: "#340C0C",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -734,62 +750,62 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonDate: {
-    width: '100%',
+    width: "100%",
     height: 40,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 10,
     marginTop: 10,
-    backgroundColor: '#DF1D1D',
+    backgroundColor: "#DF1D1D",
     borderRadius: 10,
   },
   textButtonDate: {
-    color: '#FFF',
-    fontWeight: 'bold',
+    color: "#FFF",
+    fontWeight: "bold",
   },
   viewData: {
     marginTop: 15,
     marginBottom: 20,
   },
   viewLocalidade: {
-    display: 'flex',
-    width: '100%',
+    display: "flex",
+    width: "100%",
   },
   textLocalidade: {
-    color: '#FFF',
-    fontWeight: 'bold',
+    color: "#FFF",
+    fontWeight: "bold",
     fontSize: 18,
   },
   inputLocal: {
-    display: 'flex',
+    display: "flex",
     marginTop: 10,
     marginBottom: 10,
   },
   inputsRua: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   inputsLocal: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     paddingLeft: 10,
     paddingRight: 10,
     height: 40,
     borderRadius: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 15,
   },
   viewCalcular: {
-    width: '90%',
+    width: "90%",
   },
   buttonCalcular: {
-    width: '100%',
+    width: "100%",
     height: 50,
-    backgroundColor: '#DF1D1D',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: '#FFF',
+    backgroundColor: "#DF1D1D",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#FFF",
     borderRadius: 20,
     paddingTop: 5,
     paddingLeft: 20,
@@ -798,9 +814,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   textCalcular: {
-    display: 'flex',
-    fontWeight: 'bold',
-    color: '#FFF',
+    display: "flex",
+    fontWeight: "bold",
+    color: "#FFF",
     fontSize: 20,
   },
 });
