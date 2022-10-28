@@ -1,15 +1,15 @@
+import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import Locacao from './src/pages/Locacao';
-import { NavigationContainer } from '@react-navigation/native';
-import Routes from './routes';
+import { StackRoutes } from "./router/index";
 
 export default function App() {
-return(
-  <NavigationContainer>
-    <Routes></Routes>
-  </NavigationContainer>
-)
+  return (
+    <View style={styles.container}>
+      <StackRoutes />
+    <StatusBar />
+  </View>
+  );
+
 }
 
 const styles = StyleSheet.create({
