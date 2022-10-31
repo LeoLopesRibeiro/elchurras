@@ -168,18 +168,21 @@ export default function CriarChurras({ navigation }) {
 
     Object.keys(bovino).forEach((key) => {
       if (bovino[key].value == true) {
+        bovino[key].icon = "vaca";
         carnesSelecionadas.push(bovino[key]);
       }
     });
 
     Object.keys(suino).forEach((key) => {
       if (suino[key].value == true) {
+        suino[key].icon = "porco";
         carnesSelecionadas.push(suino[key]);
       }
     });
 
     Object.keys(frango).forEach((key) => {
       if (frango[key].value == true) {
+        frango[key].icon = "frango";
         carnesSelecionadas.push(frango[key]);
       }
     });
@@ -249,17 +252,65 @@ export default function CriarChurras({ navigation }) {
       });
     }
 
-    console.log(bebidasSelecionadas);
+    let convidadosTotais = countHomem + countMulher + countCrianca;
+    let kgCarvao = (kgCarneTotal / 1000).toFixed(2);
+    let sacoCarvao = Math.ceil(kgCarvao / 2);
+    let salKg = (kgCarneTotal * 0.02) / 1000;
+    let paoKg = (convidadosTotais * 2 * 50) / 1000;
+    let arrozKg = (convidadosTotais * 100) / 1000;
+    let sacoArroz = Math.ceil(arrozKg / 5);
+    let farofaKg = (convidadosTotais * 100) / 1000;
+    let sacoFarofa = Math.ceil(farofaKg / 0.5);
+
     const resultado = {
       responsavel: "Gustavo",
       data: dataSelecionada,
       custos_outros: {
-        carnes: [],
-        bebidas: [],
-        outros: [],
+        carnes: carnesSelecionadas,
+        bebidas: bebidasSelecionadas,
+        outros: {
+          geral: [
+            {
+              icon: "carvao",
+              nome: "Carvão",
+              kg: Number(kgCarvao),
+              preco: sacoCarvao * 30,
+            },
+            {
+              icon: "sal",
+              nome: "Sal",
+              kg: salKg,
+              preco: Math.ceil(salKg) * 5,
+            },
+          ],
+          acompanhamentos: [
+            {
+              icon: "arroz",
+              nome: "Arroz",
+              kg: arrozKg,
+              preco: sacoArroz * 20,
+            },
+            {
+              icon: "farofa",
+              nome: "Farofa",
+              kg: farofaKg,
+              preco: sacoFarofa * 10,
+            },
+            {
+              icon: "pao",
+              nome: "Pão",
+              kg: paoKg,
+              preco: convidadosTotais * 2 * 0.5,
+            },
+          ],
+        },
         locacao: localidade,
       },
     };
+
+    navigation.navigate("Resultados", resultado.custos_outros);
+
+    console.log(resultado);
   }
 
   return (
