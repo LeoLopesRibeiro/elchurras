@@ -89,7 +89,7 @@ function Assados({ navigation, route }) {
               </View>
               <View style={styles.ViewTotal}>
                 <Text style={styles.textTotal}>Total: </Text>
-                <Text style={styles.textNumero}>{(resultados.preco_total).toFixed(2)}</Text>
+                <Text style={styles.textNumero}>{resultados.preco_total}</Text>
               </View>
             </View>
           </View>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   viewAlinhamento: {
     display: 'flex',
-    height: '90%',
+    height: '97%',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },

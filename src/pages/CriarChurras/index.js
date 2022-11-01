@@ -152,7 +152,7 @@ export default function CriarChurras({ navigation }) {
       alcolico: false,
     },
     vinho: {
-      icon: 'vinho',
+      icon: 'cerveja',
       nome: 'Vinho',
       value: false,
       preco: 45,
@@ -161,7 +161,7 @@ export default function CriarChurras({ navigation }) {
       alcolico: true,
     },
     whisky: {
-      icon: 'whisky',
+      icon: 'cerveja',
       nome: 'Whisky',
       value: false,
       preco: 80,

@@ -78,7 +78,9 @@ function Bebidas({ route }) {
             <View style={styles.ViewResultado}>
               <View style={styles.ViewTotal}>
                 <Text style={styles.textTotal}>Total: </Text>
-                <Text style={styles.textNumero}>{(resultados.preco_total).toFixed(2)}</Text>
+                <Text style={styles.textNumero}>
+                  {resultados.preco_total.toFixed(2)}
+                </Text>
               </View>
               <View style={styles.viewReceitas}></View>
             </View>
@@ -113,34 +115,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textMap: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 15,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
     marginLeft: 10,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   textMapAside: {
-    fontFamily: 'Poppins_700Bold',
-    color: '#fff',
+    fontFamily: "Poppins_700Bold",
+    color: "#fff",
   },
-  viewTeste:{
-    justifyContent: 'space-between',
-     width: '50%'
+  viewTeste: {
+    justifyContent: "space-between",
+    width: "50%",
   },
   viewTextLeft: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   viewMap: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   viewMapAside: {
-    display: 'flex',
-    alignItems: 'flex-end',
+    display: "flex",
+    alignItems: "flex-end",
   },
   teste: {
     display: "flex",
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
   },
   viewAlinhamento: {
     display: "flex",
-    height: "90%",
+    height: "80%",
     flexDirection: "column",
     justifyContent: "space-between",
   },

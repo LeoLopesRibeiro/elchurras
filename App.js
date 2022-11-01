@@ -1,3 +1,4 @@
+
 import { StatusBar, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { StackRoutes } from "./src/routes/stack.routes";
