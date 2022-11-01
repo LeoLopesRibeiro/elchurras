@@ -7,15 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useState, useEffect } from "react";
-import api from "../../service/api";
-import carne from "../../../assets/carne.png";
+import api from "../../services/api";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 import * as Location from "expo-location";
 
-function Outros() {
-  const [teste1, setTeste1] = useState([]);
-  const [location, setLocation] = useState([]);
+function Outros({ route }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [acougue, setAcougue] = useState([]);
   const [mercado, setMercado] = useState([]);
@@ -27,6 +24,8 @@ function Outros() {
     pao: require("../../../assets/pao.png"),
   };
 
+  const { resultados } = route.params;
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -36,7 +35,6 @@ function Outros() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      // let address = await Location.reverseGeocodeAsync(location);
       console.log(location.coords);
 
       const responseMercado = await api.get(
@@ -51,21 +49,13 @@ function Outros() {
     })();
   }, []);
 
-  useEffect(() => {
-    const teste =
-      '{"carnes": [{"icon":  "../../../assets/vaca.png","nome": "picanha","kg": 10,"preco": 100},{"icon":  "../../../assets/vaca.png","nome": "linguiça","kg": 10,"preco": 100},{"icon":"../../../assets/vaca.png","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":  "../../../assets/cerveja.png","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":  "../../../assets/cerveja.png","nome": "agua","garrafas": 3,"preco": 10},{"icon":  "../../../assets/cerveja.png","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{"icon": "carvao","nome": "carvão","kg": 10,"preco": 30},{"icon": "sal","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{"icon": "arroz","nome": "arroz","kg": 10,"preco": 50},{"icon": "farofa","nome": "farofa","kg": 1,"preco": 10},{"icon": "pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro":"tururu"}}';
-    const Json = JSON.parse(teste);
-
-    setTeste1(Json);
-  }, []); //eslint-disable-line
-
-  // console.log(latitude);
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
   });
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <ScrollView>
       <View style={styles.background}>
@@ -73,8 +63,8 @@ function Outros() {
           <Text style={styles.text}>Gastos</Text>
         </View>
         <View style={styles.cor}>
-          {teste1.length != 0
-            ? teste1.outros.geral.map((itens, index) => {
+          {resultados.length != 0
+            ? resultados.outros.geral.map((itens, index) => {
                 return (
                   <View style={styles.view} key={index}>
                     <View style={styles.teste}>
@@ -84,21 +74,37 @@ function Outros() {
                       />
                       <Text style={styles.textMap}>{itens.nome}</Text>
                     </View>
-                    <View style={styles.viewMap}>
-                      <Text style={styles.textMapAside}>
-                        Preço: {itens.preco}
-                      </Text>
-                      <Text style={styles.textMapAside}>Kg: {itens.kg}</Text>
-                    </View>
-                  </View>
+                    <View style={styles.viewTeste}>
+                        <View style={styles.viewMap}>
+                          <View style={styles.viewTextLeft}>
+                            <Text style={styles.textMapAside}>Preço:</Text>
+                          </View>
+                          <View style={styles.viewMapAside}>
+                            <Text style={styles.textMapAside}>
+                              {itens.preco}
+                            </Text>
+                          </View>
+                          </View>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>Kg:</Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {itens.kg}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
                 );
               })
             : null}
           <View style={styles.viewAcompanhamentos}>
             <Text style={styles.acompanhamentos}>Acompahamentos</Text>
           </View>
-          {teste1.length != 0
-            ? teste1.outros.acompanhamentos.map((itens, index) => {
+          {resultados.length != 0
+            ? resultados.outros.acompanhamentos.map((itens, index) => {
                 return (
                   <View style={styles.view} key={index}>
                     <View style={styles.teste}>
@@ -108,13 +114,29 @@ function Outros() {
                       />
                       <Text style={styles.textMap}>{itens.nome}</Text>
                     </View>
-                    <View style={styles.viewMap}>
-                      <Text style={styles.textMapAside}>
-                        Preço: {itens.preco}
-                      </Text>
-                      <Text style={styles.textMapAside}>Kg: {itens.kg}</Text>
-                    </View>
-                  </View>
+                    <View style={styles.viewTeste}>
+                        <View style={styles.viewMap}>
+                          <View style={styles.viewTextLeft}>
+                            <Text style={styles.textMapAside}>Preço:</Text>
+                          </View>
+                          <View style={styles.viewMapAside}>
+                            <Text style={styles.textMapAside}>
+                              {itens.preco}
+                            </Text>
+                          </View>
+                          </View>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>Kg:</Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {itens.kg}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
                 );
               })
             : null}
@@ -191,7 +213,7 @@ function Outros() {
           <View style={styles.ViewResultado}>
             <View style={styles.ViewTotal}>
               <Text style={styles.textTotal}>Total: </Text>
-              <Text style={styles.textNumero}>R$: 90,00 </Text>
+              <Text style={styles.textNumero}>{(resultados.preco_total).toFixed(2)}</Text>
             </View>
             <View style={styles.viewReceitas}></View>
           </View>
@@ -220,20 +242,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textMap: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 15,
-    textTransform: "capitalize",
+    textTransform: 'capitalize',
     marginLeft: 10,
-    fontFamily: "Poppins_700Bold",
+    fontFamily: 'Poppins_700Bold',
   },
   textMapAside: {
-    fontFamily: "Poppins_700Bold",
-    color: "#fff",
+    fontFamily: 'Poppins_700Bold',
+    color: '#fff',
+  },
+  viewTeste:{
+    justifyContent: 'space-between',
+     width: '35%'
+  },
+  viewTextLeft: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   viewMap: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  viewMapAside: {
+    display: 'flex',
+    alignItems: 'flex-end',
   },
   teste: {
     display: "flex",
@@ -312,7 +348,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 20,
     paddingRight: 10,
-    paddingLeft: 20
+    paddingLeft: 20,
   },
   ViewTotal: {
     display: "flex",
@@ -340,7 +376,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: 10,
-    paddingTop: 10
-  }
+    paddingTop: 10,
+  },
 });
 export default Outros;

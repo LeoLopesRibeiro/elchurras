@@ -1,21 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import Locacao from './src/pages/Locacao';
-import { NavigationContainer } from '@react-navigation/native';
-import Routes from './routes';
-import { StackRoutes } from './routes2';
+import { StatusBar, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { StackRoutes } from "./src/routes/stack.routes";
 
 export default function App() {
-return(
-    <StackRoutes></StackRoutes>
-)
+  return (
+    <View style={styles.container}>
+      <StackRoutes />
+      <StatusBar />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
   },
 });

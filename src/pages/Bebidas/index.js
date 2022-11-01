@@ -1,75 +1,91 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { useState, useEffect } from "react";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import "../../../assets/cerveja.png";
 
-function Bebidas() {
+function Bebidas({ route }) {
   const images = {
     agua: require("../../../assets/agua.png"),
     cerveja: require("../../../assets/cerveja.png"),
     refri: require("../../../assets/refrigerante.png"),
+    vinho: require("../../../assets/vinho.png"),
+    whisky: require("../../../assets/whisky.png"),
   };
 
-  useEffect(() => {
-    const teste =
-      '{"carnes": [{"icon":  "../../../assets/vaca.png","nome": "picanha","kg": 10,"preco": 100},{"icon":  "../../../assets/vaca.png","nome": "linguiça","kg": 10,"preco": 100},{"icon":"../../../assets/vaca.png","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":  "cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":  "agua","nome": "agua","garrafas": 3,"preco": 10},{"icon":  "refri","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{"icon": "./assets/carvao","nome": "carvão","kg": 10,"preco": 30},{"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro":"tururu"}}';
-    const Json = JSON.parse(teste);
+  const { resultados } = route.params;
 
-    setTeste1(Json);
-  }, []);
-  console.log(teste1);
-
-  const [teste1, setTeste1] = useState([]);
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
   });
   if (!fontsLoaded) {
     return null;
   }
-  return (
-    <View style={styles.background}>
-      <View style={styles.whiteBackground}>
-        <Text style={styles.text}>Gastos</Text>
-      </View>
-      <View style={styles.cor}>
-        <View style={styles.viewAlinhamento}>
-          <View>
-            {teste1.length != 0
-              ? teste1.bebidas.map((itens, index) => {
-                  return (
-                    <View style={styles.view} key={index}>
-                      <View style={styles.teste}>
-                        <Image
-                          source={images[itens.icon]}
-                          style={{ width: 30, height: 30 }}
-                        />
-                        <Text style={styles.textMap}>{itens.nome}</Text>
-                      </View>
-                      <View style={styles.viewMap}>
-                        <Text style={styles.textMapAside}>
-                          Preço: {itens.preco}
-                        </Text>
-                        <Text style={styles.textMapAside}>
-                          Garrafas: {itens.garrafas}
-                        </Text>
-                      </View>
-                    </View>
-                  );
-                })
-              : null}
-          </View>
 
-          <View style={styles.ViewResultado}>
-          <View style={styles.ViewTotal}>
-              <Text style={styles.textTotal}>Total: </Text>
-              <Text style={styles.textNumero}>R$: 90,00 </Text>
+  return (
+    <ScrollView style={styles.cor}>
+      <View style={styles.background}>
+        <View style={styles.whiteBackground}>
+          <Text style={styles.text}>Gastos</Text>
+        </View>
+        <View style={styles.cor}>
+          <View style={styles.viewAlinhamento}>
+            <View>
+              {resultados.length != 0
+                ? resultados.bebidas.map((itens, index) => {
+                    return (
+                      <View style={styles.view} key={index}>
+                        <View style={styles.teste}>
+                          <Image
+                            source={images[itens.icon]}
+                            style={{ width: 30, height: 30 }}
+                          />
+                          <Text style={styles.textMap}>{itens.nome}</Text>
+                        </View>
+                        <View style={styles.viewTeste}>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>Preço:</Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {itens.preco}
+                              </Text>
+                            </View>
+                          </View>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>
+                                Unidades (
+                                {itens.litragem < 1000
+                                  ? itens.litragem
+                                  : itens.litragem / 1000}{" "}
+                                {itens.litragem < 1000 ? "ml" : "L"})
+                              </Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {itens.garrafa}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    );
+                  })
+                : null}
             </View>
-            <View style={styles.viewReceitas}>
+
+            <View style={styles.ViewResultado}>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.textTotal}>Total: </Text>
+                <Text style={styles.textNumero}>{(resultados.preco_total).toFixed(2)}</Text>
+              </View>
+              <View style={styles.viewReceitas}></View>
             </View>
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -97,18 +113,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textMap: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 15,
-    textTransform: "capitalize",
+    textTransform: 'capitalize',
     marginLeft: 10,
-    fontFamily: "Poppins_700Bold",
+    fontFamily: 'Poppins_700Bold',
   },
   textMapAside: {
-    fontFamily: "Poppins_700Bold",
-    color: "#fff",
+    fontFamily: 'Poppins_700Bold',
+    color: '#fff',
+  },
+  viewTeste:{
+    justifyContent: 'space-between',
+     width: '50%'
+  },
+  viewTextLeft: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   viewMap: {
-    display: "flex",
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  viewMapAside: {
+    display: 'flex',
+    alignItems: 'flex-end',
   },
   teste: {
     display: "flex",
@@ -143,9 +175,9 @@ const styles = StyleSheet.create({
   },
   ViewTotal: {
     display: "flex",
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
   },
   viewReceitas: {
     display: "flex",
@@ -153,14 +185,13 @@ const styles = StyleSheet.create({
   },
   viewAlinhamento: {
     display: "flex",
-    height: "97%",
+    height: "90%",
     flexDirection: "column",
     justifyContent: "space-between",
   },
-  textNumero:{
+  textNumero: {
     color: "#ffffff",
     fontFamily: "Poppins_700Bold",
-    
   },
 });
 export default Bebidas;
