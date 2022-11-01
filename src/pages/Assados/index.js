@@ -2,11 +2,14 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import "../../../assets/vaca.png";
+import * as Localization from "expo-localization";
 
-function Assados({ navigation }) {
+function Assados({ navigation, route }) {
   function goToReceitas() {
     navigation.navigate("Receitas");
   }
+
+  const { resultados } = route.params;
 
   const images = {
     bovino: require("../../../assets/vaca.png"),
@@ -14,22 +17,13 @@ function Assados({ navigation }) {
     frango: require("../../../assets/galinha.png"),
   };
 
-  useEffect(() => {
-    const teste =
-      '{"carnes": [{"icon":  "bovino","nome": "picanha","kg": 10,"preco": 100},{"icon":  "suino","nome": "linguiça","kg": 10,"preco": 100},{"icon":"frango","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":  "./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":  "./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{"icon": "./assets/carvao","nome": "carvão","kg": 10,"preco": 30},{"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro":"tururu"}}';
-    const Json = JSON.parse(teste);
-
-    setTeste1(Json);
-  }, []);
-  console.log(teste1);
-
-  const [teste1, setTeste1] = useState([]);
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
   });
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <View style={styles.background}>
       <View style={styles.whiteBackground}>
@@ -38,8 +32,8 @@ function Assados({ navigation }) {
       <View style={styles.cor}>
         <View style={styles.viewAlinhamento}>
           <View>
-            {teste1.length != 0
-              ? teste1.carnes.map((itens, index) => {
+            {resultados != undefined
+              ? resultados.carnes.map((itens, index) => {
                   return (
                     <View style={styles.view} key={index}>
                       <View style={styles.teste}>
@@ -63,13 +57,16 @@ function Assados({ navigation }) {
 
           <View style={styles.ViewResultado}>
             <View style={styles.viewReceitas}>
-              <TouchableOpacity style={styles.borderReceitas}  onPress={goToReceitas}>
-              <Text style={styles.receitas}>Receitas</Text>
+              <TouchableOpacity
+                style={styles.borderReceitas}
+                onPress={goToReceitas}
+              >
+                <Text style={styles.receitas}>Receitas</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.ViewTotal}>
               <Text style={styles.textTotal}>Total: </Text>
-              <Text style={styles.textNumero}>R$: 90,00 </Text>
+              <Text style={styles.textNumero}>{resultados.preco_total}</Text>
             </View>
           </View>
         </View>
@@ -80,7 +77,7 @@ function Assados({ navigation }) {
 
 const styles = StyleSheet.create({
   cor: {
-    height: '90%',
+    height: "90%",
     backgroundColor: "#340C0C",
   },
   text: {
@@ -91,11 +88,11 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#340C0C",
     display: "flex",
-    flexDirection: 'column',
-    justifyContent: 'space-between'
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   whiteBackground: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     height: 100,
     display: "flex",
     justifyContent: "center",
@@ -148,33 +145,32 @@ const styles = StyleSheet.create({
   },
   ViewTotal: {
     display: "flex",
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
   },
   viewReceitas: {
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
-  viewAlinhamento:{
-    display: 'flex',
-    height: '97%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+  viewAlinhamento: {
+    display: "flex",
+    height: "97%",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
-  textNumero:{
+  textNumero: {
     color: "#ffffff",
     fontFamily: "Poppins_700Bold",
-    
   },
-  borderReceitas:{
+  borderReceitas: {
     width: 100,
-    alignItems: 'center',
-    backgroundColor: '#DF1D1D',
+    alignItems: "center",
+    backgroundColor: "#DF1D1D",
     padding: 8,
     marginBottom: 20,
     borderRadius: 10,
-    }
+  },
 });
 export default Assados;
