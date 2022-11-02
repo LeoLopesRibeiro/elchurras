@@ -9,10 +9,14 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import Checkbox from "expo-checkbox";
-import api from "../../services/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function CriarChurras({ navigation }) {
+export default function CriarChurras({ navigation, route }) {
+  const { id } = route.params;
+  const [goBack, setGoBack] = useState(false);
+  const [responsavel, setResponsavel] = useState(null);
+
   const [countHomem, setCountHomem] = useState(0);
   const [countMulher, setCountMulher] = useState(0);
   const [countCrianca, setCountCrianca] = useState(0);
@@ -29,17 +33,47 @@ export default function CriarChurras({ navigation }) {
     setExibirCalendario(true);
   }
 
-  const images = {
-    homem: require("../../../assets/homem.png"),
-    mulher: require("../../../assets/mulher.png"),
-    crianca: require("../../../assets/crianca.png"),
-  };
+  async function setChurrasStorage(churras) {
+    try {
+      const usuariosJSON = await AsyncStorage.getItem("usuarios");
 
-  const jsonteste = JSON.parse(
-    '{"carnes": [{"icon":"./assets/carne","nome": "picanha","kg": 10,"preco": 100},{"icon":  "./assets/carne","nome": "linguiça","kg": 10,"preco": 100},{"icon":"./assets/carne","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":"./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":"./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{	"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{	"icon": "homem","nome": "carvão","kg": 10,"preco": 30},{	"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{	"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{	"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{	"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "miguel martins mendes","numero": "10","bairro": "jardim santa tereza"}}'
-  );
+      if (usuariosJSON !== null) {
+        const usuarios = JSON.parse(usuariosJSON);
+        usuarios[id].churras.push(churras);
 
-  const icon = jsonteste.outros.geral[0].icon;
+        await AsyncStorage.setItem("usuarios", JSON.stringify(usuarios));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+
+    async function getResponsavel() {
+      try {
+        const usuariosJSON = await AsyncStorage.getItem("usuarios");
+  
+        if (usuariosJSON !== null) {
+          const usuarios = JSON.parse(usuariosJSON);
+          setResponsavel(usuarios[id].nome);
+        }
+
+      } catch (e) {
+  
+      }
+    }
+
+    getResponsavel()
+
+    navigation.addListener("focus", (e) => {
+      if (goBack) {
+        navigation.navigate("ListarChurras");
+      }
+
+      setGoBack(true);
+    });
+  }, [navigation, goBack]); // eslint-disable-line
 
   const [bovino, setBovino] = useState({
     maminha: {
@@ -106,44 +140,56 @@ export default function CriarChurras({ navigation }) {
 
   const [bebidas, setBebidas] = useState({
     refrigerante: {
+      icon: "refri",
       nome: "Refrigerante",
       value: false,
       preco: 7.5,
+      litragem: 2000,
       garrafa: 2000,
       alcolico: false,
     },
     cerveja: {
+      icon: "cerveja",
       nome: "Cerveja",
       value: false,
-      preco: 6,
-      garrafa: 330,
+      preco: 2.5,
+      litragem: 350,
+      garrafa: 350,
       alcolico: true,
     },
     agua: {
+      icon: "agua",
       nome: "Água",
       value: false,
       preco: 2,
+      litragem: 500,
       garrafa: 500,
       alcolico: false,
     },
     suco: {
+      icon: "refri",
       nome: "Suco",
       value: false,
       preco: 6,
+      litragem: 1000,
       garrafa: 1000,
       alcolico: false,
     },
     vinho: {
+      icon: "cerveja",
       nome: "Vinho",
       value: false,
       preco: 45,
+      litragem: 750,
       garrafa: 750,
       alcolico: true,
     },
     whisky: {
+      icon: "cerveja",
       nome: "Whisky",
       value: false,
       preco: 80,
+      litragem: 1000,
       garrafa: 1000,
       alcolico: true,
     },
@@ -168,14 +214,14 @@ export default function CriarChurras({ navigation }) {
 
     Object.keys(bovino).forEach((key) => {
       if (bovino[key].value == true) {
-        bovino[key].icon = "vaca";
+        bovino[key].icon = "bovino";
         carnesSelecionadas.push(bovino[key]);
       }
     });
 
     Object.keys(suino).forEach((key) => {
       if (suino[key].value == true) {
-        suino[key].icon = "porco";
+        suino[key].icon = "suino";
         carnesSelecionadas.push(suino[key]);
       }
     });
@@ -193,6 +239,8 @@ export default function CriarChurras({ navigation }) {
       }
     });
 
+    let precoTotal = 0;
+
     // Contas carnes
 
     let kgHomem = 600 * countHomem;
@@ -206,9 +254,8 @@ export default function CriarChurras({ navigation }) {
     carnesSelecionadas.forEach((carne) => {
       carne.preco = Number((carne.preco * kgPorCarne).toFixed(2));
       carne.kg = Number((kgPorCarne / 1000).toFixed(2));
+      precoTotal += carne.preco;
     });
-
-    console.log(carnesSelecionadas);
 
     // Contas bebidas
 
@@ -240,6 +287,7 @@ export default function CriarChurras({ navigation }) {
         }
 
         bebida.preco = Number((bebida.preco * bebida.garrafa).toFixed(2));
+        precoTotal += bebida.preco;
       });
     } else {
       let litrosTotais = litrosAdulto + litrosCrianca;
@@ -249,6 +297,7 @@ export default function CriarChurras({ navigation }) {
         bebida.garrafa = Math.ceil(litrosPorBebida / bebida.garrafa);
 
         bebida.preco = Number((bebida.preco * bebida.garrafa).toFixed(2));
+        precoTotal += bebida.preco;
       });
     }
 
@@ -259,11 +308,13 @@ export default function CriarChurras({ navigation }) {
     let paoKg = (convidadosTotais * 2 * 50) / 1000;
     let arrozKg = (convidadosTotais * 100) / 1000;
     let sacoArroz = Math.ceil(arrozKg / 5);
-    let farofaKg = (convidadosTotais * 100) / 1000;
+    let farofaKg = (convidadosTotais * 70) / 1000;
     let sacoFarofa = Math.ceil(farofaKg / 0.5);
 
+    console.log(responsavel)
+
     const resultado = {
-      responsavel: "Gustavo",
+      responsavel: responsavel,
       data: dataSelecionada,
       custos_outros: {
         carnes: carnesSelecionadas,
@@ -274,7 +325,7 @@ export default function CriarChurras({ navigation }) {
               icon: "carvao",
               nome: "Carvão",
               kg: Number(kgCarvao),
-              preco: sacoCarvao * 30,
+              preco: sacoCarvao * 17,
             },
             {
               icon: "sal",
@@ -294,7 +345,7 @@ export default function CriarChurras({ navigation }) {
               icon: "farofa",
               nome: "Farofa",
               kg: farofaKg,
-              preco: sacoFarofa * 10,
+              preco: sacoFarofa * 8,
             },
             {
               icon: "pao",
@@ -305,12 +356,21 @@ export default function CriarChurras({ navigation }) {
           ],
         },
         locacao: localidade,
+        preco_total: precoTotal,
       },
     };
 
-    navigation.navigate("Resultados", resultado.custos_outros);
+    resultado.custos_outros.outros.geral.forEach((valor) => {
+      resultado.custos_outros.preco_total += valor.preco;
+    });
 
-    console.log(resultado);
+    resultado.custos_outros.outros.acompanhamentos.forEach((valor) => {
+      resultado.custos_outros.preco_total += valor.preco;
+    });
+
+    setChurrasStorage(resultado);
+
+    navigation.navigate("Resultados", resultado.custos_outros);
   }
 
   return (

@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import ListarChurras from "../pages/ListarChurras";
 import CriarChurras from "../pages/CriarChurras";
+import TabRoutes from "./tab.routes";
 
 const { Screen, Navigator } = createNativeStackNavigator();
 
@@ -22,6 +23,11 @@ export function StackRoutes() {
           options={{
             title: "Criar Churras",
           }}
+        />
+        <Screen
+          name="Resultados"
+          component={TabRoutes}
+          options={{ headerShown: false }}
         />
       </Navigator>
     </NavigationContainer>
