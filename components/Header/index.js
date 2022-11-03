@@ -1,11 +1,11 @@
 import react from "react";
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, SafeAreaView } from 'react-native';
 
 
 export default function Header() {
     return (
-            <View style={styles.header}>
-
+      <SafeAreaView style={styles.header}>
+      
                 <View style={styles.container_logo}>
                     <Text style={styles.titulo_header}>EL CHURRAS</Text>
                 </View>
@@ -14,7 +14,7 @@ export default function Header() {
                     <Image source={require('../../assets/favicon.png')} />
                 </View>
 
-            </View>
+      </SafeAreaView>
     );
 }
 

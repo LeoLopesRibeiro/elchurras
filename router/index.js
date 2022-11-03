@@ -11,13 +11,13 @@ export function StackRoutes() {
     <NavigationContainer>
       <Navigator>
         <Screen
+          name="Selecionar Usuarios"
+          component={SelecionarUsuarios}
+        />
+        <Screen
           name="Adicionar"
           component={AdicionarUsuarios} 
           options={{headerShown:false}}
-        />
-        <Screen
-          name="SelecionarUsuarios"
-          component={SelecionarUsuarios}
         />
       </Navigator>
     </NavigationContainer>
