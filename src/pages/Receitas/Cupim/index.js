@@ -2,7 +2,7 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 
-export default function Linguica() {
+export default function Cupim() {
     return(
         <View style={styles.card}>
                 <Text style={styles.title}>Cupim</Text>
@@ -27,21 +27,21 @@ export default function Linguica() {
                 </View>
                 <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
                 <View style={styles.listmodoPreparo}>
-                    <Text style={styles.textListModoPreparo}><strong>1 </strong> 
-                    Compre o provolone numa única peça e depois fatie em tiras no formato “batata palito”, só que um pouco mais grossas.
+                    <Text style={styles.textListModoPreparo}>
+                        1 Compre o provolone numa única peça e depois fatie em tiras no formato “batata palito”, só que um pouco mais grossas.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>2 </strong> 
-                        Depois, faça alguns furos na peça de cupim com o auxílio de uma faca fina e bem afiada, 
+                    <Text style={styles.textListModoPreparo}>
+                        2 Depois, faça alguns furos na peça de cupim com o auxílio de uma faca fina e bem afiada, 
                         ou de um outro objeto perfurante, que permita retirar a tira de carne de dentro do buraco 
                         (se você apenas perfurar a carne com a ponta da faca, na hora de assar as fibras da carne vão se contrair, 
                         fechar o furo e espremer o provolone para fora).
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>3 </strong> 
-                        Depois, tempere a peça com o sal grosso misturado com o alho triturado e 
+                    <Text style={styles.textListModoPreparo}> 
+                        3 Depois, tempere a peça com o sal grosso misturado com o alho triturado e 
                         embrulhe em seis voltas de papel celofane especial para churrasco.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>4 </strong> 
-                        Na hora de assar, não tenha pressa: leve à grelha a uma distância de 60 centímetros do braseiro vivo e deixe por pelo menos 4 horas,
+                    <Text style={styles.textListModoPreparo}>
+                        4 Na hora de assar, não tenha pressa: leve à grelha a uma distância de 60 centímetros do braseiro vivo e deixe por pelo menos 4 horas,
                         virando a peça 1 vez a cada hora. Depois, retire o papel celofane e coloque a peça de volta à grelha por mais 7 minutos de cada lado
                         apenas para dourar a parte externa da carne.
                     </Text>

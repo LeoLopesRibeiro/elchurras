@@ -27,21 +27,18 @@ export default function Maminha() {
                 </View>
                 <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
                 <View style={styles.listmodoPreparo}>
-                    <Text style={styles.textListModoPreparo}><strong>1</strong> Em um recipiente tempere a carne com o MAGGI Gril e o molho inglês. </Text>
-                    <Text style={styles.textListModoPreparo}><strong>2</strong> Espete, alternadamente, cubos de carne, cenoura, batata e azeitona em palitos para churrasco. </Text>
-                    <Text style={styles.textListModoPreparo}><strong>3</strong> Coloque-os em uma forma refratária e leve-os para assar no micro-ondas por 10 minutos, em potência alta. Sirva a seguir</Text>
+                    <Text style={styles.textListModoPreparo}>
+                        1 Em um recipiente tempere a carne com o MAGGI Gril e o molho inglês. </Text>
+                    <Text style={styles.textListModoPreparo}>
+                        2 Espete, alternadamente, cubos de carne, cenoura, batata e azeitona em palitos para churrasco. </Text>
+                    <Text style={styles.textListModoPreparo}>
+                        3 Coloque-os em uma forma refratária e leve-os para assar no micro-ondas por 10 minutos, em potência alta. Sirva a seguir</Text>
                 </View>
             </View>
     );
 }
 
 const styles = StyleSheet.create({
-    // container:{
-    //     minHeight: '100vh',
-    //     alignItems: "center",
-    //     height: '100%',
-    //     backgroundColor: '#340C0C',
-    // },
     card: {
        width: 330,
        minHeight: 550,
@@ -80,17 +77,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         padding: 20,
     },
-    // whiteBackground: {
-    //     height: 100,
-    //     width: '100vw',
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     backgroundColor: "#fff",
-    // },
-    // textReceitas: {
-    //     fontWeight: 'bold',
-    //     fontSize: 32,
-    // },
     listIngredientes: {
         marginLeft: 30,
     },

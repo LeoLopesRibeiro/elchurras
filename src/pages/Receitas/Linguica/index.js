@@ -24,14 +24,14 @@ export default function Linguica() {
                 </View>
                 <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
                 <View style={styles.listmodoPreparo}>
-                    <Text style={styles.textListModoPreparo}><strong>1 </strong> 
-                        Para fazer o churrasco é a coisa mais simples que tem: é só deixar grelhar a 15cm da brasa.
+                    <Text style={styles.textListModoPreparo}>
+                        1 Para fazer o churrasco é a coisa mais simples que tem: é só deixar grelhar a 15cm da brasa.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>2 </strong> 
-                        Não precisa furar e nem colocar outro tempero.
+                    <Text style={styles.textListModoPreparo}>
+                        2 Não precisa furar e nem colocar outro tempero.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>3 </strong> 
-                        Sirva com um pão bem fresquinho e bom apetite!.
+                    <Text style={styles.textListModoPreparo}>
+                        3 Sirva com um pão bem fresquinho e bom apetite!.
                     </Text>
                 </View>
             </View>

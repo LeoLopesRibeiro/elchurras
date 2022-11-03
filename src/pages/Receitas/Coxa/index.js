@@ -29,11 +29,11 @@ export default function Coxa() {
                 </View>
                 <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
                 <View style={styles.listmodoPreparo}>
-                    <Text style={styles.textListModoPreparo}><strong>1 </strong> 
-                        Tempere as coxas a gosto.
+                    <Text style={styles.textListModoPreparo}>
+                        1 Tempere as coxas a gosto.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>2 </strong> 
-                        Colocar na churrasqueira e deixar assando por cerca de 20minutos. É importante virar o frango, para que ele asse por completo.
+                    <Text style={styles.textListModoPreparo}>
+                        2 Colocar na churrasqueira e deixar assando por cerca de 20minutos. É importante virar o frango, para que ele asse por completo.
                     </Text>
                 </View>
             </View>

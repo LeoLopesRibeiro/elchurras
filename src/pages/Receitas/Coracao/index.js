@@ -31,19 +31,19 @@ export default function Coracao() {
                 </View>
                 <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
                 <View style={styles.listmodoPreparo}>
-                    <Text style={styles.textListModoPreparo}><strong>1 </strong> 
+                    <Text style={styles.textListModoPreparo}>1  
                         Limpe os corações primeiro. Retire o grosso da gordura saturada e as veias mais grossas. Cuide para retirar qualquer resquício de sangue coagulado.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>2 </strong> 
+                    <Text style={styles.textListModoPreparo}>2  
                         Coloque os corações numa tigela e adicione o restante dos ingredientes.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>3 </strong> 
+                    <Text style={styles.textListModoPreparo}>3  
                         Misture bem (usando as mãos mesmo) e cubra, selando bem com plástico filme (PVC).
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>4 </strong> 
+                    <Text style={styles.textListModoPreparo}>4  
                         Deixar na geladeira de um dia para o outro, para o tempero penetrar bem.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>5 </strong> 
+                    <Text style={styles.textListModoPreparo}>5  
                         Retirar e fazer espetinhos na hora de colocar no fogo.
                     </Text>
                 </View>

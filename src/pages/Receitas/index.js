@@ -1,14 +1,14 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
 import { ScrollView } from "react-native-web";
 import Cupim from "./Cupim";
-import Picanha from "./Picanha";
-import Lombo from "./Lombo";
-import Maminha from "./Maminha";
-import Linguica from "./Linguica";
-import Coxa from "./Coxa";
-import Costela from "./Costela";
-import Coracao from "./Coracao";
-import Asa from "./Asa";
+// import Picanha from "./Picanha";
+// import Lombo from "./Lombo";
+// import Maminha from "./Maminha";
+// import Linguica from "./Linguica";
+// import Coxa from "./Coxa";
+// import Costela from "./Costela";
+// import Coracao from "./Coracao";
+// import Asa from "./Asa";
 
 function Receitas(){
     return(
@@ -18,14 +18,14 @@ function Receitas(){
                 <Text style={styles.textReceitas}>Receitas</Text>
             </View>      
             <Cupim />
-            <Picanha />
+            {/* <Picanha />
             <Linguica />
             <Maminha />
             <Lombo />
             <Coxa />
             <Costela />
             <Coracao />
-            <Asa />
+            <Asa /> */}
         </View>
         </ScrollView>
     )
@@ -35,7 +35,7 @@ export default Receitas;
 
 const styles = StyleSheet.create({
     container:{
-        minHeight: '100vh',
+        minHeight: '100%',
         alignItems: "center",
         height: '100%',
         backgroundColor: '#340C0C',

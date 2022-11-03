@@ -33,19 +33,19 @@ export default function Asa() {
                 </View>
                 <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
                 <View style={styles.listmodoPreparo}>
-                    <Text style={styles.textListModoPreparo}><strong>1 </strong> 
-                        No liquidificado coloque todos os ingredientes, menos o suco do limão. Bata até ficar bem pastoso.
+                    <Text style={styles.textListModoPreparo}>
+                        1 No liquidificado coloque todos os ingredientes, menos o suco do limão. Bata até ficar bem pastoso.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>2 </strong> 
-                        Limpe as asinhas.
+                    <Text style={styles.textListModoPreparo}>
+                        2 Limpe as asinhas.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>3 </strong> 
-                        Passe o suco de limão.
+                    <Text style={styles.textListModoPreparo}>
+                        3 Passe o suco de limão.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>4 </strong> 
+                    <Text style={styles.textListModoPreparo}>4 
                         Em uma vasilha coloque as asinhas e a mistura.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>5 </strong> 
+                    <Text style={styles.textListModoPreparo}>5 
                         Colocar na churrasqueira e deixar assando por cerca de 10minutos. É importante virar a asa, para que ele asse por completo.
                     </Text>
                 </View>

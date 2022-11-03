@@ -29,19 +29,19 @@ export default function Costela() {
                 </View>
                 <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
                 <View style={styles.listmodoPreparo}>
-                    <Text style={styles.textListModoPreparo}><strong>1 </strong> 
+                    <Text style={styles.textListModoPreparo}>1 
                          Depois de descongelada, deixe a costela marinando na mistura dos temperos durante 2 horas em temperatura ambiente.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>2 </strong> 
+                    <Text style={styles.textListModoPreparo}>2 
                         Na hora de assar, coloque a peça inteira sobre a grelha em forma de cúpula já bem quente, com os ossos voltados para o fogo.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>3 </strong> 
+                    <Text style={styles.textListModoPreparo}>3 
                         Deixe 20 minutos.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>4 </strong> 
+                    <Text style={styles.textListModoPreparo}>4 
                         Vire a costela e deixe mais 20 minutos.
                     </Text>
-                    <Text style={styles.textListModoPreparo}><strong>5 </strong> 
+                    <Text style={styles.textListModoPreparo}>5 
                         Sirva guarnecida com fatias de abacaxi grelhadas.
                     </Text>
                 </View>
