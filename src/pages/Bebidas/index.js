@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import "../../../assets/cerveja.png";
 
@@ -7,6 +7,9 @@ function Bebidas({ route }) {
     agua: require("../../../assets/agua.png"),
     cerveja: require("../../../assets/cerveja.png"),
     refri: require("../../../assets/refrigerante.png"),
+    vinho: require("../../../assets/vinho.png"),
+    whisky: require("../../../assets/whisky.png"),
+    suco: require("../../../assets/suco.png"),
   };
 
   const { resultados } = route.params;
@@ -19,52 +22,86 @@ function Bebidas({ route }) {
   }
 
   return (
-    <View style={styles.background}>
-      <View style={styles.whiteBackground}>
-        <Text style={styles.text}>Gastos</Text>
-      </View>
-      <View style={styles.cor}>
-        <View style={styles.viewAlinhamento}>
-          <View>
-            {resultados.length != 0
-              ? resultados.bebidas.map((itens, index) => {
-                  return (
-                    <View style={styles.view} key={index}>
-                      <View style={styles.teste}>
-                        <Image
-                          source={images[itens.icon]}
-                          style={{ width: 30, height: 30 }}
-                        />
-                        <Text style={styles.textMap}>{itens.nome}</Text>
+    <ScrollView style={styles.cor}>
+      <View style={styles.background}>
+        <View style={styles.whiteBackground}>
+          <Text style={styles.text}>Gastos</Text>
+        </View>
+        <View style={styles.cor}>
+          <View style={styles.viewAlinhamento}>
+            <View>
+              {resultados.length != 0
+                ? resultados.bebidas.map((itens, index) => {
+                    return (
+                      <View style={styles.view} key={index}>
+                        <View style={styles.teste}>
+                          <Image
+                            source={images[itens.icon]}
+                            style={{ width: 30, height: 30 }}
+                          />
+                          <Text style={styles.textMap}>{itens.nome}</Text>
+                        </View>
+                        <View style={styles.viewTeste}>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>Preço:</Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {Intl.NumberFormat("pt-BR", {
+                                  style: "currency",
+                                  currency: "BRL",
+                                }).format(itens.preco)}
+                              </Text>
+                            </View>
+                          </View>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>
+                                Unidades (
+                                {itens.litragem < 1000
+                                  ? itens.litragem
+                                  : itens.litragem / 1000}{" "}
+                                {itens.litragem < 1000 ? "ml" : "L"}):
+                              </Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {itens.garrafa}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
                       </View>
-                      <View style={styles.viewMap}>
-                        <Text style={styles.textMapAside}>
-                          Preço: {itens.preco}
-                        </Text>
-                        <Text style={styles.textMapAside}>
-                          Unidades (
-                          {itens.litragem < 1000
-                            ? itens.litragem
-                            : itens.litragem / 1000}{" "}
-                          {itens.litragem < 1000 ? "ml" : "L"}): {itens.garrafa}
-                        </Text>
-                      </View>
-                    </View>
-                  );
-                })
-              : null}
-          </View>
-
-          <View style={styles.ViewResultado}>
-            <View style={styles.ViewTotal}>
-              <Text style={styles.textTotal}>Total: </Text>
-              <Text style={styles.textNumero}>{resultados.preco_total}</Text>
+                    );
+                  })
+                : null}
             </View>
-            <View style={styles.viewReceitas}></View>
+
+            <View style={styles.ViewResultado}>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.textTotal}>Total: </Text>
+                <Text style={styles.textNumero}>
+                  {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(resultados.preco_total)}
+                </Text>
+              </View>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.textNumeroRateio}>Rateio:</Text>
+                <Text style={styles.textNumero}>
+                  {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(resultados.rateio)}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -102,8 +139,24 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_700Bold",
     color: "#fff",
   },
+  viewTeste: {
+    justifyContent: "space-between",
+    width: "50%",
+  },
+  viewTextLeft: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
   viewMap: {
     display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  viewMapAside: {
+    display: "flex",
+    alignItems: "flex-end",
   },
   teste: {
     display: "flex",
@@ -127,14 +180,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: "Poppins_700Bold",
   },
-  receitas: {
-    color: "#fff",
+  textNumeroRateio: {
+    color: "#ffffff",
     fontFamily: "Poppins_700Bold",
+    marginLeft: 10,
   },
   ViewResultado: {
     display: "flex",
     padding: 10,
     justifyContent: "space-between",
+    marginTop: 50,
   },
   ViewTotal: {
     display: "flex",
@@ -142,13 +197,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  viewReceitas: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
   viewAlinhamento: {
     display: "flex",
-    height: "97%",
     flexDirection: "column",
     justifyContent: "space-between",
   },

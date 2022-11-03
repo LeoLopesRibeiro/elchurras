@@ -1,4 +1,4 @@
-import { StyleSheet, View, StatusBar, Platform } from "react-native";
+import { StyleSheet, View, StatusBar, Platform, SafeAreaView } from "react-native";
 import { StackRoutes } from "./src/routes/stack.routes";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -27,7 +27,7 @@ export default function App() {
               churras: [],
             },
           ]);
-
+  
           await AsyncStorage.setItem("usuarios", jsonUsuarios);
         }
       } catch (e) {
@@ -39,10 +39,10 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StackRoutes />
       <StatusBar />
-    </View>
+    </SafeAreaView>
   );
 }
 

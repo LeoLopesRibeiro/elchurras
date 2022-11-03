@@ -91,10 +91,21 @@ function Assados({ navigation, route }) {
               </View>
               <View style={styles.ViewTotal}>
                 <Text style={styles.textTotal}>Total: </Text>
-                <Text style={styles.textNumero}>{Intl.NumberFormat("pt-BR", {
-                                  style: "currency",
-                                  currency: "BRL",
-                                }).format(resultados.preco_total)}</Text>
+                <Text style={styles.textNumero}>
+                  {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(resultados.preco_total)}
+                </Text>
+              </View>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.textNumeroRateio}>Rateio:</Text>
+                <Text style={styles.textNumero}>
+                  {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(resultados.rateio)}
+                </Text>
               </View>
             </View>
           </View>
@@ -103,8 +114,6 @@ function Assados({ navigation, route }) {
     </ScrollView>
   );
 }
-import Intl from "intl";
-
 const styles = StyleSheet.create({
   cor: {
     height: "90%",
@@ -180,6 +189,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: "Poppins_700Bold",
   },
+  textNumeroRateio: {
+    color: "#ffffff",
+    fontFamily: "Poppins_700Bold",
+    marginLeft: 10,
+  },
   receitas: {
     color: "#fff",
     fontFamily: "Poppins_700Bold",
@@ -188,6 +202,7 @@ const styles = StyleSheet.create({
     display: "flex",
     padding: 10,
     justifyContent: "space-between",
+    marginTop: 50,
   },
   ViewTotal: {
     display: "flex",
@@ -202,7 +217,6 @@ const styles = StyleSheet.create({
   },
   viewAlinhamento: {
     display: "flex",
-    height: "97%",
     flexDirection: "column",
     justifyContent: "space-between",
   },

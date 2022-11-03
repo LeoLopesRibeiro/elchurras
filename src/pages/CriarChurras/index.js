@@ -8,9 +8,10 @@ import {
   ScrollView,
 } from "react-native";
 import { useState, useEffect } from "react";
-import Checkbox from "expo-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import CheckboxChurras from "../../components/CheckboxChurras";
+import InputConvidados from "../../components/InputConvidados";
 
 export default function CriarChurras({ navigation, route }) {
   const { id } = route.params;
@@ -49,22 +50,20 @@ export default function CriarChurras({ navigation, route }) {
   }
 
   useEffect(() => {
-
     async function getResponsavel() {
       try {
         const usuariosJSON = await AsyncStorage.getItem("usuarios");
-  
+
         if (usuariosJSON !== null) {
           const usuarios = JSON.parse(usuariosJSON);
           setResponsavel(usuarios[id].nome);
         }
-
       } catch (e) {
-  
+        console.log(e);
       }
     }
 
-    getResponsavel()
+    getResponsavel();
 
     navigation.addListener("focus", (e) => {
       if (goBack) {
@@ -176,7 +175,7 @@ export default function CriarChurras({ navigation, route }) {
       alcolico: false,
     },
     vinho: {
-      icon: "cerveja",
+      icon: "vinho",
       nome: "Vinho",
       value: false,
       preco: 45,
@@ -185,7 +184,7 @@ export default function CriarChurras({ navigation, route }) {
       alcolico: true,
     },
     whisky: {
-      icon: "cerveja",
+      icon: "whisky",
       nome: "Whisky",
       value: false,
       preco: 80,
@@ -311,7 +310,7 @@ export default function CriarChurras({ navigation, route }) {
     let farofaKg = (convidadosTotais * 70) / 1000;
     let sacoFarofa = Math.ceil(farofaKg / 0.5);
 
-    console.log(responsavel)
+    console.log(responsavel);
 
     const resultado = {
       responsavel: responsavel,
@@ -357,6 +356,7 @@ export default function CriarChurras({ navigation, route }) {
         },
         locacao: localidade,
         preco_total: precoTotal,
+        rateio: 0,
       },
     };
 
@@ -368,6 +368,10 @@ export default function CriarChurras({ navigation, route }) {
       resultado.custos_outros.preco_total += valor.preco;
     });
 
+    let rateio =
+      resultado.custos_outros.preco_total / (countHomem + countMulher);
+
+    resultado.custos_outros.rateio = rateio;
     setChurrasStorage(resultado);
 
     navigation.navigate("Resultados", resultado.custos_outros);
@@ -386,32 +390,10 @@ export default function CriarChurras({ navigation, route }) {
                   source={require("../../../assets/homem.png")}
                 />
               </View>
-              <View style={styles.inputField}>
-                <TouchableOpacity
-                  onPress={() =>
-                    setCountHomem(countHomem != 0 ? countHomem - 1 : 0)
-                  }
-                >
-                  <Text style={styles.add_dec}>-</Text>
-                </TouchableOpacity>
-                <TextInput
-                  style={styles.input}
-                  value={`${countHomem}`}
-                  onChangeText={(text) => {
-                    setCountHomem(Number(text));
-                  }}
-                  placeholderTextColor="#DEDEDE"
-                  keyboardType="number-pad"
-                  maxLength={3}
-                />
-                <TouchableOpacity
-                  onPress={() =>
-                    setCountHomem(countHomem != 999 ? countHomem + 1 : 999)
-                  }
-                >
-                  <Text style={styles.add_dec}>+</Text>
-                </TouchableOpacity>
-              </View>
+              <InputConvidados
+                count={countHomem}
+                setCount={(e) => setCountHomem(e)}
+              />
             </View>
             <View style={styles.viewInput}>
               <View style={styles.viewImage}>
@@ -420,32 +402,10 @@ export default function CriarChurras({ navigation, route }) {
                   source={require("../../../assets/mulher.png")}
                 />
               </View>
-              <View style={styles.inputField}>
-                <TouchableOpacity
-                  onPress={() =>
-                    setCountMulher(countMulher != 0 ? countMulher - 1 : 0)
-                  }
-                >
-                  <Text style={styles.add_dec}>-</Text>
-                </TouchableOpacity>
-                <TextInput
-                  style={styles.input}
-                  value={`${countMulher}`}
-                  onChangeText={(text) => {
-                    setCountMulher(Number(text));
-                  }}
-                  placeholderTextColor="#DEDEDE"
-                  keyboardType="number-pad"
-                  maxLength={3}
-                />
-                <TouchableOpacity
-                  onPress={() =>
-                    setCountMulher(countMulher != 999 ? countMulher + 1 : 999)
-                  }
-                >
-                  <Text style={styles.add_dec}>+</Text>
-                </TouchableOpacity>
-              </View>
+              <InputConvidados
+                count={countMulher}
+                setCount={(e) => setCountMulher(e)}
+              />
             </View>
             <View style={styles.viewInput}>
               <View style={styles.viewImage}>
@@ -454,34 +414,10 @@ export default function CriarChurras({ navigation, route }) {
                   source={require("../../../assets/crianca.png")}
                 />
               </View>
-              <View style={styles.inputField}>
-                <TouchableOpacity
-                  onPress={() =>
-                    setCountCrianca(countCrianca != 0 ? countCrianca - 1 : 0)
-                  }
-                >
-                  <Text style={styles.add_dec}>-</Text>
-                </TouchableOpacity>
-                <TextInput
-                  style={styles.input}
-                  value={`${countCrianca}`}
-                  onChangeText={(text) => {
-                    setCountCrianca(Number(text));
-                  }}
-                  placeholderTextColor="#DEDEDE"
-                  keyboardType="number-pad"
-                  maxLength={3}
-                />
-                <TouchableOpacity
-                  onPress={() =>
-                    setCountCrianca(
-                      countCrianca != 999 ? countCrianca + 1 : 999
-                    )
-                  }
-                >
-                  <Text style={styles.add_dec}>+</Text>
-                </TouchableOpacity>
-              </View>
+              <InputConvidados
+                count={countCrianca}
+                setCount={(e) => setCountCrianca(e)}
+              />
             </View>
           </View>
         </View>
@@ -493,26 +429,14 @@ export default function CriarChurras({ navigation, route }) {
               <View style={styles.checkboxes}>
                 {Object.keys(bovino).map((key) => {
                   return (
-                    <View key={key} style={styles.checkboxLabel}>
-                      <Checkbox
-                        value={bovino[key].value}
-                        onValueChange={() => {
-                          if (bovino[key].value) {
-                            setBovino({
-                              ...bovino,
-                              [key]: { ...bovino[key], value: false },
-                            });
-                          } else {
-                            setBovino({
-                              ...bovino,
-                              [key]: { ...bovino[key], value: true },
-                            });
-                          }
-                        }}
-                        color={bovino[key].value ? "#EED0A2" : undefined}
-                      />
-                      <Text style={styles.carneNome}>{bovino[key].nome}</Text>
-                    </View>
+                    <CheckboxChurras
+                      key={key}
+                      data={bovino[key]}
+                      value={bovino}
+                      chave={key}
+                      setValue={(e) => setBovino(e)}
+                      width="35%"
+                    />
                   );
                 })}
               </View>
@@ -522,26 +446,14 @@ export default function CriarChurras({ navigation, route }) {
               <View style={styles.checkboxes}>
                 {Object.keys(suino).map((key) => {
                   return (
-                    <View key={key} style={styles.checkboxLabel}>
-                      <Checkbox
-                        value={suino[key].value}
-                        onValueChange={() => {
-                          if (suino[key].value) {
-                            setSuino({
-                              ...suino,
-                              [key]: { ...suino[key], value: false },
-                            });
-                          } else {
-                            setSuino({
-                              ...suino,
-                              [key]: { ...suino[key], value: true },
-                            });
-                          }
-                        }}
-                        color={suino[key].value ? "#EED0A2" : undefined}
-                      />
-                      <Text style={styles.bebidaNome}>{suino[key].nome}</Text>
-                    </View>
+                    <CheckboxChurras
+                      key={key}
+                      data={suino[key]}
+                      value={suino}
+                      chave={key}
+                      setValue={(e) => setSuino(e)}
+                      width="35%"
+                    />
                   );
                 })}
               </View>
@@ -551,26 +463,14 @@ export default function CriarChurras({ navigation, route }) {
               <View style={styles.checkboxes}>
                 {Object.keys(frango).map((key) => {
                   return (
-                    <View key={key} style={styles.checkboxLabel}>
-                      <Checkbox
-                        value={frango[key].value}
-                        onValueChange={() => {
-                          if (frango[key].value) {
-                            setFrango({
-                              ...frango,
-                              [key]: { ...frango[key], value: false },
-                            });
-                          } else {
-                            setFrango({
-                              ...frango,
-                              [key]: { ...frango[key], value: true },
-                            });
-                          }
-                        }}
-                        color={frango[key].value ? "#EED0A2" : undefined}
-                      />
-                      <Text style={styles.bebidaNome}>{frango[key].nome}</Text>
-                    </View>
+                    <CheckboxChurras
+                      key={key}
+                      data={frango[key]}
+                      value={frango}
+                      chave={key}
+                      setValue={(e) => setFrango(e)}
+                      width="35%"
+                    />
                   );
                 })}
               </View>
@@ -584,26 +484,13 @@ export default function CriarChurras({ navigation, route }) {
               {Object.keys(bebidas).map((key, index) => {
                 if (index < 3) {
                   return (
-                    <View key={key} style={styles.checkboxLabelBebidas}>
-                      <Checkbox
-                        value={bebidas[key].value}
-                        onValueChange={() => {
-                          if (bebidas[key].value) {
-                            setBebidas({
-                              ...bebidas,
-                              [key]: { ...bebidas[key], value: false },
-                            });
-                          } else {
-                            setBebidas({
-                              ...bebidas,
-                              [key]: { ...bebidas[key], value: true },
-                            });
-                          }
-                        }}
-                        color={bebidas[key].value ? "#EED0A2" : undefined}
-                      />
-                      <Text style={styles.bebidaNome}>{bebidas[key].nome}</Text>
-                    </View>
+                    <CheckboxChurras
+                      key={key}
+                      data={bebidas[key]}
+                      value={bebidas}
+                      chave={key}
+                      setValue={(e) => setBebidas(e)}
+                    />
                   );
                 }
               })}
@@ -612,26 +499,13 @@ export default function CriarChurras({ navigation, route }) {
               {Object.keys(bebidas).map((key, index) => {
                 if (index > 2) {
                   return (
-                    <View key={key} style={styles.checkboxLabelBebidas}>
-                      <Checkbox
-                        value={bebidas[key].value}
-                        onValueChange={() => {
-                          if (bebidas[key].value) {
-                            setBebidas({
-                              ...bebidas,
-                              [key]: { ...bebidas[key], value: false },
-                            });
-                          } else {
-                            setBebidas({
-                              ...bebidas,
-                              [key]: { ...bebidas[key], value: true },
-                            });
-                          }
-                        }}
-                        color={bebidas[key].value ? "#EED0A2" : undefined}
-                      />
-                      <Text style={styles.bebidaNome}>{bebidas[key].nome}</Text>
-                    </View>
+                    <CheckboxChurras
+                      key={key}
+                      data={bebidas[key]}
+                      value={bebidas}
+                      chave={key}
+                      setValue={(e) => setBebidas(e)}
+                    />
                   );
                 }
               })}
@@ -761,22 +635,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
-  inputField: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  input: {
-    color: "#FFF",
-    fontWeight: "bold",
-    fontSize: 20,
-    textAlign: "center",
-  },
-  add_dec: {
-    color: "#FFF",
-    fontSize: 30,
-    fontWeight: "bold",
-  },
   viewCarnes: {
     display: "flex",
     width: "90%",
@@ -805,20 +663,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
-  checkboxLabel: {
-    display: "flex",
-    flexDirection: "row",
-    width: "35%",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  carneNome: {
-    color: "#FFF",
-    fontSize: 16,
-    fontWeight: "bold",
-    marginLeft: 5,
-    textTransform: "capitalize",
-  },
   viewBebidas: {
     display: "flex",
     width: "90%",
@@ -827,27 +671,13 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingBottom: 10,
+    paddingBottom: 30,
     marginTop: 20,
   },
   checkboxesBebidas: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  checkboxLabelBebidas: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  bebidaNome: {
-    color: "#FFF",
-    fontSize: 16,
-    fontWeight: "bold",
-    marginLeft: 5,
-    textTransform: "capitalize",
   },
   viewOutros: {
     display: "flex",

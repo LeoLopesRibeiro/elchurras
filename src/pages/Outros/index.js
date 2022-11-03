@@ -9,6 +9,7 @@ import {
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
+
 import * as Location from "expo-location";
 
 function Outros({ route }) {
@@ -34,6 +35,7 @@ function Outros({ route }) {
       }
 
       let location = await Location.getCurrentPositionAsync({});
+      console.log(location.coords);
 
       const responseMercado = await api.get(
         `discover?at=${location.coords.latitude},${location.coords.longitude}&limit=3&q=supermercado&apiKey=gNuRT103voDtjaiyCV_rdniV-szQ4iKt7WpFbQBTT64`
@@ -72,11 +74,30 @@ function Outros({ route }) {
                       />
                       <Text style={styles.textMap}>{itens.nome}</Text>
                     </View>
-                    <View style={styles.viewMap}>
-                      <Text style={styles.textMapAside}>
-                        Preço: {itens.preco}
-                      </Text>
-                      <Text style={styles.textMapAside}>Kg: {itens.kg}</Text>
+                    <View style={styles.viewTeste}>
+                      <View style={styles.viewMap}>
+                        <View style={styles.viewTextLeft}>
+                          <Text style={styles.textMapAside}>Preço:</Text>
+                        </View>
+                        <View style={styles.viewMapAside}>
+                          <Text style={styles.textMapAside}>
+                            {Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(itens.preco)}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.viewMap}>
+                        <View style={styles.viewTextLeft}>
+                          <Text style={styles.textMapAside}>Kg:</Text>
+                        </View>
+                        <View style={styles.viewMapAside}>
+                          <Text style={styles.textMapAside}>
+                            {Intl.NumberFormat("pt-BR").format(itens.kg)}
+                          </Text>
+                        </View>
+                      </View>
                     </View>
                   </View>
                 );
@@ -96,11 +117,30 @@ function Outros({ route }) {
                       />
                       <Text style={styles.textMap}>{itens.nome}</Text>
                     </View>
-                    <View style={styles.viewMap}>
-                      <Text style={styles.textMapAside}>
-                        Preço: {itens.preco}
-                      </Text>
-                      <Text style={styles.textMapAside}>Kg: {itens.kg}</Text>
+                    <View style={styles.viewTeste}>
+                      <View style={styles.viewMap}>
+                        <View style={styles.viewTextLeft}>
+                          <Text style={styles.textMapAside}>Preço:</Text>
+                        </View>
+                        <View style={styles.viewMapAside}>
+                          <Text style={styles.textMapAside}>
+                            {Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(itens.preco)}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.viewMap}>
+                        <View style={styles.viewTextLeft}>
+                          <Text style={styles.textMapAside}>Kg:</Text>
+                        </View>
+                        <View style={styles.viewMapAside}>
+                          <Text style={styles.textMapAside}>
+                            {Intl.NumberFormat("pt-BR").format(itens.kg)}
+                          </Text>
+                        </View>
+                      </View>
                     </View>
                   </View>
                 );
@@ -131,7 +171,7 @@ function Outros({ route }) {
                         </Text>
                       </View>
                     </View>
-                    <View style={styles.viewMap}>
+                    <View style={styles.viewContato}>
                       <Text style={styles.textAcougueGrande}>
                         Distância: {itens.distance}m
                       </Text>
@@ -162,7 +202,7 @@ function Outros({ route }) {
                         </Text>
                       </View>
                     </View>
-                    <View style={styles.viewMap}>
+                    <View style={styles.viewContato}>
                       <Text style={styles.textAcougueGrande}>
                         Distância: {itens.distance}m
                       </Text>
@@ -179,9 +219,22 @@ function Outros({ route }) {
           <View style={styles.ViewResultado}>
             <View style={styles.ViewTotal}>
               <Text style={styles.textTotal}>Total: </Text>
-              <Text style={styles.textNumero}>{resultados.preco_total}</Text>
+              <Text style={styles.textNumero}>
+                {Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(resultados.preco_total)}
+              </Text>
             </View>
-            <View style={styles.viewReceitas}></View>
+            <View style={styles.ViewTotal}>
+              <Text style={styles.textNumeroRateio}>Rateio:</Text>
+              <Text style={styles.textNumero}>
+                {Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(resultados.rateio)}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -218,9 +271,28 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_700Bold",
     color: "#fff",
   },
+  viewTeste: {
+    justifyContent: "space-between",
+    width: "40%",
+  },
+  viewTextLeft: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
   viewMap: {
     display: "flex",
-    flexDirection: "column",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  viewContato: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  viewMapAside: {
+    display: "flex",
     alignItems: "flex-end",
   },
   teste: {
@@ -262,17 +334,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 3,
   },
+  textNumeroRateio: {
+    color: "#ffffff",
+    marginLeft: 10,
+    fontFamily: "Poppins_700Bold",
+  },
   Locais: {
     fontSize: 18,
     color: "#fff",
     fontFamily: "Poppins_700Bold",
-  },
-  viewCarne: {
-    height: "100%",
-    width: "30px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
   textAcougueGrande: {
     color: "#fff",
@@ -288,35 +358,21 @@ const styles = StyleSheet.create({
   textTotal: {
     color: "#fff",
     fontSize: 25,
+    marginLeft: 10,
     textTransform: "capitalize",
-    fontFamily: "Poppins_700Bold",
-  },
-  receitas: {
-    color: "#fff",
     fontFamily: "Poppins_700Bold",
   },
   ViewResultado: {
     display: "flex",
     justifyContent: "space-between",
     marginTop: 20,
-    paddingRight: 10,
-    paddingLeft: 20,
+    padding: 10,
   },
   ViewTotal: {
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
-  },
-  viewReceitas: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  viewAlinhamento: {
-    display: "flex",
-    height: "100%",
-    flexDirection: "column",
-    justifyContent: "space-between",
   },
   textNumero: {
     color: "#ffffff",
