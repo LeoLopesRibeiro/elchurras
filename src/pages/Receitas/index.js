@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
-import { ScrollView } from "react-native-web";
+import { View, Text, StyleSheet} from "react-native";
+import { ScrollView } from "react-native";
 import Cupim from "./Cupim";
 // import Picanha from "./Picanha";
 // import Lombo from "./Lombo";
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     whiteBackground: {
         height: 100,
-        width: '100vw',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: "#fff",
