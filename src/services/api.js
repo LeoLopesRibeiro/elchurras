@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: 'https://discover.search.hereapi.com/v1/'
-});
+  baseURL: "https://geocode.search.hereapi.com/v1/"
+})
 
-export default api
+export default api;

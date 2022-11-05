@@ -9,6 +9,8 @@ import {
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
+import MapItens from "../../components/MapItens";
+import Total from "../../components/Total";
 
 import * as Location from "expo-location";
 
@@ -63,83 +65,11 @@ function Outros({ route }) {
           <Text style={styles.text}>Gastos</Text>
         </View>
         <View style={styles.cor}>
-          {resultados.length != 0
-            ? resultados.outros.geral.map((itens, index) => {
-                return (
-                  <View style={styles.view} key={index}>
-                    <View style={styles.teste}>
-                      <Image
-                        source={images[itens.icon]}
-                        style={{ width: 30, height: 30 }}
-                      />
-                      <Text style={styles.textMap}>{itens.nome}</Text>
-                    </View>
-                    <View style={styles.viewTeste}>
-                        <View style={styles.viewMap}>
-                          <View style={styles.viewTextLeft}>
-                            <Text style={styles.textMapAside}>Preço:</Text>
-                          </View>
-                          <View style={styles.viewMapAside}>
-                            <Text style={styles.textMapAside}>
-                              {itens.preco}
-                            </Text>
-                          </View>
-                          </View>
-                          <View style={styles.viewMap}>
-                            <View style={styles.viewTextLeft}>
-                              <Text style={styles.textMapAside}>Kg:</Text>
-                            </View>
-                            <View style={styles.viewMapAside}>
-                              <Text style={styles.textMapAside}>
-                                {itens.kg}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                );
-              })
-            : null}
+          <MapItens data={resultados.outros.geral} />
           <View style={styles.viewAcompanhamentos}>
             <Text style={styles.acompanhamentos}>Acompahamentos</Text>
           </View>
-          {resultados.length != 0
-            ? resultados.outros.acompanhamentos.map((itens, index) => {
-                return (
-                  <View style={styles.view} key={index}>
-                    <View style={styles.teste}>
-                      <Image
-                        source={images[itens.icon]}
-                        style={{ width: 30, height: 30 }}
-                      />
-                      <Text style={styles.textMap}>{itens.nome}</Text>
-                    </View>
-                    <View style={styles.viewTeste}>
-                        <View style={styles.viewMap}>
-                          <View style={styles.viewTextLeft}>
-                            <Text style={styles.textMapAside}>Preço:</Text>
-                          </View>
-                          <View style={styles.viewMapAside}>
-                            <Text style={styles.textMapAside}>
-                              {itens.preco}
-                            </Text>
-                          </View>
-                          </View>
-                          <View style={styles.viewMap}>
-                            <View style={styles.viewTextLeft}>
-                              <Text style={styles.textMapAside}>Kg:</Text>
-                            </View>
-                            <View style={styles.viewMapAside}>
-                              <Text style={styles.textMapAside}>
-                                {itens.kg}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                );
-              })
-            : null}
+          <MapItens data={resultados.outros.acompanhamentos} />
           <View style={styles.viewAcompanhamentos}>
             <Text style={styles.Locais}>Locais indicados para compra</Text>
           </View>
@@ -165,7 +95,7 @@ function Outros({ route }) {
                         </Text>
                       </View>
                     </View>
-                    <View style={styles.viewMap}>
+                    <View style={styles.viewContato}>
                       <Text style={styles.textAcougueGrande}>
                         Distância: {itens.distance}m
                       </Text>
@@ -196,7 +126,7 @@ function Outros({ route }) {
                         </Text>
                       </View>
                     </View>
-                    <View style={styles.viewMap}>
+                    <View style={styles.viewContato}>
                       <Text style={styles.textAcougueGrande}>
                         Distância: {itens.distance}m
                       </Text>
@@ -210,13 +140,7 @@ function Outros({ route }) {
                 );
               })
             : null}
-          <View style={styles.ViewResultado}>
-            <View style={styles.ViewTotal}>
-              <Text style={styles.textTotal}>Total: </Text>
-              <Text style={styles.textNumero}>{(resultados.preco_total).toFixed(2)}</Text>
-            </View>
-            <View style={styles.viewReceitas}></View>
-          </View>
+       <Total data={resultados}/>
         </View>
       </View>
     </ScrollView>
@@ -242,34 +166,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textMap: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 15,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
     marginLeft: 10,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   textMapAside: {
-    fontFamily: 'Poppins_700Bold',
-    color: '#fff',
+    fontFamily: "Poppins_700Bold",
+    color: "#fff",
   },
-  viewTeste:{
-    justifyContent: 'space-between',
-     width: '35%'
+  viewTeste: {
+    justifyContent: "space-between",
+    width: "40%",
   },
   viewTextLeft: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   viewMap: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  viewContato: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   viewMapAside: {
-    display: 'flex',
-    alignItems: 'flex-end',
+    display: "flex",
+    alignItems: "flex-end",
   },
   teste: {
     display: "flex",
@@ -310,17 +239,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 3,
   },
+  
   Locais: {
     fontSize: 18,
     color: "#fff",
     fontFamily: "Poppins_700Bold",
-  },
-  viewCarne: {
-    height: "100%",
-    width: "30px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
   textAcougueGrande: {
     color: "#fff",
@@ -332,43 +255,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-  },
-  textTotal: {
-    color: "#fff",
-    fontSize: 25,
-    textTransform: "capitalize",
-    fontFamily: "Poppins_700Bold",
-  },
-  receitas: {
-    color: "#fff",
-    fontFamily: "Poppins_700Bold",
-  },
-  ViewResultado: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginTop: 20,
-    paddingRight: 10,
-    paddingLeft: 20,
-  },
-  ViewTotal: {
-    display: "flex",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  viewReceitas: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  viewAlinhamento: {
-    display: "flex",
-    height: "100%",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
-  textNumero: {
-    color: "#ffffff",
-    fontFamily: "Poppins_700Bold",
   },
   indicator: {
     width: "100%",

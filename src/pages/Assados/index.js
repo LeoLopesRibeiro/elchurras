@@ -5,23 +5,18 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import { useFonts, Poppins_700Bold } from '@expo-google-fonts/poppins';
-import * as Localization from 'expo-localization';
+} from "react-native";
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
+import MapItens from '../../components/MapItens/index';
+import Total from "../../components/Total";
 
 function Assados({ navigation, route }) {
   function goToReceitas() {
-    navigation.navigate('Receitas');
+    navigation.navigate("Receitas");
   }
 
   const { resultados } = route.params;
 
-  const images = {
-    bovino: require('../../../assets/vaca.png'),
-    suino: require('../../../assets/porco.png'),
-    frango: require('../../../assets/galinha.png'),
-  };
 
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
@@ -38,59 +33,17 @@ function Assados({ navigation, route }) {
         </View>
         <View style={styles.cor}>
           <View style={styles.viewAlinhamento}>
-            <View>
-              {resultados != undefined
-                ? resultados.carnes.map((itens, index) => {
-                    return (
-                      <View style={styles.view} key={index}>
-                        <View style={styles.teste}>
-                          <Image
-                            source={images[itens.icon]}
-                            style={{ width: 30, height: 30 }}
-                          />
-                          <Text style={styles.textMap}>{itens.nome}</Text>
-                        </View>
-
-                        <View style={styles.viewTeste}>
-                        <View style={styles.viewMap}>
-                          <View style={styles.viewTextLeft}>
-                            <Text style={styles.textMapAside}>Preço:</Text>
-                          </View>
-                          <View style={styles.viewMapAside}>
-                            <Text style={styles.textMapAside}>
-                              {itens.preco}
-                            </Text>
-                          </View>
-                          </View>
-                          <View style={styles.viewMap}>
-                            <View style={styles.viewTextLeft}>
-                              <Text style={styles.textMapAside}>Kg:</Text>
-                            </View>
-                            <View style={styles.viewMapAside}>
-                              <Text style={styles.textMapAside}>
-                                {itens.kg}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    );
-                  })
-                : null}
-            </View>
-
+            <MapItens data={resultados.carnes}/>
             <View style={styles.ViewResultado}>
               <View style={styles.viewReceitas}>
                 <TouchableOpacity
                   style={styles.borderReceitas}
-                  onPress={goToReceitas}>
+                  onPress={goToReceitas}
+                >
                   <Text style={styles.receitas}>Receitas</Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.ViewTotal}>
-                <Text style={styles.textTotal}>Total: </Text>
-                <Text style={styles.textNumero}>{resultados.preco_total}</Text>
-              </View>
+             <Total data={resultados}/>
             </View>
           </View>
         </View>
@@ -98,116 +51,76 @@ function Assados({ navigation, route }) {
     </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({
   cor: {
-    height: '90%',
-    backgroundColor: '#340C0C',
+    height: "90%",
+    backgroundColor: "#340C0C",
   },
   text: {
     fontSize: 40,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   background: {
-    height: '100%',
-    backgroundColor: '#340C0C',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    height: "100%",
+    backgroundColor: "#340C0C",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   whiteBackground: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     height: 100,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  textMap: {
-    color: '#fff',
-    fontSize: 15,
-    textTransform: 'capitalize',
-    marginLeft: 10,
-    fontFamily: 'Poppins_700Bold',
-  },
-  textMapAside: {
-    fontFamily: 'Poppins_700Bold',
-    color: '#fff',
-  },
-  viewTeste:{
-    justifyContent: 'space-between',
-     width: '40%'
-  },
-  viewTextLeft: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  viewMap: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  viewMapAside: {
-    display: 'flex',
-    alignItems: 'flex-end',
-  },
-  teste: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  view: {
-    padding: 10,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EED0A2',
-  },
+  
   textTotal: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 25,
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
     marginLeft: 10,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
+  },
+  textNumeroRateio: {
+    color: "#ffffff",
+    fontFamily: "Poppins_700Bold",
+    marginLeft: 10,
   },
   receitas: {
-    color: '#fff',
-    fontFamily: 'Poppins_700Bold',
+    color: "#fff",
+    fontFamily: "Poppins_700Bold",
   },
   ViewResultado: {
-    display: 'flex',
+    display: "flex",
     padding: 10,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
+    marginTop: 50,
   },
   ViewTotal: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
   },
   viewReceitas: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
   },
   viewAlinhamento: {
-    display: 'flex',
-    height: '97%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   textNumero: {
-    color: '#ffffff',
-    fontFamily: 'Poppins_700Bold',
+    color: "#ffffff",
+    fontFamily: "Poppins_700Bold",
   },
   borderReceitas: {
     width: 100,
-    alignItems: 'center',
-    backgroundColor: '#DF1D1D',
+    alignItems: "center",
+    backgroundColor: "#DF1D1D",
     padding: 8,
     marginBottom: 20,
     borderRadius: 10,

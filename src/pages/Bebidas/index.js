@@ -1,16 +1,9 @@
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { useState, useEffect } from "react";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import "../../../assets/cerveja.png";
-
+import  MapItens  from "../../components/MapItens";
+import Total from "../../components/Total";
 function Bebidas({ route }) {
-  const images = {
-    agua: require("../../../assets/agua.png"),
-    cerveja: require("../../../assets/cerveja.png"),
-    refri: require("../../../assets/refrigerante.png"),
-    vinho: require("../../../assets/vinho.png"),
-    whisky: require("../../../assets/whisky.png"),
-  };
 
   const { resultados } = route.params;
 
@@ -29,61 +22,8 @@ function Bebidas({ route }) {
         </View>
         <View style={styles.cor}>
           <View style={styles.viewAlinhamento}>
-            <View>
-              {resultados.length != 0
-                ? resultados.bebidas.map((itens, index) => {
-                    return (
-                      <View style={styles.view} key={index}>
-                        <View style={styles.teste}>
-                          <Image
-                            source={images[itens.icon]}
-                            style={{ width: 30, height: 30 }}
-                          />
-                          <Text style={styles.textMap}>{itens.nome}</Text>
-                        </View>
-                        <View style={styles.viewTeste}>
-                          <View style={styles.viewMap}>
-                            <View style={styles.viewTextLeft}>
-                              <Text style={styles.textMapAside}>Preço:</Text>
-                            </View>
-                            <View style={styles.viewMapAside}>
-                              <Text style={styles.textMapAside}>
-                                {itens.preco}
-                              </Text>
-                            </View>
-                          </View>
-                          <View style={styles.viewMap}>
-                            <View style={styles.viewTextLeft}>
-                              <Text style={styles.textMapAside}>
-                                Unidades (
-                                {itens.litragem < 1000
-                                  ? itens.litragem
-                                  : itens.litragem / 1000}{" "}
-                                {itens.litragem < 1000 ? "ml" : "L"})
-                              </Text>
-                            </View>
-                            <View style={styles.viewMapAside}>
-                              <Text style={styles.textMapAside}>
-                                {itens.garrafa}
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    );
-                  })
-                : null}
-            </View>
-
-            <View style={styles.ViewResultado}>
-              <View style={styles.ViewTotal}>
-                <Text style={styles.textTotal}>Total: </Text>
-                <Text style={styles.textNumero}>
-                  {resultados.preco_total.toFixed(2)}
-                </Text>
-              </View>
-              <View style={styles.viewReceitas}></View>
-            </View>
+          <MapItens data={resultados.bebidas}/>
+          <Total data={resultados}/>
           </View>
         </View>
       </View>
@@ -166,14 +106,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: "Poppins_700Bold",
   },
-  receitas: {
-    color: "#fff",
+  textNumeroRateio: {
+    color: "#ffffff",
     fontFamily: "Poppins_700Bold",
+    marginLeft: 10,
   },
   ViewResultado: {
     display: "flex",
     padding: 10,
     justifyContent: "space-between",
+    marginTop: 50,
   },
   ViewTotal: {
     display: "flex",
@@ -181,13 +123,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  viewReceitas: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
   viewAlinhamento: {
     display: "flex",
-    height: "80%",
     flexDirection: "column",
     justifyContent: "space-between",
   },
