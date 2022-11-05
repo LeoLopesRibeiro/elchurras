@@ -6,12 +6,16 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CheckboxChurras from "../../components/CheckboxChurras";
 import InputConvidados from "../../components/InputConvidados";
+import CalcularChurras from "../../functions/CalcularChurras";
+// import Container, { Toast } from "toastify-react-native";
+import Toast from "react-native-toast-message";
 
 export default function CriarChurras({ navigation, route }) {
   const parametros = route.params;
@@ -234,365 +238,300 @@ export default function CriarChurras({ navigation, route }) {
       }
     });
 
-    let precoTotal = 0;
+    if (countHomem + countMulher === 0) {
+      console.log("teste");
+      Toast.show({
+        type: "error",
+        text1: "Selecione pelo menos um adulto!",
+      });
+      return;
+    }
 
-    // Contas carnes
+    if (carnesSelecionadas.length === 0) {
+      Toast.show({
+        type: "error",
+        text1: "Selecione pelo menos uma carne!",
+      });
+      return;
+    }
 
-    let kgHomem = 600 * countHomem;
-    let kgMulher = 400 * countMulher;
-    let kgCrianca = 250 * countCrianca;
+    if (bebidasSelecionadas.length === 0) {
+      Toast.show({
+        type: "error",
+        text1: "Selecione pelo menos uma bebida!",
+      });
+      return;
+    }
 
-    let kgCarneTotal = kgHomem + kgMulher + kgCrianca;
+    const camposNaoPreenchidos = [];
 
-    let kgPorCarne = (kgCarneTotal / carnesSelecionadas.length).toFixed(2);
+    function captalize(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    }
 
-    carnesSelecionadas.forEach((carne) => {
-      carne.preco = Number((carne.preco * kgPorCarne).toFixed(2));
-      carne.kg = Number((kgPorCarne / 1000).toFixed(2));
-      precoTotal += carne.preco;
-    });
-
-    // Contas bebidas
-
-    let litrosAdulto = countHomem * 1500 + countMulher * 1500;
-    let litrosCrianca = countHomem * 750;
-
-    let alcolico = false;
-    let quantBebidasAlcolicas = 0;
-
-    bebidasSelecionadas.forEach((bebida) => {
-      if (bebida.alcolico == true) {
-        alcolico = true;
-        quantBebidasAlcolicas++;
+    Object.keys(localidade).forEach((key) => {
+      if (localidade[key] == "") {
+        camposNaoPreenchidos.push(captalize(key));
       }
     });
 
-    if (alcolico) {
-      let litrosBebidasPorAdulto = litrosAdulto / bebidasSelecionadas.length;
-      let litrosBebidasPorCrianca =
-        litrosCrianca / bebidasSelecionadas.length - quantBebidasAlcolicas;
-
-      bebidasSelecionadas.forEach((bebida) => {
-        if (bebida.alcolico == true) {
-          bebida.garrafa = Math.ceil(litrosBebidasPorAdulto / bebida.garrafa);
-        } else {
-          bebida.garrafa = Math.ceil(
-            (litrosBebidasPorAdulto + litrosBebidasPorCrianca) / bebida.garrafa
-          );
-        }
-
-        bebida.preco = Number((bebida.preco * bebida.garrafa).toFixed(2));
-        precoTotal += bebida.preco;
+    if (camposNaoPreenchidos.length !== 0) {
+      Toast.show({
+        type: "error",
+        text1: "Informe o local do evento!",
+        text2: `Preencha o campo ${camposNaoPreenchidos[0]}`,
       });
-    } else {
-      let litrosTotais = litrosAdulto + litrosCrianca;
-      let litrosPorBebida = litrosTotais / bebidasSelecionadas.length;
-
-      bebidasSelecionadas.forEach((bebida) => {
-        bebida.garrafa = Math.ceil(litrosPorBebida / bebida.garrafa);
-
-        bebida.preco = Number((bebida.preco * bebida.garrafa).toFixed(2));
-        precoTotal += bebida.preco;
-      });
+      return;
     }
 
-    let convidadosTotais = countHomem + countMulher + countCrianca;
-    let kgCarvao = (kgCarneTotal / 1000).toFixed(2);
-    let sacoCarvao = Math.ceil(kgCarvao / 2);
-    let salKg = (kgCarneTotal * 0.02) / 1000;
-    let paoKg = (convidadosTotais * 2 * 50) / 1000;
-    let arrozKg = (convidadosTotais * 100) / 1000;
-    let sacoArroz = Math.ceil(arrozKg / 5);
-    let farofaKg = (convidadosTotais * 70) / 1000;
-    let sacoFarofa = Math.ceil(farofaKg / 0.5);
+    const items = {
+      carnesSelecionadas,
+      bebidasSelecionadas,
+      countHomem,
+      countMulher,
+      countCrianca,
+    };
+
+    const custos = CalcularChurras(items);
+    custos.locacao = localidade;
 
     const resultado = {
       responsavel: responsavel,
       data: dataSelecionada,
-      custos_outros: {
-        carnes: carnesSelecionadas,
-        bebidas: bebidasSelecionadas,
-        outros: {
-          geral: [
-            {
-              icon: "carvao",
-              nome: "Carvão",
-              kg: Number(kgCarvao),
-              preco: sacoCarvao * 17,
-            },
-            {
-              icon: "sal",
-              nome: "Sal",
-              kg: salKg,
-              preco: Math.ceil(salKg) * 5,
-            },
-          ],
-          acompanhamentos: [
-            {
-              icon: "arroz",
-              nome: "Arroz",
-              kg: arrozKg,
-              preco: sacoArroz * 20,
-            },
-            {
-              icon: "farofa",
-              nome: "Farofa",
-              kg: farofaKg,
-              preco: sacoFarofa * 8,
-            },
-            {
-              icon: "pao",
-              nome: "Pão",
-              kg: paoKg,
-              preco: convidadosTotais * 2 * 0.5,
-            },
-          ],
-        },
-        locacao: localidade,
-        preco_total: precoTotal,
-        rateio: 0,
-      },
+      custos_outros: custos,
     };
 
-    resultado.custos_outros.outros.geral.forEach((valor) => {
-      resultado.custos_outros.preco_total += valor.preco;
-    });
-
-    resultado.custos_outros.outros.acompanhamentos.forEach((valor) => {
-      resultado.custos_outros.preco_total += valor.preco;
-    });
-
-    let rateio =
-      resultado.custos_outros.preco_total / (countHomem + countMulher);
-
-    resultado.custos_outros.rateio = rateio;
     setChurrasStorage(resultado);
 
     navigation.navigate("Resultados", resultado.custos_outros);
   }
 
   return (
-    <ScrollView>
-      <View style={styles.criarChurras}>
-        <View style={styles.viewConvidados}>
-          <Text style={styles.viewTitulo}>Convidados</Text>
-          <View style={styles.inputs}>
-            <View style={styles.viewInput}>
-              <View style={styles.viewImage}>
-                <Image
-                  style={styles.inputImage}
-                  source={require("../../../assets/homem.png")}
+    <View>
+      <ScrollView>
+        <View style={styles.criarChurras}>
+          <View style={styles.viewConvidados}>
+            <Text style={styles.viewTitulo}>Convidados</Text>
+            <View style={styles.inputs}>
+              <View style={styles.viewInput}>
+                <View style={styles.viewImage}>
+                  <Image
+                    style={styles.inputImage}
+                    source={require("../../../assets/homem.png")}
+                  />
+                </View>
+                <InputConvidados
+                  count={countHomem}
+                  setCount={(e) => setCountHomem(e)}
                 />
               </View>
-              <InputConvidados
-                count={countHomem}
-                setCount={(e) => setCountHomem(e)}
-              />
-            </View>
-            <View style={styles.viewInput}>
-              <View style={styles.viewImage}>
-                <Image
-                  style={styles.inputImage}
-                  source={require("../../../assets/mulher.png")}
+              <View style={styles.viewInput}>
+                <View style={styles.viewImage}>
+                  <Image
+                    style={styles.inputImage}
+                    source={require("../../../assets/mulher.png")}
+                  />
+                </View>
+                <InputConvidados
+                  count={countMulher}
+                  setCount={(e) => setCountMulher(e)}
                 />
               </View>
-              <InputConvidados
-                count={countMulher}
-                setCount={(e) => setCountMulher(e)}
-              />
-            </View>
-            <View style={styles.viewInput}>
-              <View style={styles.viewImage}>
-                <Image
-                  style={styles.inputImage}
-                  source={require("../../../assets/crianca.png")}
+              <View style={styles.viewInput}>
+                <View style={styles.viewImage}>
+                  <Image
+                    style={styles.inputImage}
+                    source={require("../../../assets/crianca.png")}
+                  />
+                </View>
+                <InputConvidados
+                  count={countCrianca}
+                  setCount={(e) => setCountCrianca(e)}
                 />
-              </View>
-              <InputConvidados
-                count={countCrianca}
-                setCount={(e) => setCountCrianca(e)}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={styles.viewCarnes}>
-          <Text style={styles.viewTitulo}>Carnes</Text>
-          <View style={styles.inputCarnes}>
-            <View style={styles.carne}>
-              <Text style={styles.carneTitulo}>Bovino:</Text>
-              <View style={styles.checkboxes}>
-                {Object.keys(bovino).map((key) => {
-                  return (
-                    <CheckboxChurras
-                      key={key}
-                      data={bovino[key]}
-                      value={bovino}
-                      chave={key}
-                      setValue={(e) => setBovino(e)}
-                      width="35%"
-                    />
-                  );
-                })}
-              </View>
-            </View>
-            <View style={styles.carne}>
-              <Text style={styles.carneTitulo}>Suino:</Text>
-              <View style={styles.checkboxes}>
-                {Object.keys(suino).map((key) => {
-                  return (
-                    <CheckboxChurras
-                      key={key}
-                      data={suino[key]}
-                      value={suino}
-                      chave={key}
-                      setValue={(e) => setSuino(e)}
-                      width="35%"
-                    />
-                  );
-                })}
-              </View>
-            </View>
-            <View style={styles.carne}>
-              <Text style={styles.carneTitulo}>Frango:</Text>
-              <View style={styles.checkboxes}>
-                {Object.keys(frango).map((key) => {
-                  return (
-                    <CheckboxChurras
-                      key={key}
-                      data={frango[key]}
-                      value={frango}
-                      chave={key}
-                      setValue={(e) => setFrango(e)}
-                      width="35%"
-                    />
-                  );
-                })}
               </View>
             </View>
           </View>
-        </View>
-        <View style={styles.viewBebidas}>
-          <Text style={styles.viewTitulo}>Bebidas</Text>
-          <View style={styles.checkboxesBebidas}>
-            <View style={styles.checkboxesLeft}>
-              {Object.keys(bebidas).map((key, index) => {
-                if (index < 3) {
-                  return (
-                    <CheckboxChurras
-                      key={key}
-                      data={bebidas[key]}
-                      value={bebidas}
-                      chave={key}
-                      setValue={(e) => setBebidas(e)}
-                    />
-                  );
-                }
-              })}
-            </View>
-            <View style={styles.checkboxesRight}>
-              {Object.keys(bebidas).map((key, index) => {
-                if (index > 2) {
-                  return (
-                    <CheckboxChurras
-                      key={key}
-                      data={bebidas[key]}
-                      value={bebidas}
-                      chave={key}
-                      setValue={(e) => setBebidas(e)}
-                    />
-                  );
-                }
-              })}
+          <View style={styles.viewCarnes}>
+            <Text style={styles.viewTitulo}>Carnes</Text>
+            <View style={styles.inputCarnes}>
+              <View style={styles.carne}>
+                <Text style={styles.carneTitulo}>Bovino:</Text>
+                <View style={styles.checkboxes}>
+                  {Object.keys(bovino).map((key) => {
+                    return (
+                      <CheckboxChurras
+                        key={key}
+                        data={bovino[key]}
+                        value={bovino}
+                        chave={key}
+                        setValue={(e) => setBovino(e)}
+                        width="35%"
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+              <View style={styles.carne}>
+                <Text style={styles.carneTitulo}>Suino:</Text>
+                <View style={styles.checkboxes}>
+                  {Object.keys(suino).map((key) => {
+                    return (
+                      <CheckboxChurras
+                        key={key}
+                        data={suino[key]}
+                        value={suino}
+                        chave={key}
+                        setValue={(e) => setSuino(e)}
+                        width="35%"
+                      />
+                    );
+                  })}
+                </View>
+              </View>
+              <View style={styles.carne}>
+                <Text style={styles.carneTitulo}>Frango:</Text>
+                <View style={styles.checkboxes}>
+                  {Object.keys(frango).map((key) => {
+                    return (
+                      <CheckboxChurras
+                        key={key}
+                        data={frango[key]}
+                        value={frango}
+                        chave={key}
+                        setValue={(e) => setFrango(e)}
+                        width="35%"
+                      />
+                    );
+                  })}
+                </View>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={styles.viewOutros}>
-          <Text style={styles.viewTitulo}>Outros</Text>
-          <View style={styles.viewData}>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={styles.textLocalidade}>Data do evento:</Text>
-              <Text style={{ color: "#FFF", fontWeight: "bold" }}>
-                {date.toJSON().substring(8, 10)}/{date.toJSON().substring(5, 7)}
-                /{date.toJSON().substring(0, 4)}
-              </Text>
+          <View style={styles.viewBebidas}>
+            <Text style={styles.viewTitulo}>Bebidas</Text>
+            <View style={styles.checkboxesBebidas}>
+              <View style={styles.checkboxesLeft}>
+                {Object.keys(bebidas).map((key, index) => {
+                  if (index < 3) {
+                    return (
+                      <CheckboxChurras
+                        key={key}
+                        data={bebidas[key]}
+                        value={bebidas}
+                        chave={key}
+                        setValue={(e) => setBebidas(e)}
+                      />
+                    );
+                  }
+                })}
+              </View>
+              <View style={styles.checkboxesRight}>
+                {Object.keys(bebidas).map((key, index) => {
+                  if (index > 2) {
+                    return (
+                      <CheckboxChurras
+                        key={key}
+                        data={bebidas[key]}
+                        value={bebidas}
+                        chave={key}
+                        setValue={(e) => setBebidas(e)}
+                      />
+                    );
+                  }
+                })}
+              </View>
             </View>
+          </View>
+          <View style={styles.viewOutros}>
+            <Text style={styles.viewTitulo}>Outros</Text>
+            <View style={styles.viewData}>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.textLocalidade}>Data do evento:</Text>
+                <Text style={{ color: "#FFF", fontWeight: "bold" }}>
+                  {date.toJSON().substring(8, 10)}/
+                  {date.toJSON().substring(5, 7)}/
+                  {date.toJSON().substring(0, 4)}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.buttonDate}
+                onPress={() => setExibirCalendario(true)}
+              >
+                <Text style={styles.textButtonDate}>
+                  Selecionar data do evento
+                </Text>
+              </TouchableOpacity>
+              {exibirCalendario && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode="date"
+                  is24Hour={true}
+                  display="default"
+                  onChange={dateHandler}
+                />
+              )}
+            </View>
+            <View style={styles.viewLocalidade}>
+              <Text style={styles.textLocalidade}>Localidade:</Text>
+              <View style={styles.inputLocal}>
+                <View style={styles.inputsRua}>
+                  <TextInput
+                    style={[styles.inputsLocal, { width: "68%" }]}
+                    placeholder="Digite a rua."
+                    value={localidade.rua}
+                    onChangeText={(valor) =>
+                      setLocalidade({ ...localidade, rua: valor })
+                    }
+                  />
+                  <TextInput
+                    style={[styles.inputsLocal, { width: "28%" }]}
+                    placeholder="Número."
+                    keyboardType="number-pad"
+                    value={localidade.numero}
+                    onChangeText={(valor) =>
+                      setLocalidade({ ...localidade, numero: valor })
+                    }
+                  />
+                </View>
+                <TextInput
+                  style={styles.inputsLocal}
+                  placeholder="Digite o bairro."
+                  value={localidade.bairro}
+                  onChangeText={(valor) =>
+                    setLocalidade({ ...localidade, bairro: valor })
+                  }
+                />
+                <TextInput
+                  style={styles.inputsLocal}
+                  placeholder="Digite a cidade."
+                  value={localidade.cidade}
+                  onChangeText={(valor) =>
+                    setLocalidade({ ...localidade, cidade: valor })
+                  }
+                />
+              </View>
+            </View>
+          </View>
+          <View style={styles.viewCalcular}>
             <TouchableOpacity
-              style={styles.buttonDate}
-              onPress={() => setExibirCalendario(true)}
+              style={styles.buttonCalcular}
+              onPress={() => calcularChurras()}
             >
-              <Text style={styles.textButtonDate}>
-                Selecionar data do evento
-              </Text>
+              <Text style={styles.textCalcular}>Calcular</Text>
             </TouchableOpacity>
-            {exibirCalendario && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode="date"
-                is24Hour={true}
-                display="default"
-                onChange={dateHandler}
-              />
-            )}
-          </View>
-          <View style={styles.viewLocalidade}>
-            <Text style={styles.textLocalidade}>Localidade:</Text>
-            <View style={styles.inputLocal}>
-              <View style={styles.inputsRua}>
-                <TextInput
-                  style={[styles.inputsLocal, { width: "68%" }]}
-                  placeholder="Digite a rua."
-                  value={localidade.rua}
-                  onChangeText={(valor) =>
-                    setLocalidade({ ...localidade, rua: valor })
-                  }
-                />
-                <TextInput
-                  style={[styles.inputsLocal, { width: "28%" }]}
-                  placeholder="Número."
-                  keyboardType="number-pad"
-                  value={localidade.numero}
-                  onChangeText={(valor) =>
-                    setLocalidade({ ...localidade, numero: valor })
-                  }
-                />
-              </View>
-              <TextInput
-                style={styles.inputsLocal}
-                placeholder="Digite o bairro."
-                value={localidade.bairro}
-                onChangeText={(valor) =>
-                  setLocalidade({ ...localidade, bairro: valor })
-                }
-              />
-              <TextInput
-                style={styles.inputsLocal}
-                placeholder="Digite a cidade."
-                value={localidade.cidade}
-                onChangeText={(valor) =>
-                  setLocalidade({ ...localidade, cidade: valor })
-                }
-              />
-            </View>
           </View>
         </View>
-        <View style={styles.viewCalcular}>
-          <TouchableOpacity
-            style={styles.buttonCalcular}
-            onPress={() => calcularChurras()}
-          >
-            <Text style={styles.textCalcular}>Calcular</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <Toast />
+    </View>
   );
 }
 
