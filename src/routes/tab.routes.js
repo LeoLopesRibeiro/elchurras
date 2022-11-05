@@ -46,7 +46,7 @@ function TabRoutes({ route }) {
               return (
                 <MaterialCommunityIcons
                   name="food-steak"
-                  size={24}
+                  size={size}
                   color="#EED0A2"
                 />
               );
@@ -54,7 +54,7 @@ function TabRoutes({ route }) {
               return (
                 <MaterialCommunityIcons
                   name="food-steak"
-                  size={24}
+                  size={size}
                   color="#F2F2F2"
                 />
               );
