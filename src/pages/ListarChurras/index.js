@@ -3,17 +3,16 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import CardChurras from "../../components/CardChurras";
 
 export default function ListarChurras({ navigation, route }) {
   const [listaChurras, setListaChurras] = useState([]);
 
-  // const {id} = route.params;
-  const id = 0;
+  const { id } = route.params;
 
   function goToCriarChurras() {
     navigation.navigate("CriarChurras", { id });
@@ -35,12 +34,12 @@ export default function ListarChurras({ navigation, route }) {
       }
     }
 
-    navigation.addListener("focus", (e) => {
+    navigation.addListener("focus", () => {
       getUsuarios();
     });
 
     getUsuarios();
-  }, [navigation]);
+  }, [navigation]); //eslint-disable-line
 
   return (
     <View style={styles.listarChurras}>
@@ -50,24 +49,11 @@ export default function ListarChurras({ navigation, route }) {
             {listaChurras.length !== 0 ? (
               listaChurras.map((churras, index) => {
                 return (
-                  <TouchableOpacity
+                  <CardChurras
                     key={index}
-                    onPress={() => goToCustos(churras.custos_outros)}
-                    style={styles.churrasCriado}
-                    activeOpacity={0.8}
-                  >
-                    <Image
-                      source={require("../../../assets/carne.png")}
-                      style={styles.imagemCarne}
-                    />
-                    <Text style={styles.dataChurras}>
-                      Data do evento: {churras.data.dia}/{churras.data.mes}/
-                      {churras.data.ano}
-                    </Text>
-                    <Text style={styles.responsavelChurras}>
-                      Responsável: {churras.responsavel}
-                    </Text>
-                  </TouchableOpacity>
+                    churras={churras}
+                    goTo={(e) => goToCustos(e)}
+                  />
                 );
               })
             ) : (
@@ -111,33 +97,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFF",
-  },
-  churrasCriado: {
-    width: "80%",
-    backgroundColor: "#340C0C",
-    padding: 20,
-    marginBottom: 20,
-    display: "flex",
-    alignItems: "center",
-    borderRadius: 10,
-  },
-  imagemCarne: {
-    width: 52,
-    height: 43,
-    marginBottom: 20,
-    marginTop: 10,
-  },
-  dataChurras: {
-    color: "#FFF",
-    fontWeight: "bold",
-    fontSize: 14,
-  },
-  responsavelChurras: {
-    color: "#FFF",
-    fontWeight: "bold",
-    fontSize: 14,
-    textTransform: "capitalize",
-    marginTop: 10,
   },
   buttonCriar: {
     width: 130,

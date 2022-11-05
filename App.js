@@ -9,35 +9,6 @@ if (Platform.OS == "android") {
 }
 
 export default function App() {
-  useEffect(() => {
-    async function setUsuarios() {
-      try {
-        const usuarios = await AsyncStorage.getItem("usuarios");
-
-        if (usuarios === null) {
-          const jsonUsuarios = JSON.stringify([
-            {
-              nome: "Gustavo",
-              icon: "lala",
-              churras: [],
-            },
-            {
-              nome: "Matheus",
-              icon: "lala",
-              churras: [],
-            },
-          ]);
-  
-          await AsyncStorage.setItem("usuarios", jsonUsuarios);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    setUsuarios();
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <StackRoutes />

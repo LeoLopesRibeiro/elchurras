@@ -9,11 +9,17 @@ import {
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 function Assados({ navigation, route }) {
-  function goToReceitas() {
-    navigation.navigate("Receitas");
-  }
-
   const { resultados } = route.params;
+
+  function goToReceitas() {
+    const carnes = [];
+
+    resultados.carnes.forEach((carne) => {
+      carnes.push(carne.nome);
+    });
+
+    navigation.navigate("Receitas", { carnes: carnes });
+  }
 
   const images = {
     bovino: require("../../../assets/vaca.png"),

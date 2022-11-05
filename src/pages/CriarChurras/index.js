@@ -14,7 +14,7 @@ import CheckboxChurras from "../../components/CheckboxChurras";
 import InputConvidados from "../../components/InputConvidados";
 
 export default function CriarChurras({ navigation, route }) {
-  const { id } = route.params;
+  const parametros = route.params;
   const [goBack, setGoBack] = useState(false);
   const [responsavel, setResponsavel] = useState(null);
 
@@ -30,17 +30,13 @@ export default function CriarChurras({ navigation, route }) {
     setDate(selectedDate);
   }
 
-  function showDatepicker() {
-    setExibirCalendario(true);
-  }
-
   async function setChurrasStorage(churras) {
     try {
       const usuariosJSON = await AsyncStorage.getItem("usuarios");
 
       if (usuariosJSON !== null) {
         const usuarios = JSON.parse(usuariosJSON);
-        usuarios[id].churras.push(churras);
+        usuarios[parametros.id].churras.push(churras);
 
         await AsyncStorage.setItem("usuarios", JSON.stringify(usuarios));
       }
@@ -56,7 +52,7 @@ export default function CriarChurras({ navigation, route }) {
 
         if (usuariosJSON !== null) {
           const usuarios = JSON.parse(usuariosJSON);
-          setResponsavel(usuarios[id].nome);
+          setResponsavel(usuarios[parametros.id].nome);
         }
       } catch (e) {
         console.log(e);
@@ -67,7 +63,7 @@ export default function CriarChurras({ navigation, route }) {
 
     navigation.addListener("focus", (e) => {
       if (goBack) {
-        navigation.navigate("ListarChurras");
+        navigation.navigate("ListarChurras", { id: parametros.id });
       }
 
       setGoBack(true);
@@ -310,8 +306,6 @@ export default function CriarChurras({ navigation, route }) {
     let farofaKg = (convidadosTotais * 70) / 1000;
     let sacoFarofa = Math.ceil(farofaKg / 0.5);
 
-    console.log(responsavel);
-
     const resultado = {
       responsavel: responsavel,
       data: dataSelecionada,
@@ -515,10 +509,23 @@ export default function CriarChurras({ navigation, route }) {
         <View style={styles.viewOutros}>
           <Text style={styles.viewTitulo}>Outros</Text>
           <View style={styles.viewData}>
-            <Text style={styles.textLocalidade}>Data do evento:</Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.textLocalidade}>Data do evento:</Text>
+              <Text style={{ color: "#FFF", fontWeight: "bold" }}>
+                {date.toJSON().substring(8, 10)}/{date.toJSON().substring(5, 7)}
+                /{date.toJSON().substring(0, 4)}
+              </Text>
+            </View>
             <TouchableOpacity
               style={styles.buttonDate}
-              onPress={showDatepicker}
+              onPress={() => setExibirCalendario(true)}
             >
               <Text style={styles.textButtonDate}>
                 Selecionar data do evento

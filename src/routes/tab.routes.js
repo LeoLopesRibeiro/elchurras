@@ -20,16 +20,13 @@ function TabRoutes({ route }) {
         headerTitleStyle: {
           color: "#fff",
         },
-        tabBarStyle: {
-          borderTopColor: "#F2F2F2",
-        },
-
         tabBarActiveTintColor: "#EED0A2",
         tabBarInactiveTintColor: "#F2F2F2",
         tabBarActiveBackgroundColor: "#340C0C",
         tabBarInactiveBackgroundColor: "#340C0C",
         tabBarStyle: [
           {
+            borderTopColor: "#F2F2F2",
             backgroundColor: "#1B1D2E",
             display: "flex",
             justifyContent: "space-between",
