@@ -1,44 +1,242 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
-function Assados(){
-    const [teste1, setTeste1] = useState([])
-  
-    useEffect(()=>{
-    const teste =  '{"carnes": [{"icon":  "./assets/carne","nome": "picanha","kg": 10,"preco": 100},{"icon":  "./assets/carne","nome": "linguiça","kg": 10,"preco": 100},{"icon":"./assets/carne","nome": "coxinha","kg": 10,"preco": 100}],"bebidas": [{"icon":  "./assets/cerveja","nome": "cerveja","garrafas": 1,"preco": 30},{"icon":  "./assets/agua","nome": "agua","garrafas": 3,"preco": 10},{"icon":  "./assets/refrigerante","nome": "refrigerante","garrafas": 2,"preco": 20}],"outros": {"geral": [{"icon": "./assets/carvao","nome": "carvão","kg": 10,"preco": 30},{"icon": "./assets/sal_grosso","nome": "sal grosso","kg": 1,"preco": 10}],"acompanhamentos": [{"icon": "./assets/arroz","nome": "arroz","kg": 10,"preco": 50},{"icon": "./assets/farofa","nome": "farofa","kg": 1,"preco": 10},{"icon": "./assets/pao","nome": "pão","kg": 1,"preco": 10}]},"locacao": {"rua": "blabla","numero": "10","bairro":"tururu"}}'
-    const Json = JSON.parse(teste);
+function Assados({ navigation, route }) {
+  const { resultados } = route.params;
 
-    setTeste1(Json)
-  }, [])
-  console.log(teste1)
+  function goToReceitas() {
+    const carnes = [];
 
-        
-    return(
-        <View style={styles.cor}>
+    resultados.carnes.forEach((carne) => {
+      carnes.push(carne.nome);
+    });
 
-    {teste1.length != 0 ? (
-            teste1.carnes.map((itens, index)=>{
-                return(
-                    <View key={index}>
-                        <Text>{itens.nome}</Text>
-                        <Text>Preço{itens.preco}</Text>
-                        <Text>Kg: {itens.kg}</Text>
-                    </View>
-                )
-            })
-          ) : (
-            null
-          )
-        }
+    navigation.navigate("Receitas", { carnes: carnes });
+  }
 
+  const images = {
+    bovino: require("../../../assets/vaca.png"),
+    suino: require("../../../assets/porco.png"),
+    frango: require("../../../assets/galinha.png"),
+  };
+
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return (
+    <ScrollView style={styles.cor}>
+      <View style={styles.background}>
+        <View style={styles.whiteBackground}>
+          <Text style={styles.text}>Gastos</Text>
         </View>
-    )
-}
+        <View style={styles.cor}>
+          <View style={styles.viewAlinhamento}>
+            <View>
+              {resultados != undefined
+                ? resultados.carnes.map((itens, index) => {
+                    return (
+                      <View style={styles.view} key={index}>
+                        <View style={styles.teste}>
+                          <Image
+                            source={images[itens.icon]}
+                            style={{ width: 30, height: 30 }}
+                          />
+                          <Text style={styles.textMap}>{itens.nome}</Text>
+                        </View>
 
+                        <View style={styles.viewTeste}>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>Preço:</Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {Intl.NumberFormat("pt-BR", {
+                                  style: "currency",
+                                  currency: "BRL",
+                                }).format(itens.preco)}
+                              </Text>
+                            </View>
+                          </View>
+                          <View style={styles.viewMap}>
+                            <View style={styles.viewTextLeft}>
+                              <Text style={styles.textMapAside}>Kg:</Text>
+                            </View>
+                            <View style={styles.viewMapAside}>
+                              <Text style={styles.textMapAside}>
+                                {Intl.NumberFormat("pt-BR").format(itens.kg)}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    );
+                  })
+                : null}
+            </View>
+
+            <View style={styles.ViewResultado}>
+              <View style={styles.viewReceitas}>
+                <TouchableOpacity
+                  style={styles.borderReceitas}
+                  onPress={goToReceitas}
+                >
+                  <Text style={styles.receitas}>Receitas</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.textTotal}>Total: </Text>
+                <Text style={styles.textNumero}>
+                  {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(resultados.preco_total)}
+                </Text>
+              </View>
+              <View style={styles.ViewTotal}>
+                <Text style={styles.textNumeroRateio}>Rateio:</Text>
+                <Text style={styles.textNumero}>
+                  {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(resultados.rateio)}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
 const styles = StyleSheet.create({
-    cor:{
-        height: '100%',
-        backgroundColor: '#340C0C'
-    }
-})
-export default Assados
+  cor: {
+    height: "90%",
+    backgroundColor: "#340C0C",
+  },
+  text: {
+    fontSize: 40,
+    fontFamily: "Poppins_700Bold",
+  },
+  background: {
+    height: "100%",
+    backgroundColor: "#340C0C",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  whiteBackground: {
+    backgroundColor: "#fff",
+    height: 100,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textMap: {
+    color: "#fff",
+    fontSize: 15,
+    textTransform: "capitalize",
+    marginLeft: 10,
+    fontFamily: "Poppins_700Bold",
+  },
+  textMapAside: {
+    fontFamily: "Poppins_700Bold",
+    color: "#fff",
+  },
+  viewTeste: {
+    justifyContent: "space-between",
+    width: "40%",
+  },
+  viewTextLeft: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  viewMap: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  viewMapAside: {
+    display: "flex",
+    alignItems: "flex-end",
+  },
+  teste: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  view: {
+    padding: 10,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "#EED0A2",
+  },
+  textTotal: {
+    color: "#fff",
+    fontSize: 25,
+    textTransform: "capitalize",
+    marginLeft: 10,
+    fontFamily: "Poppins_700Bold",
+  },
+  textNumeroRateio: {
+    color: "#ffffff",
+    fontFamily: "Poppins_700Bold",
+    marginLeft: 10,
+  },
+  receitas: {
+    color: "#fff",
+    fontFamily: "Poppins_700Bold",
+  },
+  ViewResultado: {
+    display: "flex",
+    padding: 10,
+    justifyContent: "space-between",
+    marginTop: 50,
+  },
+  ViewTotal: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  viewReceitas: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  },
+  viewAlinhamento: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  textNumero: {
+    color: "#ffffff",
+    fontFamily: "Poppins_700Bold",
+  },
+  borderReceitas: {
+    width: 100,
+    alignItems: "center",
+    backgroundColor: "#DF1D1D",
+    padding: 8,
+    marginBottom: 20,
+    borderRadius: 10,
+  },
+});
+export default Assados;

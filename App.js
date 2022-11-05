@@ -1,22 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import Locacao from './src/pages/Locacao';
-import { NavigationContainer } from '@react-navigation/native';
-import Routes from './routes';
+import { StyleSheet, View, StatusBar, Platform, SafeAreaView } from "react-native";
+import { StackRoutes } from "./src/routes/stack.routes";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+if (Platform.OS == "android") {
+  require("intl");
+  require("intl/locale-data/jsonp/pt-BR");
+}
 
 export default function App() {
-return(
-  <NavigationContainer>
-    <Routes></Routes>
-  </NavigationContainer>
-)
+  return (
+    <SafeAreaView style={styles.container}>
+      <StackRoutes />
+      <StatusBar />
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
   },
 });
