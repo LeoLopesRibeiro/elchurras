@@ -1,6 +1,14 @@
 import { TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 export default function CardChurras({ churras, goTo }) {
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <TouchableOpacity
       onPress={() => goTo(churras.custos_outros)}
@@ -38,12 +46,12 @@ const styles = StyleSheet.create({
   },
   dataChurras: {
     color: '#FFF',
-    fontWeight: 'bold',
     fontSize: 14,
+    fontFamily: "Poppins_700Bold",
   },
   responsavelChurras: {
     color: '#FFF',
-    fontWeight: 'bold',
+    fontFamily: "Poppins_700Bold",
     fontSize: 14,
     textTransform: 'capitalize',
     marginTop: 10,

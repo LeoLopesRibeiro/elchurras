@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Checkbox from "expo-checkbox";
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 export default function CheckboxChurras({
   data,
@@ -20,6 +21,13 @@ export default function CheckboxChurras({
         [chave]: { ...data, value: true },
       });
     }
+  }
+
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
   }
 
   return (
@@ -46,8 +54,8 @@ const styles = StyleSheet.create({
   },
   itemNome: {
     color: "#FFF",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 14,
+    fontFamily: "Poppins_700Bold",
     marginLeft: 5,
     textTransform: "capitalize",
   },

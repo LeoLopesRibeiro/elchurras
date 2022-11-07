@@ -8,6 +8,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import CardChurras from "../../components/CardChurras";
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 export default function ListarChurras({ navigation, route }) {
   const [listaChurras, setListaChurras] = useState([]);
@@ -40,6 +41,13 @@ export default function ListarChurras({ navigation, route }) {
 
     getUsuarios();
   }, [navigation]); //eslint-disable-line
+
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <View style={styles.listarChurras}>
@@ -99,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   buttonCriar: {
-    width: 130,
+    width: 145,
     height: 110,
     backgroundColor: "#DF1D1D",
     display: "flex",
@@ -113,6 +121,6 @@ const styles = StyleSheet.create({
   },
   buttonTexto: {
     color: "#FFF",
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
   },
 });

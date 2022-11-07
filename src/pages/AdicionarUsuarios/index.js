@@ -11,7 +11,6 @@ import {
 import { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Header from "../../components/Header/index";
 import Toast from "react-native-toast-message";
 
 export default function AdicionarUsuarios({ navigation }) {

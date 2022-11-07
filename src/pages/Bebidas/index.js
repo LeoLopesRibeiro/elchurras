@@ -3,6 +3,7 @@ import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import "../../../assets/cerveja.png";
 import  MapItens  from "../../components/MapItens";
 import Total from "../../components/Total";
+
 function Bebidas({ route }) {
 
   const { resultados } = route.params;

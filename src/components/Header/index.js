@@ -4,7 +4,7 @@ function Header() {
   return (
     <View style={styles.header}>
       <View style={styles.header}>
-        <Text style={styles.texto}>El Churras</Text>
+        <Text style={styles.texto}>EL Churras</Text>
         <Image
           source={require("../../../assets/logo.png")}
           style={{ width: 30, height: 30 }}

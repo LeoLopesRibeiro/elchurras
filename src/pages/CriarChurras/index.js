@@ -14,7 +14,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import CheckboxChurras from "../../components/CheckboxChurras";
 import InputConvidados from "../../components/InputConvidados";
 import CalcularChurras from "../../functions/CalcularChurras";
-// import Container, { Toast } from "toastify-react-native";
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import Toast from "react-native-toast-message";
 
 export default function CriarChurras({ navigation, route }) {
@@ -266,7 +266,7 @@ export default function CriarChurras({ navigation, route }) {
     const camposNaoPreenchidos = [];
 
     function captalize(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1)
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     Object.keys(localidade).forEach((key) => {
@@ -304,6 +304,13 @@ export default function CriarChurras({ navigation, route }) {
     setChurrasStorage(resultado);
 
     navigation.navigate("Resultados", resultado.custos_outros);
+  }
+
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
   }
 
   return (
@@ -454,7 +461,7 @@ export default function CriarChurras({ navigation, route }) {
                 }}
               >
                 <Text style={styles.textLocalidade}>Data do evento:</Text>
-                <Text style={{ color: "#FFF", fontWeight: "bold" }}>
+                <Text style={{ color: "#FFF", fontFamily: "Poppins_700Bold" }}>
                   {date.toJSON().substring(8, 10)}/
                   {date.toJSON().substring(5, 7)}/
                   {date.toJSON().substring(0, 4)}
@@ -557,8 +564,8 @@ const styles = StyleSheet.create({
   },
   viewTitulo: {
     color: "#FFF",
-    fontSize: 35,
-    fontWeight: "bold",
+    fontSize: 32,
+    fontFamily: "Poppins_700Bold",
     textAlign: "center",
   },
   inputs: {
@@ -602,8 +609,8 @@ const styles = StyleSheet.create({
   },
   carneTitulo: {
     color: "#FFF",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: "Poppins_700Bold",
   },
   checkboxes: {
     display: "flex",
@@ -649,7 +656,7 @@ const styles = StyleSheet.create({
   },
   textButtonDate: {
     color: "#FFF",
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
   },
   viewData: {
     marginTop: 15,
@@ -661,8 +668,8 @@ const styles = StyleSheet.create({
   },
   textLocalidade: {
     color: "#FFF",
-    fontWeight: "bold",
-    fontSize: 18,
+    fontFamily: "Poppins_700Bold",
+    fontSize: 16,
   },
   inputLocal: {
     display: "flex",
@@ -680,7 +687,8 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     height: 40,
     borderRadius: 10,
-    fontWeight: "bold",
+    fontSize: 13,
+    fontFamily: "Poppins_700Bold",
     marginBottom: 15,
   },
   viewCalcular: {
@@ -702,8 +710,8 @@ const styles = StyleSheet.create({
   },
   textCalcular: {
     display: "flex",
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
     color: "#FFF",
-    fontSize: 20,
+    fontSize: 18,
   },
 });

@@ -5,8 +5,16 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 export default function InputConvidados({ count, setCount }) {
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <View style={styles.inputField}>
       <TouchableOpacity onPress={() => setCount(count != 0 ? count - 1 : 0)}>
@@ -39,13 +47,13 @@ const styles = StyleSheet.create({
   },
   input: {
     color: "#FFF",
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
     fontSize: 20,
     textAlign: "center",
   },
   add_dec: {
     color: "#FFF",
     fontSize: 30,
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
   },
 });

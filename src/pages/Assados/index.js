@@ -7,8 +7,8 @@ import {
   ScrollView,
 } from "react-native";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
-import MapItens from '../../components/MapItens/index'
-import Total from '../../components/Total/index'
+import MapItens from "../../components/MapItens/index";
+import Total from "../../components/Total/index";
 
 function Assados({ navigation, route }) {
   const { resultados } = route.params;
@@ -22,12 +22,6 @@ function Assados({ navigation, route }) {
 
     navigation.navigate("Receitas", { carnes: carnes });
   }
-
-  const images = {
-    bovino: require("../../../assets/vaca.png"),
-    suino: require("../../../assets/porco.png"),
-    frango: require("../../../assets/galinha.png"),
-  };
 
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
@@ -44,8 +38,7 @@ function Assados({ navigation, route }) {
         </View>
         <View style={styles.cor}>
           <View style={styles.viewAlinhamento}>
-            
-            <MapItens data={resultados.carnes}/> 
+            <MapItens data={resultados.carnes} />
             <View style={styles.ViewResultado}>
               <View style={styles.viewReceitas}>
                 <TouchableOpacity
@@ -55,7 +48,7 @@ function Assados({ navigation, route }) {
                   <Text style={styles.receitas}>Receitas</Text>
                 </TouchableOpacity>
               </View>
-              <Total data={resultados}/>
+              <Total data={resultados} />
             </View>
           </View>
         </View>
@@ -149,7 +142,7 @@ const styles = StyleSheet.create({
   },
   ViewResultado: {
     display: "flex",
-    padding: 10,
+    paddingRight: 10,
     justifyContent: "space-between",
     marginTop: 50,
   },

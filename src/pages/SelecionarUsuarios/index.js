@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 export default function SelecionarUsuarios({ navigation }) {
   const [card, setCard] = useState([]);
@@ -21,8 +22,8 @@ export default function SelecionarUsuarios({ navigation }) {
       const usuariosLocal = await AsyncStorage.getItem("usuarios");
       
       if (usuariosLocal === null) {
-        await AsyncStorage.setItem("usuarios", JSON.stringify([]));
         try {
+          await AsyncStorage.setItem("usuarios", JSON.stringify([]));
         } catch (e) {
           console.log(e);
         }
@@ -52,6 +53,13 @@ export default function SelecionarUsuarios({ navigation }) {
 
   function goToCriar() {
     navigation.navigate("AdicionarUsuarios");
+  }
+
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
   }
 
   console.log(card.length);
@@ -116,8 +124,8 @@ const styles = StyleSheet.create({
 
   card: {
     display: "flex",
-    width: 333,
-    height: 223,
+    width: "90%",
+    padding: 15,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#340C0C",
@@ -125,9 +133,9 @@ const styles = StyleSheet.create({
   },
 
   titulo: {
-    fontWeight: "700",
     color: "#fff",
-    fontSize: 32,
+    fontSize: 28,
+    fontFamily: "Poppins_700Bold",
   },
 
   perfil: {
@@ -137,6 +145,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     padding: 5,
+    marginLeft: 10,
+    marginRight: 10,
   },
 
   ImgCamera: {
@@ -148,7 +158,7 @@ const styles = StyleSheet.create({
   texto: {
     color: "#fff",
     textAlign: "center",
-    fontWeight: "700",
+    fontFamily: "Poppins_700Bold",
     fontSize: 14,
     top: 10,
   },
@@ -170,6 +180,6 @@ const styles = StyleSheet.create({
 
   buttonTexto: {
     color: "#FFF",
-    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
   },
 });

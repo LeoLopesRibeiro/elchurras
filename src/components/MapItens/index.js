@@ -47,38 +47,8 @@ export default function MapItens({ data }) {
                   <Text style={styles.textMap}>{itens.nome}</Text>
                 </View>
 
-        
-                  {itens.kg !== undefined ? (
+                {itens.kg !== undefined ? (
                   <View style={styles.format2}>
-                    
-                      <View style={styles.viewTextMap}>
-                        <View style={styles.viewTextLeft}>
-                          <Text style={styles.textMapAside}>Preço:</Text>
-                        </View>
-                        <View style={styles.viewMapAside}>
-                          <Text style={styles.textMapAside}>
-                            {Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(itens.preco)}
-                          </Text>
-                        </View>
-                      </View>
-                      <View style={styles.viewTextMap}>
-                        <View style={styles.viewTextLeft}>
-                          <Text style={styles.textMapAside}>Kg:</Text>
-                        </View>
-                        <View style={styles.viewMapAside}>
-                          <Text style={styles.textMapAside}>
-                            {Intl.NumberFormat("pt-BR").format(itens.kg)}
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                   
-                  ) : (
-                    <View style={styles.format}>
-                    
                     <View style={styles.viewTextMap}>
                       <View style={styles.viewTextLeft}>
                         <Text style={styles.textMapAside}>Preço:</Text>
@@ -94,13 +64,41 @@ export default function MapItens({ data }) {
                     </View>
                     <View style={styles.viewTextMap}>
                       <View style={styles.viewTextLeft}>
-                        <Text style={styles.textMapAside}><Text style={styles.textMapAside}>
-                          Unidades (
-                          {itens.litragem < 1000
-                            ? itens.litragem
-                            : itens.litragem / 1000}{" "}
-                          {itens.litragem < 1000 ? "ml" : "L"}):
-                        </Text></Text>
+                        <Text style={styles.textMapAside}>Kg:</Text>
+                      </View>
+                      <View style={styles.viewMapAside}>
+                        <Text style={styles.textMapAside}>
+                          {Intl.NumberFormat("pt-BR").format(itens.kg)}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                ) : (
+                  <View style={styles.format}>
+                    <View style={styles.viewTextMap}>
+                      <View style={styles.viewTextLeft}>
+                        <Text style={styles.textMapAside}>Preço:</Text>
+                      </View>
+                      <View style={styles.viewMapAside}>
+                        <Text style={styles.textMapAside}>
+                          {Intl.NumberFormat("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          }).format(itens.preco)}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.viewTextMap}>
+                      <View style={styles.viewTextLeft}>
+                        <Text style={styles.textMapAside}>
+                          <Text style={styles.textMapAside}>
+                            Unidades (
+                            {itens.litragem < 1000
+                              ? itens.litragem
+                              : itens.litragem / 1000}{" "}
+                            {itens.litragem < 1000 ? "ml" : "L"}):
+                          </Text>
+                        </Text>
                       </View>
                       <View style={styles.viewMapAside}>
                         <Text style={styles.textMapAside}>
@@ -109,10 +107,8 @@ export default function MapItens({ data }) {
                       </View>
                     </View>
                   </View>
-                 
-                  )}
-                </View>
-              
+                )}
+              </View>
             );
           })
         : null}
@@ -134,7 +130,7 @@ const styles = StyleSheet.create({
   },
   viewTeste: {
     justifyContent: "space-between",
-    flexDirection: 'column',
+    flexDirection: "column",
     width: "100%",
   },
   viewTextLeft: {
@@ -167,21 +163,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#EED0A2",
   },
-  format:{
+  format: {
     justifyContent: "space-between",
-    display: 'flex',
-    width: '50%',
+    display: "flex",
+    width: "50%",
   },
-  format2:{
+  format2: {
     justifyContent: "space-between",
-    display: 'flex',
-    width: '40%',
+    display: "flex",
+    width: "40%",
   },
-  viewTextMap:{
+  viewTextMap: {
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    
-  }
+  },
 });
