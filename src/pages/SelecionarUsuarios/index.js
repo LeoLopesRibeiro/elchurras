@@ -68,7 +68,7 @@ export default function SelecionarUsuarios({ navigation }) {
                       <TouchableOpacity onPress={() => listarChurras(index)}>
                         <Image
                           style={styles.ImgCamera}
-                          source={{ uri: itens.uri }}
+                          source={itens.uri == null ? require("../../../assets/user.png") : {uri: itens.uri}}
                         />
                         <Text style={styles.texto}>{itens.nome}</Text>
                       </TouchableOpacity>
