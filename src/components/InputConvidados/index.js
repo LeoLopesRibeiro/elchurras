@@ -16,7 +16,7 @@ export default function InputConvidados({ count, setCount }) {
         style={styles.input}
         value={`${count}`}
         onChangeText={(text) => {
-          setCountHomem(Number(text));
+          setCount(Number(text));
         }}
         placeholderTextColor="#DEDEDE"
         keyboardType="number-pad"

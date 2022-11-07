@@ -1,13 +1,13 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 
-import Assados from "../pages/Assados";
-import Bebidas from "../pages/Bebidas";
-import Locacao from "../pages/Locacao";
-import Header from "../components/Header";
-import Outros from "../pages/Outros";
+import Assados from '../pages/Assados';
+import Bebidas from '../pages/Bebidas';
+import Locacao from '../pages/Locacao';
+import Header from '../components/Header';
+import Outros from '../pages/Outros';
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 function TabRoutes({ route }) {
@@ -15,41 +15,37 @@ function TabRoutes({ route }) {
     <Tab.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#340C0C",
+          backgroundColor: '#340C0C',
         },
         headerTitleStyle: {
-          color: "#fff",
+          color: '#fff',
         },
-        tabBarStyle: {
-          borderTopColor: "#F2F2F2",
-        },
-
-        tabBarActiveTintColor: "#EED0A2",
-        tabBarInactiveTintColor: "#F2F2F2",
-        tabBarActiveBackgroundColor: "#340C0C",
-        tabBarInactiveBackgroundColor: "#340C0C",
+        tabBarActiveTintColor: '#EED0A2',
+        tabBarInactiveTintColor: '#F2F2F2',
+        tabBarActiveBackgroundColor: '#340C0C',
+        tabBarInactiveBackgroundColor: '#340C0C',
         tabBarStyle: [
           {
-            backgroundColor: "#1B1D2E",
-            display: "flex",
-            justifyContent: "space-between",
+            borderTopColor: '#F2F2F2',
+            backgroundColor: '#1B1D2E',
+            display: 'flex',
+            justifyContent: 'space-between',
           },
           null,
         ],
-      }}
-    >
+      }}>
       <Tab.Screen
         name="Assados"
         component={Assados}
         initialParams={{ resultados: route.params }}
         options={{
-          headerTitle: () => <Header />,
+          headerShown: false,
           tabBarIcon: ({ size, focused }) => {
             if (focused) {
               return (
                 <MaterialCommunityIcons
                   name="food-steak"
-                  size={24}
+                  size={size}
                   color="#EED0A2"
                 />
               );
@@ -57,7 +53,7 @@ function TabRoutes({ route }) {
               return (
                 <MaterialCommunityIcons
                   name="food-steak"
-                  size={24}
+                  size={size}
                   color="#F2F2F2"
                 />
               );
@@ -70,7 +66,7 @@ function TabRoutes({ route }) {
         component={Bebidas}
         initialParams={{ resultados: route.params }}
         options={{
-          headerTitle: () => <Header />,
+          headerShown: false,
           tabBarIcon: ({ size, focused }) => {
             if (focused) {
               return (
@@ -89,7 +85,7 @@ function TabRoutes({ route }) {
         component={Outros}
         initialParams={{ resultados: route.params }}
         options={{
-          headerTitle: () => <Header />,
+          headerShown: false,
           tabBarIcon: ({ size, focused }) => {
             if (focused) {
               return (
@@ -116,7 +112,7 @@ function TabRoutes({ route }) {
         component={Locacao}
         initialParams={{ resultados: route.params }}
         options={{
-          headerTitle: () => <Header />,
+          headerShown: false,
           tabBarIcon: ({ size, focused }) => {
             if (focused) {
               return (

@@ -7,16 +7,27 @@ import {
   ScrollView,
 } from "react-native";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
-import MapItens from '../../components/MapItens/index';
-import Total from "../../components/Total";
+import MapItens from '../../components/MapItens/index'
+import Total from '../../components/Total/index'
 
 function Assados({ navigation, route }) {
-  function goToReceitas() {
-    navigation.navigate("Receitas");
-  }
-
   const { resultados } = route.params;
 
+  function goToReceitas() {
+    const carnes = [];
+
+    resultados.carnes.forEach((carne) => {
+      carnes.push(carne.nome);
+    });
+
+    navigation.navigate("Receitas", { carnes: carnes });
+  }
+
+  const images = {
+    bovino: require("../../../assets/vaca.png"),
+    suino: require("../../../assets/porco.png"),
+    frango: require("../../../assets/galinha.png"),
+  };
 
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
@@ -33,7 +44,8 @@ function Assados({ navigation, route }) {
         </View>
         <View style={styles.cor}>
           <View style={styles.viewAlinhamento}>
-            <MapItens data={resultados.carnes}/>
+            
+            <MapItens data={resultados.carnes}/> 
             <View style={styles.ViewResultado}>
               <View style={styles.viewReceitas}>
                 <TouchableOpacity
@@ -43,7 +55,7 @@ function Assados({ navigation, route }) {
                   <Text style={styles.receitas}>Receitas</Text>
                 </TouchableOpacity>
               </View>
-             <Total data={resultados}/>
+              <Total data={resultados}/>
             </View>
           </View>
         </View>
@@ -74,7 +86,51 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  
+  textMap: {
+    color: "#fff",
+    fontSize: 15,
+    textTransform: "capitalize",
+    marginLeft: 10,
+    fontFamily: "Poppins_700Bold",
+  },
+  textMapAside: {
+    fontFamily: "Poppins_700Bold",
+    color: "#fff",
+  },
+  viewTeste: {
+    justifyContent: "space-between",
+    width: "40%",
+  },
+  viewTextLeft: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  viewMap: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  viewMapAside: {
+    display: "flex",
+    alignItems: "flex-end",
+  },
+  teste: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  view: {
+    padding: 10,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "#EED0A2",
+  },
   textTotal: {
     color: "#fff",
     fontSize: 25,

@@ -18,14 +18,7 @@ function Outros({ route }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [acougue, setAcougue] = useState([]);
   const [mercado, setMercado] = useState([]);
-  const images = {
-    carvao: require("../../../assets/carvao.png"),
-    sal: require("../../../assets/sal.png"),
-    arroz: require("../../../assets/arroz.png"),
-    farofa: require("../../../assets/farofa.png"),
-    pao: require("../../../assets/pao.png"),
-  };
-
+ 
   const { resultados } = route.params;
 
   useEffect(() => {
@@ -165,46 +158,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  textMap: {
-    color: "#fff",
-    fontSize: 15,
-    textTransform: "capitalize",
-    marginLeft: 10,
-    fontFamily: "Poppins_700Bold",
-  },
-  textMapAside: {
-    fontFamily: "Poppins_700Bold",
-    color: "#fff",
-  },
-  viewTeste: {
-    justifyContent: "space-between",
-    width: "40%",
-  },
-  viewTextLeft: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  viewMap: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   viewContato: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-  },
-  viewMapAside: {
-    display: "flex",
-    alignItems: "flex-end",
-  },
-  teste: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "row",
-    alignItems: "center",
   },
   view: {
     padding: 10,

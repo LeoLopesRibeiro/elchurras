@@ -15,7 +15,6 @@ function Header() {
 }
 const styles = StyleSheet.create({
   header: {
-    width: "100%",
     color: "#fff",
     display: "flex",
     textAlign: "center",
