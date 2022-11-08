@@ -30,10 +30,11 @@ export default function Lombo() {
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          1 Tempere o lombo com sal grosso e coloque-o no espeto. Leve à
-          churrasqueira em fogo médio e deixe dourar. Depois retire o sal
-          grosso, pincele com óleo e cubra-o com queijo ralado. Leve de volta a
-          churrasqueira, até que fique crocante.
+          <Text style={styles.strong}>1 </Text>
+            Tempere o lombo com sal grosso e coloque-o no espeto. Leve à
+            churrasqueira em fogo médio e deixe dourar. Depois retire o sal
+            grosso, pincele com óleo e cubra-o com queijo ralado. Leve de volta a
+            churrasqueira, até que fique crocante.
         </Text>
       </View>
     </View>
@@ -93,4 +94,7 @@ const styles = StyleSheet.create({
   textListModoPreparo: {
     marginTop: 5,
   },
+  strong: {
+    fontWeight: "bold",
+  }
 });

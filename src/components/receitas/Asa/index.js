@@ -36,17 +36,26 @@ export default function Asa() {
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          1 No liquidificado coloque todos os ingredientes, menos o suco do
-          limão. Bata até ficar bem pastoso.
-        </Text>
-        <Text style={styles.textListModoPreparo}>2 Limpe as asinhas.</Text>
-        <Text style={styles.textListModoPreparo}>3 Passe o suco de limão.</Text>
-        <Text style={styles.textListModoPreparo}>
-          4 Em uma vasilha coloque as asinhas e a mistura.
+          <Text style={styles.strong}>1 </Text>
+            No liquidificado coloque todos os ingredientes, menos o suco do
+            limão. Bata até ficar bem pastoso.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          5 Colocar na churrasqueira e deixar assando por cerca de 10minutos. É
-          importante virar a asa, para que ele asse por completo.
+          <Text style={styles.strong}>2 </Text>
+            Limpe as asinhas.
+        </Text>
+        <Text style={styles.textListModoPreparo}>
+          <Text style={styles.strong}>3 </Text>
+            Passe o suco de limão.
+          </Text>
+        <Text style={styles.textListModoPreparo}>
+          <Text style={styles.strong}>4 </Text>
+            Em uma vasilha coloque as asinhas e a mistura.
+        </Text>
+        <Text style={styles.textListModoPreparo}>
+          <Text style={styles.strong}>5 </Text>
+            Colocar na churrasqueira e deixar assando por cerca de 10minutos. É
+            importante virar a asa, para que ele asse por completo.
         </Text>
       </View>
     </View>
@@ -106,4 +115,7 @@ const styles = StyleSheet.create({
   textListModoPreparo: {
     marginTop: 10,
   },
+  strong: {
+    fontWeight: "bold",
+  }
 });

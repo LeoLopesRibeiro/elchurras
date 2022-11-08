@@ -34,24 +34,29 @@ export default function Coracao() {
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          1 Limpe os corações primeiro. Retire o grosso da gordura saturada e as
-          veias mais grossas. Cuide para retirar qualquer resquício de sangue
-          coagulado.
+          <Text style={styles.strong}>1 </Text>
+            Limpe os corações primeiro. Retire o grosso da gordura saturada e as
+            veias mais grossas. Cuide para retirar qualquer resquício de sangue
+            coagulado.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          2 Coloque os corações numa tigela e adicione o restante dos
-          ingredientes.
+          <Text style={styles.strong}>2 </Text>
+            Coloque os corações numa tigela e adicione o restante dos
+            ingredientes.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          3 Misture bem (usando as mãos mesmo) e cubra, selando bem com plástico
-          filme (PVC).
+          <Text style={styles.strong}>3 </Text>
+            Misture bem (usando as mãos mesmo) e cubra, selando bem com plástico
+            filme (PVC).
         </Text>
         <Text style={styles.textListModoPreparo}>
-          4 Deixar na geladeira de um dia para o outro, para o tempero penetrar
-          bem.
+          <Text style={styles.strong}>4 </Text>
+            Deixar na geladeira de um dia para o outro, para o tempero penetrar
+            bem.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          5 Retirar e fazer espetinhos na hora de colocar no fogo.
+          <Text style={styles.strong}>5 </Text>
+            Retirar e fazer espetinhos na hora de colocar no fogo.
         </Text>
       </View>
     </View>
@@ -111,4 +116,7 @@ const styles = StyleSheet.create({
   textListModoPreparo: {
     marginTop: 10,
   },
+  strong: {
+    fontWeight: 'bold',
+  }
 });

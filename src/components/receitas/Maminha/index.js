@@ -32,15 +32,18 @@ export default function Maminha() {
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          1 Em um recipiente tempere a carne com o MAGGI Gril e o molho inglês.{" "}
+            <Text style={styles.strong}>1 </Text>
+              Em um recipiente tempere a carne com o MAGGI Gril e o molho inglês.{" "}
         </Text>
         <Text style={styles.textListModoPreparo}>
-          2 Espete, alternadamente, cubos de carne, cenoura, batata e azeitona
-          em palitos para churrasco.{" "}
+          <Text style={styles.strong}>2 </Text>
+            Espete, alternadamente, cubos de carne, cenoura, batata e azeitona
+            em palitos para churrasco.{" "}
         </Text>
         <Text style={styles.textListModoPreparo}>
-          3 Coloque-os em uma forma refratária e leve-os para assar no
-          micro-ondas por 10 minutos, em potência alta. Sirva a seguir
+          <Text style={styles.strong}>3 </Text>
+            Coloque-os em uma forma refratária e leve-os para assar no
+            micro-ondas por 10 minutos, em potência alta. Sirva a seguir
         </Text>
       </View>
     </View>
@@ -100,4 +103,7 @@ const styles = StyleSheet.create({
   textListModoPreparo: {
     marginTop: 5,
   },
+  strong: {
+    fontWeight: "bold",
+  }
 });

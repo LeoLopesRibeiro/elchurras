@@ -32,19 +32,26 @@ export default function Costela() {
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          1 Depois de descongelada, deixe a costela marinando na mistura dos
-          temperos durante 2 horas em temperatura ambiente.
+          <Text style={styles.strong}>1 </Text>
+            Depois de descongelada, deixe a costela marinando na mistura dos
+            temperos durante 2 horas em temperatura ambiente.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          2 Na hora de assar, coloque a peça inteira sobre a grelha em forma de
-          cúpula já bem quente, com os ossos voltados para o fogo.
-        </Text>
-        <Text style={styles.textListModoPreparo}>3 Deixe 20 minutos.</Text>
-        <Text style={styles.textListModoPreparo}>
-          4 Vire a costela e deixe mais 20 minutos.
+          <Text style={styles.strong}>2 </Text>
+            Na hora de assar, coloque a peça inteira sobre a grelha em forma de
+            cúpula já bem quente, com os ossos voltados para o fogo.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          5 Sirva guarnecida com fatias de abacaxi grelhadas.
+          <Text style={styles.strong}>3 </Text>
+            Deixe 20 minutos.
+        </Text>
+        <Text style={styles.textListModoPreparo}>
+          <Text style={styles.strong}>4 </Text>
+            Vire a costela e deixe mais 20 minutos.
+        </Text>
+        <Text style={styles.textListModoPreparo}>
+          <Text style={styles.strong}>5 </Text>
+            Sirva guarnecida com fatias de abacaxi grelhadas.
         </Text>
       </View>
     </View>
@@ -104,4 +111,7 @@ const styles = StyleSheet.create({
   textListModoPreparo: {
     marginTop: 10,
   },
+  strong: {
+    fontWeight: "bold",
+  }
 });

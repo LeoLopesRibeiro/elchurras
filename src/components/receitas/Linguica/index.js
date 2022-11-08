@@ -27,14 +27,17 @@ export default function Linguica() {
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          1 Para fazer o churrasco é a coisa mais simples que tem: é só deixar
-          grelhar a 15cm da brasa.
+          <Text style={styles.strong}>1 </Text>
+            Para fazer o churrasco é a coisa mais simples que tem: é só deixar
+            grelhar a 15cm da brasa.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          2 Não precisa furar e nem colocar outro tempero.
+          <Text style={styles.strong}>2 </Text>
+            Não precisa furar e nem colocar outro tempero.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          3 Sirva com um pão bem fresquinho e bom apetite!.
+          <Text style={styles.strong}>3 </Text>
+            Sirva com um pão bem fresquinho e bom apetite!.
         </Text>
       </View>
     </View>
@@ -94,4 +97,7 @@ const styles = StyleSheet.create({
   textListModoPreparo: {
     marginTop: 5,
   },
+  strong: {
+    fontWeight: "bold",
+  }
 });
