@@ -30,7 +30,6 @@ function Outros({ route }) {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location.coords);
 
       const responseMercado = await api.get(
         `discover?at=${location.coords.latitude},${location.coords.longitude}&limit=3&q=supermercado&apiKey=gNuRT103voDtjaiyCV_rdniV-szQ4iKt7WpFbQBTT64`

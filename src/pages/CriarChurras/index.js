@@ -74,71 +74,81 @@ export default function CriarChurras({ navigation, route }) {
     });
   }, [navigation, goBack]); // eslint-disable-line
 
-  const [bovino, setBovino] = useState({
-    maminha: {
+  const [bovino, setBovino] = useState([
+    {
+      id: 0,
       nome: "Maminha",
       value: false,
       preco: 0.042,
       kg: 0,
     },
-    cupim: {
+    {
+      id: 1,
       nome: "Cupim",
       value: false,
       preco: 0.035,
       kg: 0,
     },
-    picanha: {
+    {
+      id: 2,
       nome: "Picanha",
       value: false,
       preco: 0.06,
       kg: 0,
     },
-  });
+  ]);
 
-  const [suino, setSuino] = useState({
-    linguica: {
+  const [suino, setSuino] = useState([
+    {
+      id: 3,
       nome: "Linguiça",
       value: false,
       preco: 0.032,
       kg: 0,
     },
-    lombo: {
+    {
+      id: 4,
       nome: "Lombo",
       value: false,
       preco: 0.04,
       kg: 0,
     },
-    costela: {
+    {
+      id: 5,
       nome: "Costela",
       value: false,
       preco: 0.03,
       kg: 0,
     },
-  });
+  ]);
 
-  const [frango, setFrango] = useState({
-    coxa: {
+  const [frango, setFrango] = useState([
+    {
+      id: 6,
       nome: "Coxa",
       value: false,
       preco: 0.02,
       kg: 0,
     },
-    coracao: {
+    {
+      id: 7,
       nome: "Coração",
       value: false,
       preco: 0.036,
       kg: 0,
     },
-    asa: {
+    {
+      id: 8,
       nome: "Asa",
       value: false,
       preco: 0.023,
       kg: 0,
     },
-  });
+  ]);
 
-  const [bebidas, setBebidas] = useState({
-    refrigerante: {
+  const [bebidas, setBebidas] = useState([
+    {
+      id: 9,
       icon: "refri",
       nome: "Refrigerante",
       value: false,
@@ -147,7 +157,8 @@ export default function CriarChurras({ navigation, route }) {
       garrafa: 2000,
       alcolico: false,
     },
-    cerveja: {
+    {
+      id: 10,
       icon: "cerveja",
       nome: "Cerveja",
       value: false,
@@ -156,7 +167,8 @@ export default function CriarChurras({ navigation, route }) {
       garrafa: 350,
       alcolico: true,
     },
-    agua: {
+    {
+      id: 11,
       icon: "agua",
       nome: "Água",
       value: false,
@@ -165,8 +177,9 @@ export default function CriarChurras({ navigation, route }) {
       garrafa: 500,
       alcolico: false,
     },
-    suco: {
-      icon: "refri",
+    {
+      id: 12,
+      icon: "suco",
       nome: "Suco",
       value: false,
       preco: 6,
@@ -174,7 +187,8 @@ export default function CriarChurras({ navigation, route }) {
       garrafa: 1000,
       alcolico: false,
     },
-    vinho: {
+    {
+      id: 13,
       icon: "vinho",
       nome: "Vinho",
       value: false,
@@ -183,7 +197,8 @@ export default function CriarChurras({ navigation, route }) {
       garrafa: 750,
       alcolico: true,
     },
-    whisky: {
+    {
+      id: 14,
       icon: "whisky",
       nome: "Whisky",
       value: false,
@@ -192,7 +207,7 @@ export default function CriarChurras({ navigation, route }) {
       garrafa: 1000,
       alcolico: true,
     },
-  });
+  ]);
 
   const [localidade, setLocalidade] = useState({
     rua: "",
@@ -211,35 +226,34 @@ export default function CriarChurras({ navigation, route }) {
     const carnesSelecionadas = [];
     const bebidasSelecionadas = [];
 
-    Object.keys(bovino).forEach((key) => {
-      if (bovino[key].value == true) {
-        bovino[key].icon = "bovino";
-        carnesSelecionadas.push(bovino[key]);
+    bovino.forEach((carne) => {
+      if (carne.value == true) {
+        carne.icon = "bovino";
+        carnesSelecionadas.push(carne);
       }
     });
 
-    Object.keys(suino).forEach((key) => {
-      if (suino[key].value == true) {
-        suino[key].icon = "suino";
-        carnesSelecionadas.push(suino[key]);
+    suino.forEach((carne) => {
+      if (carne.value == true) {
+        carne.icon = "suino";
+        carnesSelecionadas.push(carne);
       }
     });
 
-    Object.keys(frango).forEach((key) => {
-      if (frango[key].value == true) {
-        frango[key].icon = "frango";
-        carnesSelecionadas.push(frango[key]);
+    frango.forEach((carne) => {
+      if (carne.value == true) {
+        carne.icon = "frango";
+        carnesSelecionadas.push(carne);
       }
     });
 
-    Object.keys(bebidas).forEach((key) => {
-      if (bebidas[key].value == true) {
-        bebidasSelecionadas.push(bebidas[key]);
+    bebidas.forEach((bebida) => {
+      if (bebida.value == true) {
+        bebidasSelecionadas.push(bebida);
       }
     });
 
     if (countHomem + countMulher === 0) {
-      console.log("teste");
       Toast.show({
         type: "error",
         text1: "Selecione pelo menos um adulto!",
@@ -364,13 +378,12 @@ export default function CriarChurras({ navigation, route }) {
               <View style={styles.carne}>
                 <Text style={styles.carneTitulo}>Bovino:</Text>
                 <View style={styles.checkboxes}>
-                  {Object.keys(bovino).map((key) => {
+                  {bovino.map((carne) => {
                     return (
                       <CheckboxChurras
-                        key={key}
-                        data={bovino[key]}
+                        key={carne.id}
+                        data={carne}
                         value={bovino}
-                        chave={key}
                         setValue={(e) => setBovino(e)}
                         width="35%"
                       />
@@ -381,13 +394,12 @@ export default function CriarChurras({ navigation, route }) {
               <View style={styles.carne}>
                 <Text style={styles.carneTitulo}>Suino:</Text>
                 <View style={styles.checkboxes}>
-                  {Object.keys(suino).map((key) => {
+                  {suino.map((carne) => {
                     return (
                       <CheckboxChurras
-                        key={key}
-                        data={suino[key]}
+                        key={carne.id}
+                        data={carne}
                         value={suino}
-                        chave={key}
                         setValue={(e) => setSuino(e)}
                         width="35%"
                       />
@@ -398,13 +410,12 @@ export default function CriarChurras({ navigation, route }) {
               <View style={styles.carne}>
                 <Text style={styles.carneTitulo}>Frango:</Text>
                 <View style={styles.checkboxes}>
-                  {Object.keys(frango).map((key) => {
+                  {frango.map((carne) => {
                     return (
                       <CheckboxChurras
-                        key={key}
-                        data={frango[key]}
+                        key={carne.id}
+                        data={carne}
                         value={frango}
-                        chave={key}
                         setValue={(e) => setFrango(e)}
                         width="35%"
                       />
@@ -418,14 +429,13 @@ export default function CriarChurras({ navigation, route }) {
             <Text style={styles.viewTitulo}>Bebidas</Text>
             <View style={styles.checkboxesBebidas}>
               <View style={styles.checkboxesLeft}>
-                {Object.keys(bebidas).map((key, index) => {
+                {bebidas.map((bebida, index) => {
                   if (index < 3) {
                     return (
                       <CheckboxChurras
-                        key={key}
-                        data={bebidas[key]}
+                        key={bebida.id}
+                        data={bebida}
                         value={bebidas}
-                        chave={key}
                         setValue={(e) => setBebidas(e)}
                       />
                     );
@@ -433,14 +443,13 @@ export default function CriarChurras({ navigation, route }) {
                 })}
               </View>
               <View style={styles.checkboxesRight}>
-                {Object.keys(bebidas).map((key, index) => {
+                {bebidas.map((bebida, index) => {
                   if (index > 2) {
                     return (
                       <CheckboxChurras
-                        key={key}
-                        data={bebidas[key]}
+                        key={bebida.id}
+                        data={bebida}
                         value={bebidas}
-                        chave={key}
                         setValue={(e) => setBebidas(e)}
                       />
                     );

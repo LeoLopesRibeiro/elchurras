@@ -6,20 +6,29 @@ export default function CheckboxChurras({
   data,
   setValue,
   value,
-  chave,
   width,
 }) {
   function setValueHandler() {
     if (data.value) {
-      setValue({
-        ...value,
-        [chave]: { ...data, value: false },
-      });
+      setValue(
+        value.map((carne) => {
+          if (carne.id === data.id) {
+            return { ...carne, value: false };
+          } else {
+            return { ...carne };
+          }
+        })
+      );
     } else {
-      setValue({
-        ...value,
-        [chave]: { ...data, value: true },
-      });
+      setValue(
+        value.map((carne) => {
+          if (carne.id === data.id) {
+            return { ...carne, value: true };
+          } else {
+            return { ...carne };
+          }
+        })
+      );
     }
   }
 

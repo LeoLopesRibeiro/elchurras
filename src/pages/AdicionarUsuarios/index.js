@@ -69,7 +69,6 @@ export default function AdicionarUsuarios({ navigation }) {
       await AsyncStorage.setItem("usuarios", usuariosJSON);
 
       let usuariosNovo = await AsyncStorage.getItem("usuarios");
-      console.log(JSON.parse(usuariosNovo));
     } catch (e) {
       alert("Erro 404");
     }

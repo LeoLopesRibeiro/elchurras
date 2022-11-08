@@ -66,7 +66,9 @@ export default function ListarChurras({ navigation, route }) {
               })
             ) : (
               <View>
-                <Text>Você não possui nenhum churrasco</Text>
+                <Text style={styles.textSemChurras}>
+                  Você não possui nenhum churrasco
+                </Text>
               </View>
             )}
           </View>
@@ -121,6 +123,9 @@ const styles = StyleSheet.create({
   },
   buttonTexto: {
     color: "#FFF",
+    fontFamily: "Poppins_700Bold",
+  },
+  textSemChurras: {
     fontFamily: "Poppins_700Bold",
   },
 });

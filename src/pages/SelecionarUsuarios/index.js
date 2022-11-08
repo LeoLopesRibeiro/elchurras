@@ -36,10 +36,9 @@ export default function SelecionarUsuarios({ navigation }) {
 
         if (usuariosNovo !== null) {
           setCard(JSON.parse(usuariosNovo));
-          console.log(JSON.parse(usuariosNovo));
         }
       } catch (e) {
-        alert(e);
+        console.log(e)
       }
     }
 
@@ -62,7 +61,6 @@ export default function SelecionarUsuarios({ navigation }) {
     return null;
   }
 
-  console.log(card.length);
   if (card.length !== 0) {
     return (
       <View style={styles.container}>
