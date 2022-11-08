@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "El churras",
+    "name": "EL Churras",
     "slug": "elchurras",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/iconApp.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -18,13 +18,20 @@
       "**/*"
     ],
     "ios": {
+      "config": {
+        "googleMapsApiKey": "AIzaSyBr7Xip4PqhSI_ZQhHViTwBvAEMV17iG-8"
+      },
       "supportsTablet": true
     },
     "android": {
+      "config": {
+        "googleMaps": {"apiKey": "AIzaSyBr7Xip4PqhSI_ZQhHViTwBvAEMV17iG-8"}
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.techninja.elchurras"
     },
     "web": {
       "favicon": "./assets/favicon.png"
