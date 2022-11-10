@@ -1,5 +1,6 @@
-import { TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Image, Text, StyleSheet, View } from 'react-native';
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
+import GerarPDF from "../../functions/GerarPDF"
 
 export default function CardChurras({ churras, goTo }) {
   let [fontsLoaded] = useFonts({
@@ -10,10 +11,8 @@ export default function CardChurras({ churras, goTo }) {
   }
 
   return (
-    <TouchableOpacity
-      onPress={() => goTo(churras.custos_outros)}
-      style={styles.churrasCriado}
-      activeOpacity={0.8}>
+    <View
+      style={styles.churrasCriado}>
       <Image
         source={require('../../../assets/carne.png')}
         style={styles.imagemCarne}
@@ -24,7 +23,16 @@ export default function CardChurras({ churras, goTo }) {
       <Text style={styles.responsavelChurras}>
         Responsável: {churras.responsavel}
       </Text>
-    </TouchableOpacity>
+      <View style={styles.botoes}>
+        <TouchableOpacity onPress={() => goTo(churras.custos_outros)} style={styles.botaoVer}>
+          <Text style={styles.textBotoes}>Ver churrasco</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => GerarPDF(churras.custos_outros, churras.data, churras.responsavel)} style={styles.botaoCompartilhar}>
+          <Text style={styles.textBotoes}>Compartilhar </Text>
+          <Image source={require('../../../assets/share.png')} style={{width: 15, height: 15}}/>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
@@ -56,4 +64,28 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     marginTop: 10,
   },
+  botoes: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    marginTop: 20
+  },
+  textBotoes: {
+    color: "#FFF",
+    fontFamily: "Poppins_700Bold"
+  },
+  botaoVer: {
+    backgroundColor: "#DF1D1D",
+    padding: 5,
+    borderRadius: 10
+  },
+  botaoCompartilhar: {
+    backgroundColor: "#DF1D1D",
+    padding: 5,
+    borderRadius: 10,
+    display: 'flex',
+    flexDirection: "row",
+    alignItems: 'center'
+  }
 });
