@@ -12,8 +12,11 @@ import { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
+import {useFonts, Poppins_700Bold} from '@expo-google-fonts/poppins'
 
 export default function AdicionarUsuarios({ navigation }) {
+
+
   const [nome, setNome] = useState("");
   const [image, setImage] = useState();
   const [usuarios, setUsuarios] = useState([]);
@@ -78,6 +81,12 @@ export default function AdicionarUsuarios({ navigation }) {
 
   }
 
+    let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <View style={styles.conatinercard}>
@@ -108,7 +117,6 @@ export default function AdicionarUsuarios({ navigation }) {
             style={styles.TextoInput}
             placeholder="Nome"
             required
-            placeholderTextColor="#000"
             onChangeText={(text) => setNome(text)}
           />
           <TouchableOpacity
@@ -152,16 +160,18 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 10,
     bottom: 10,
+    fontFamily: "Poppins_700Bold"
   },
 
   container_TextoCard: {
     bottom: 70,
+
   },
 
   TextoCard: {
     color: "#fff",
-    fontWeight: "bold",
     fontSize: 32,
+    fontFamily: "Poppins_700Bold"
   },
 
   container_ImageCard: {
@@ -189,9 +199,9 @@ const styles = StyleSheet.create({
   },
 
   TextoBotao: {
-    fontWeight: "700",
     fontSize: 16,
     color: "white",
+    fontFamily: "Poppins_700Bold",
   },
 
   container_foto: {

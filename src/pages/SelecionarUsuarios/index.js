@@ -98,7 +98,7 @@ export default function SelecionarUsuarios({ navigation }) {
   } else {
     return (
       <View style={styles.container}>
-        <Text>Você não tem um usuario</Text>
+        <Text style={styles.textSemChurras}>Você não tem um usuario</Text>
         <View>
           <TouchableOpacity
             style={styles.buttonCriar}
@@ -178,6 +178,9 @@ const styles = StyleSheet.create({
 
   buttonTexto: {
     color: "#FFF",
+    fontFamily: "Poppins_700Bold",
+  },
+  textSemChurras: {
     fontFamily: "Poppins_700Bold",
   },
 });

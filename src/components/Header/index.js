@@ -1,6 +1,13 @@
 import { Platform, Text, View, StyleSheet, Image } from "react-native";
+import {useFonts, HeptaSlab_500Medium} from '@expo-google-fonts/hepta-slab'
 
 function Header() {
+  let [fontsLoaded] = useFonts({
+    HeptaSlab_500Medium,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <View style={styles.header}>
       <View style={styles.header}>
@@ -27,8 +34,9 @@ const styles = StyleSheet.create({
   texto: {
     marginRight: 20,
     color: "#fff",
-    fontWeight: "bold",
     fontSize: 20,
+    fontFamily: "HeptaSlab_500Medium",
+    textTransform: 'uppercase'
   },
 });
 export default Header;
