@@ -13,6 +13,7 @@ export default function Receitas({ route }) {
   const { carnes } = route.params;
 
   const receitas = {
+    Asa: <Asa />,
     Maminha: <Maminha />,
     Cupim: <Cupim />,
     Picanha: <Picanha />,
@@ -21,7 +22,6 @@ export default function Receitas({ route }) {
     Lombo: <Lombo />,
     Coxa: <Coxa />,
     Coração: <Coracao />,
-    Asa: <Asa />,
   };
 
   return (

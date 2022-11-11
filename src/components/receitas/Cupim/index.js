@@ -1,6 +1,13 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-
+import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
 export default function Cupim() {
+   let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+    Poppins_500Medium,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <View style={styles.card}>
       <Text style={styles.title}>Cupim</Text>
@@ -22,20 +29,20 @@ export default function Cupim() {
       </View>
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
-        <Text>• 3,5 kg de cupim bovino </Text>
-        <Text>• 1 xícara (chá) de sal grosso </Text>
-        <Text>• 4 dentes de alho triturados </Text>
-        <Text>• 800 gr de provolone </Text>
+        <Text style={styles.textIngredientes}>• 3,5 kg de cupim bovino </Text>
+        <Text style={styles.textIngredientes}>• 1 xícara (chá) de sal grosso </Text>
+        <Text style={styles.textIngredientes}>• 4 dentes de alho triturados </Text>
+        <Text style={styles.textIngredientes}>• 800 gr de provolone </Text>
       </View>
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>1 </Text>
+          <Text style={styles.strong}>• </Text>
           Compre o provolone numa única peça e depois fatie em tiras no formato
           “batata palito”, só que um pouco mais grossas.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>2 </Text>
+          <Text style={styles.strong}>• </Text>
           Depois, faça alguns furos na peça de cupim com o auxílio de uma faca
           fina e bem afiada, ou de um outro objeto perfurante, que permita
           retirar a tira de carne de dentro do buraco (se você apenas perfurar a
@@ -43,12 +50,12 @@ export default function Cupim() {
           contrair, fechar o furo e espremer o provolone para fora).
         </Text>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>3 </Text>
+          <Text style={styles.strong}>• </Text>
           Depois, tempere a peça com o sal grosso misturado com o alho triturado
           e embrulhe em seis voltas de papel celofane especial para churrasco.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>4 </Text>
+          <Text style={styles.strong}>• </Text>
           Na hora de assar, não tenha pressa: leve à grelha a uma distância de
           60 centímetros do braseiro vivo e deixe por pelo menos 4 horas,
           virando a peça 1 vez a cada hora. Depois, retire o papel celofane e
@@ -67,12 +74,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#EED0A2",
     marginTop: 50,
     marginBottom: 50,
-    paddingBottom: 20,
   },
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 10,
   },
   icon: {
@@ -94,16 +100,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
+    fontFamily: 'Poppins_700Bold',
   },
   titleIngredientes: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-    fontWeight: "bold",
+     fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listmodoPreparo: {
@@ -112,8 +119,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
+    fontFamily: 'Poppins_500Medium'
   },
   strong: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold'
   },
+  textIngredientes:{
+    fontFamily: 'Poppins_500Medium'
+  }
 });

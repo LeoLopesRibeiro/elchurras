@@ -1,6 +1,13 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-
+import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
 export default function Picanha() {
+   let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+    Poppins_500Medium,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <View style={styles.card}>
       <Text style={styles.title}>Picanha</Text>
@@ -22,15 +29,15 @@ export default function Picanha() {
       </View>
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
-        <Text>• 1 unidade de picanha bovina </Text>
-        <Text>• Óleo de soja a gosto</Text>
-        <Text>• Alho amassado(s) a gosto</Text>
-        <Text>• Sal a gosto</Text>
+        <Text style={styles.textIngredientes}>• 1 unidade de picanha bovina </Text>
+        <Text style={styles.textIngredientes}>• Óleo de soja a gosto</Text>
+        <Text style={styles.textIngredientes}>• Alho amassado(s) a gosto</Text>
+        <Text style={styles.textIngredientes}>• Sal a gosto</Text>
       </View>
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>1 </Text>
+          <Text style={styles.strong}>• </Text>
             Salpique a carne com um sal médio (sal grosso batido no pilão). A
             parte, faça um molho de óleo com alho socado. Passe a carne neste
             molho e escorra antes de levá-la para a brasa. Ao virar a carne, volte
@@ -46,9 +53,8 @@ export default function Picanha() {
 }
 
 const styles = StyleSheet.create({
-  card: {
+ card: {
     width: 330,
-    height: 600,
     borderRadius: 10,
     backgroundColor: "#EED0A2",
     marginTop: 50,
@@ -57,7 +63,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 10,
   },
   icon: {
@@ -79,26 +85,31 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
+    fontFamily: 'Poppins_700Bold',
   },
   titleIngredientes: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-    fontWeight: "bold",
+     fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listmodoPreparo: {
     marginLeft: 30,
-    maxWidth: 260,
+    maxWidth: 250,
   },
   textListModoPreparo: {
-    marginTop: 5,
+    marginTop: 10,
+    fontFamily: 'Poppins_500Medium'
   },
   strong: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold'
+  },
+  textIngredientes:{
+    fontFamily: 'Poppins_500Medium'
   }
 });

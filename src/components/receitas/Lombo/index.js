@@ -1,6 +1,13 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-
+import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
 export default function Lombo() {
+   let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+    Poppins_500Medium,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <View style={styles.card}>
       <Text style={styles.title}>Lombo</Text>
@@ -22,15 +29,15 @@ export default function Lombo() {
       </View>
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
-        <Text>• 1 kg de lombo de porco </Text>
-        <Text>• Sal grosso a gosto</Text>
-        <Text>• 100 gr de queijo ralado</Text>
-        <Text>• Óleo de soja a gosto</Text>
+        <Text style={styles.textIngredientes}>• 1 kg de lombo de porco </Text>
+        <Text style={styles.textIngredientes}>• Sal grosso a gosto</Text>
+        <Text style={styles.textIngredientes}>• 100 gr de queijo ralado</Text>
+        <Text style={styles.textIngredientes}>• Óleo de soja a gosto</Text>
       </View>
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>1 </Text>
+          <Text style={styles.strong}>• </Text>
             Tempere o lombo com sal grosso e coloque-o no espeto. Leve à
             churrasqueira em fogo médio e deixe dourar. Depois retire o sal
             grosso, pincele com óleo e cubra-o com queijo ralado. Leve de volta a
@@ -44,7 +51,6 @@ export default function Lombo() {
 const styles = StyleSheet.create({
   card: {
     width: 330,
-    height: 500,
     borderRadius: 10,
     backgroundColor: "#EED0A2",
     marginTop: 50,
@@ -53,7 +59,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 10,
   },
   icon: {
@@ -75,16 +81,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
+    fontFamily: 'Poppins_700Bold',
   },
   titleIngredientes: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-    fontWeight: "bold",
+     fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listmodoPreparo: {
@@ -92,9 +99,13 @@ const styles = StyleSheet.create({
     maxWidth: 250,
   },
   textListModoPreparo: {
-    marginTop: 5,
+    marginTop: 10,
+    fontFamily: 'Poppins_500Medium'
   },
   strong: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold'
+  },
+  textIngredientes:{
+    fontFamily: 'Poppins_500Medium'
   }
 });

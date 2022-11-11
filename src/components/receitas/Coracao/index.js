@@ -1,6 +1,14 @@
 import { View, Text, Image, StyleSheet } from "react-native";
+import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
 
 export default function Coracao() {
+  let [fontsLoaded] = useFonts({
+    Poppins_700Bold,
+    Poppins_500Medium,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <View style={styles.card}>
       <Text style={styles.title}>Coração</Text>
@@ -22,40 +30,40 @@ export default function Coracao() {
       </View>
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
-        <Text>• 1 kg de coração de frango </Text>
-        <Text>• 8 folhas de louro </Text>
-        <Text>• 1 e 1/2 colheres de sopa de orégano </Text>
-        <Text>• 1 e 1/2 colheres de sopa de shoyo </Text>
-        <Text>• 1 colher de sopa de tempero pronto para carne </Text>
-        <Text>• 1 colher de sopa de pimenta moída </Text>
-        <Text>• 1 colher de sopa de manteiga </Text>
-        <Text>• 1 copo com água morna </Text>
+        <Text style={styles.textIngredientes}>• 1 kg de coração de frango </Text>
+        <Text style={styles.textIngredientes}>• 8 folhas de louro </Text>
+        <Text style={styles.textIngredientes}>• 1 e 1/2 colheres de sopa de orégano </Text>
+        <Text style={styles.textIngredientes}>• 1 e 1/2 colheres de sopa de shoyo </Text>
+        <Text style={styles.textIngredientes}>• 1 colher de sopa de tempero pronto para carne </Text>
+        <Text style={styles.textIngredientes}>• 1 colher de sopa de pimenta moída </Text>
+        <Text style={styles.textIngredientes}>• 1 colher de sopa de manteiga </Text>
+        <Text style={styles.textIngredientes}>• 1 copo com água morna </Text>
       </View>
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>1 </Text>
+          <Text style={styles.strong}>• </Text>
             Limpe os corações primeiro. Retire o grosso da gordura saturada e as
             veias mais grossas. Cuide para retirar qualquer resquício de sangue
             coagulado.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>2 </Text>
+          <Text style={styles.strong}>• </Text>
             Coloque os corações numa tigela e adicione o restante dos
             ingredientes.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>3 </Text>
+          <Text style={styles.strong}>• </Text>
             Misture bem (usando as mãos mesmo) e cubra, selando bem com plástico
             filme (PVC).
         </Text>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>4 </Text>
+          <Text style={styles.strong}>• </Text>
             Deixar na geladeira de um dia para o outro, para o tempero penetrar
             bem.
         </Text>
         <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>5 </Text>
+          <Text style={styles.strong}>• </Text>
             Retirar e fazer espetinhos na hora de colocar no fogo.
         </Text>
       </View>
@@ -64,9 +72,8 @@ export default function Coracao() {
 }
 
 const styles = StyleSheet.create({
-  card: {
+ card: {
     width: 330,
-    height: 750,
     borderRadius: 10,
     backgroundColor: "#EED0A2",
     marginTop: 50,
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 10,
   },
   icon: {
@@ -97,16 +104,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
+    fontFamily: 'Poppins_700Bold',
   },
   titleIngredientes: {
-    fontWeight: "bold",
+    fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-    fontWeight: "bold",
+     fontFamily: 'Poppins_700Bold',
     padding: 20,
   },
   listmodoPreparo: {
@@ -115,8 +123,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
+    fontFamily: 'Poppins_500Medium'
   },
   strong: {
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_700Bold'
+  },
+  textIngredientes:{
+    fontFamily: 'Poppins_500Medium'
   }
 });
