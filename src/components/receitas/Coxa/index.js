@@ -1,8 +1,12 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
+import {
+  useFonts,
+  Poppins_700Bold,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
 
 export default function Coxa() {
-   let [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
   });
@@ -30,10 +34,18 @@ export default function Coxa() {
       </View>
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
-        <Text style={styles.textIngredientes}>• 1 kg coxinha da asa do frango </Text>
-        <Text style={styles.textIngredientes}>• 1 saquinho de sopa de cebola </Text>
-        <Text style={styles.textIngredientes}>• 300 g de alho bem picadinho </Text>
-        <Text style={styles.textIngredientes}>• 1 frasco de mostarda mostarda </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 kg coxinha da asa do frango{" "}
+        </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 saquinho de sopa de cebola{" "}
+        </Text>
+        <Text style={styles.textIngredientes}>
+          • 300 g de alho bem picadinho{" "}
+        </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 frasco de mostarda mostarda{" "}
+        </Text>
         <Text style={styles.textIngredientes}>• Sal a gosto </Text>
         <Text style={styles.textIngredientes}>• Molho de pimenta </Text>
       </View>
@@ -41,12 +53,12 @@ export default function Coxa() {
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Tempere as coxas a gosto.
+          Tempere as coxas a gosto.
         </Text>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Colocar na churrasqueira e deixar assando por cerca de 20minutos. É
-            importante virar o frango, para que ele asse por completo.
+          Colocar na churrasqueira e deixar assando por cerca de 20minutos. É
+          importante virar o frango, para que ele asse por completo.
         </Text>
       </View>
     </View>
@@ -64,7 +76,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 10,
   },
   icon: {
@@ -86,17 +98,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   titleIngredientes: {
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-     fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listmodoPreparo: {
@@ -105,12 +117,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: "Poppins_500Medium",
   },
   strong: {
-    fontFamily: 'Poppins_700Bold'
+    fontFamily: "Poppins_700Bold",
   },
-  textIngredientes:{
-    fontFamily: 'Poppins_500Medium'
-  }
+  textIngredientes: {
+    fontFamily: "Poppins_500Medium",
+  },
 });

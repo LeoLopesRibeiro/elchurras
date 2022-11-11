@@ -1,9 +1,12 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
-
+import {
+  useFonts,
+  Poppins_700Bold,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
 
 export default function Costela() {
-   let [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
   });
@@ -31,36 +34,44 @@ export default function Costela() {
       </View>
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
-        <Text style={styles.textIngredientes}>• 1 1/2 kg de costela de porco (peça) </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 1/2 kg de costela de porco (peça){" "}
+        </Text>
         <Text style={styles.textIngredientes}>• 1/2 colher (café) de sal </Text>
-        <Text style={styles.textIngredientes}>• 2 dentes de alho descascados e moídos </Text>
+        <Text style={styles.textIngredientes}>
+          • 2 dentes de alho descascados e moídos{" "}
+        </Text>
         <Text style={styles.textIngredientes}>• 1 pitada de noz-moscada </Text>
-        <Text style={styles.textIngredientes}>• 1 colher (chá) de salsinha picada </Text>
-        <Text style={styles.textIngredientes}>• 1 copo (americano) de cerveja escura </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 colher (chá) de salsinha picada{" "}
+        </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 copo (americano) de cerveja escura{" "}
+        </Text>
       </View>
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Depois de descongelada, deixe a costela marinando na mistura dos
-            temperos durante 2 horas em temperatura ambiente.
+          Depois de descongelada, deixe a costela marinando na mistura dos
+          temperos durante 2 horas em temperatura ambiente.
         </Text>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Na hora de assar, coloque a peça inteira sobre a grelha em forma de
-            cúpula já bem quente, com os ossos voltados para o fogo.
+          Na hora de assar, coloque a peça inteira sobre a grelha em forma de
+          cúpula já bem quente, com os ossos voltados para o fogo.
         </Text>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Deixe 20 minutos.
+          Deixe 20 minutos.
         </Text>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Vire a costela e deixe mais 20 minutos.
+          Vire a costela e deixe mais 20 minutos.
         </Text>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Sirva guarnecida com fatias de abacaxi grelhadas.
+          Sirva guarnecida com fatias de abacaxi grelhadas.
         </Text>
       </View>
     </View>
@@ -68,7 +79,7 @@ export default function Costela() {
 }
 
 const styles = StyleSheet.create({
- card: {
+  card: {
     width: 330,
     borderRadius: 10,
     backgroundColor: "#EED0A2",
@@ -78,7 +89,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 10,
   },
   icon: {
@@ -100,17 +111,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   titleIngredientes: {
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-     fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listmodoPreparo: {
@@ -119,12 +130,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: "Poppins_500Medium",
   },
   strong: {
-    fontFamily: 'Poppins_700Bold'
+    fontFamily: "Poppins_700Bold",
   },
-  textIngredientes:{
-    fontFamily: 'Poppins_500Medium'
-  }
+  textIngredientes: {
+    fontFamily: "Poppins_500Medium",
+  },
 });

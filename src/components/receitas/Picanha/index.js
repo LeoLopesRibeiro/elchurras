@@ -1,7 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
+import {
+  useFonts,
+  Poppins_700Bold,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
 export default function Picanha() {
-   let [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
   });
@@ -29,7 +33,9 @@ export default function Picanha() {
       </View>
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
-        <Text style={styles.textIngredientes}>• 1 unidade de picanha bovina </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 unidade de picanha bovina{" "}
+        </Text>
         <Text style={styles.textIngredientes}>• Óleo de soja a gosto</Text>
         <Text style={styles.textIngredientes}>• Alho amassado(s) a gosto</Text>
         <Text style={styles.textIngredientes}>• Sal a gosto</Text>
@@ -38,14 +44,14 @@ export default function Picanha() {
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Salpique a carne com um sal médio (sal grosso batido no pilão). A
-            parte, faça um molho de óleo com alho socado. Passe a carne neste
-            molho e escorra antes de levá-la para a brasa. Ao virar a carne, volte
-            a salpicá-la e coloque um pouco do molho (sem que escorra muito para o
-            braseiro). Para saber se a carne já está macia use a parte lateral do
-            garfo ou a parte sem corte da faca. Não fure a carne, pois ela perde o
-            sangue e resseca (vire-a com a lateral da faca ou uma espátula
-            própria).
+          Salpique a carne com um sal médio (sal grosso batido no pilão). A
+          parte, faça um molho de óleo com alho socado. Passe a carne neste
+          molho e escorra antes de levá-la para a brasa. Ao virar a carne, volte
+          a salpicá-la e coloque um pouco do molho (sem que escorra muito para o
+          braseiro). Para saber se a carne já está macia use a parte lateral do
+          garfo ou a parte sem corte da faca. Não fure a carne, pois ela perde o
+          sangue e resseca (vire-a com a lateral da faca ou uma espátula
+          própria).
         </Text>
       </View>
     </View>
@@ -53,7 +59,7 @@ export default function Picanha() {
 }
 
 const styles = StyleSheet.create({
- card: {
+  card: {
     width: 330,
     borderRadius: 10,
     backgroundColor: "#EED0A2",
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 10,
   },
   icon: {
@@ -85,17 +91,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   titleIngredientes: {
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-     fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listmodoPreparo: {
@@ -104,12 +110,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: "Poppins_500Medium",
   },
   strong: {
-    fontFamily: 'Poppins_700Bold'
+    fontFamily: "Poppins_700Bold",
   },
-  textIngredientes:{
-    fontFamily: 'Poppins_500Medium'
-  }
+  textIngredientes: {
+    fontFamily: "Poppins_500Medium",
+  },
 });

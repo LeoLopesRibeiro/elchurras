@@ -1,7 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
+import {
+  useFonts,
+  Poppins_700Bold,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
 export default function Lombo() {
-   let [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
   });
@@ -38,10 +42,10 @@ export default function Lombo() {
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Tempere o lombo com sal grosso e coloque-o no espeto. Leve à
-            churrasqueira em fogo médio e deixe dourar. Depois retire o sal
-            grosso, pincele com óleo e cubra-o com queijo ralado. Leve de volta a
-            churrasqueira, até que fique crocante.
+          Tempere o lombo com sal grosso e coloque-o no espeto. Leve à
+          churrasqueira em fogo médio e deixe dourar. Depois retire o sal
+          grosso, pincele com óleo e cubra-o com queijo ralado. Leve de volta a
+          churrasqueira, até que fique crocante.
         </Text>
       </View>
     </View>
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 10,
   },
   icon: {
@@ -81,17 +85,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   titleIngredientes: {
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-     fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listmodoPreparo: {
@@ -100,12 +104,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: "Poppins_500Medium",
   },
   strong: {
-    fontFamily: 'Poppins_700Bold'
+    fontFamily: "Poppins_700Bold",
   },
-  textIngredientes:{
-    fontFamily: 'Poppins_500Medium'
-  }
+  textIngredientes: {
+    fontFamily: "Poppins_500Medium",
+  },
 });

@@ -1,7 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
+import {
+  useFonts,
+  Poppins_700Bold,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
 export default function Linguica() {
-   let [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
   });
@@ -35,16 +39,16 @@ export default function Linguica() {
       <View style={styles.listmodoPreparo}>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Para fazer o churrasco é a coisa mais simples que tem: é só deixar
-            grelhar a 15cm da brasa.
+          Para fazer o churrasco é a coisa mais simples que tem: é só deixar
+          grelhar a 15cm da brasa.
         </Text>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Não precisa furar e nem colocar outro tempero.
+          Não precisa furar e nem colocar outro tempero.
         </Text>
         <Text style={styles.textListModoPreparo}>
           <Text style={styles.strong}>• </Text>
-            Sirva com um pão bem fresquinho e bom apetite!.
+          Sirva com um pão bem fresquinho e bom apetite!.
         </Text>
       </View>
     </View>
@@ -52,7 +56,7 @@ export default function Linguica() {
 }
 
 const styles = StyleSheet.create({
- card: {
+  card: {
     width: 330,
     borderRadius: 10,
     backgroundColor: "#EED0A2",
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 10,
   },
   icon: {
@@ -84,17 +88,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   titleIngredientes: {
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-     fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listmodoPreparo: {
@@ -103,12 +107,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: "Poppins_500Medium",
   },
   strong: {
-    fontFamily: 'Poppins_700Bold'
+    fontFamily: "Poppins_700Bold",
   },
-  textIngredientes:{
-    fontFamily: 'Poppins_500Medium'
-  }
+  textIngredientes: {
+    fontFamily: "Poppins_500Medium",
+  },
 });

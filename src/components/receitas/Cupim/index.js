@@ -1,7 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import {useFonts, Poppins_700Bold, Poppins_500Medium} from "@expo-google-fonts/poppins";
+import {
+  useFonts,
+  Poppins_700Bold,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
 export default function Cupim() {
-   let [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
   });
@@ -30,8 +34,12 @@ export default function Cupim() {
       <Text style={styles.titleIngredientes}>Ingredientes</Text>
       <View style={styles.listIngredientes}>
         <Text style={styles.textIngredientes}>• 3,5 kg de cupim bovino </Text>
-        <Text style={styles.textIngredientes}>• 1 xícara (chá) de sal grosso </Text>
-        <Text style={styles.textIngredientes}>• 4 dentes de alho triturados </Text>
+        <Text style={styles.textIngredientes}>
+          • 1 xícara (chá) de sal grosso{" "}
+        </Text>
+        <Text style={styles.textIngredientes}>
+          • 4 dentes de alho triturados{" "}
+        </Text>
         <Text style={styles.textIngredientes}>• 800 gr de provolone </Text>
       </View>
       <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
@@ -78,7 +86,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 10,
   },
   icon: {
@@ -100,17 +108,17 @@ const styles = StyleSheet.create({
   },
   textIcon: {
     marginLeft: 5,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
   },
   titleIngredientes: {
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listIngredientes: {
     marginLeft: 30,
   },
   titleModoPreparo: {
-     fontFamily: 'Poppins_700Bold',
+    fontFamily: "Poppins_700Bold",
     padding: 20,
   },
   listmodoPreparo: {
@@ -119,12 +127,12 @@ const styles = StyleSheet.create({
   },
   textListModoPreparo: {
     marginTop: 10,
-    fontFamily: 'Poppins_500Medium'
+    fontFamily: "Poppins_500Medium",
   },
   strong: {
-    fontFamily: 'Poppins_700Bold'
+    fontFamily: "Poppins_700Bold",
   },
-  textIngredientes:{
-    fontFamily: 'Poppins_500Medium'
-  }
+  textIngredientes: {
+    fontFamily: "Poppins_500Medium",
+  },
 });

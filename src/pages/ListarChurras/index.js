@@ -23,6 +23,26 @@ export default function ListarChurras({ navigation, route }) {
     navigation.navigate("Resultados", custos);
   }
 
+  async function deletarCardChurras(idChurras) {
+    try {
+      const usuarios = await AsyncStorage.getItem("usuarios");
+      if (usuarios !== null) {
+        const parseUsuarios = JSON.parse(usuarios);
+        const novoChurras = parseUsuarios[id].churras.filter((item, index) => {
+          if (index !== idChurras) {
+            return item;
+          }
+        });
+
+        parseUsuarios[id].churras = novoChurras;
+
+        await AsyncStorage.setItem("usuarios", JSON.stringify(parseUsuarios));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     async function getUsuarios() {
       try {
@@ -40,7 +60,7 @@ export default function ListarChurras({ navigation, route }) {
     });
 
     getUsuarios();
-  }, [navigation]); //eslint-disable-line
+  }, [navigation, deletarCardChurras]); //eslint-disable-line
 
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
@@ -61,6 +81,7 @@ export default function ListarChurras({ navigation, route }) {
                     key={index}
                     churras={churras}
                     goTo={(e) => goToCustos(e)}
+                    delChurras={() => deletarCardChurras(index)}
                   />
                 );
               })
