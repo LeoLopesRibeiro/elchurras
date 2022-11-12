@@ -4,9 +4,9 @@ export default function ModalChurras({ genPdf, delChurras }) {
   return (
     <View style={styles.modalChurras}>
       <View>
-        <TouchableOpacity style={styles.botao}>
+        <TouchableOpacity style={styles.botao} onPress={() => genPdf()}>
           <View style={styles.viewBotao}>
-            <Text style={styles.textBotoes} onPress={() => genPdf()}>
+            <Text style={styles.textBotoes}>
               Compartilhar{" "}
             </Text>
             <Image
