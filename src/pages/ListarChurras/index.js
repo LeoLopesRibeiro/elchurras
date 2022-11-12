@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 
 export default function ListarChurras({ navigation, route }) {
   const [listaChurras, setListaChurras] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
 
   const { id } = route.params;
 
@@ -24,31 +26,40 @@ export default function ListarChurras({ navigation, route }) {
   }
 
   async function deletarCardChurras(idChurras) {
-    try {
-      const usuarios = await AsyncStorage.getItem("usuarios");
-      if (usuarios !== null) {
-        const parseUsuarios = JSON.parse(usuarios);
-        const novoChurras = parseUsuarios[id].churras.filter((item, index) => {
-          if (index !== idChurras) {
-            return item;
-          }
-        });
-
-        parseUsuarios[id].churras = novoChurras;
-
-        await AsyncStorage.setItem("usuarios", JSON.stringify(parseUsuarios));
+    const novoChurras = usuarios[id].churras.filter((item, index) => {
+      if (index !== idChurras) {
+        return item;
       }
+    });
+
+    usuarios[id].churras = novoChurras;
+    setListaChurras(novoChurras);
+
+    try {
+      await AsyncStorage.setItem("usuarios", JSON.stringify(usuarios));
     } catch (e) {
       console.log(e);
     }
   }
 
+  function alertaDeletar(idChurras) {
+    Alert.alert("Deletar churrasco", "Deseja deletar esse churrasco?", [
+      {
+        text: "Cancelar",
+        onPress: () => null,
+        style: "cancel",
+      },
+      { text: "Sim", onPress: () => deletarCardChurras(idChurras) },
+    ]);
+  }
+
   useEffect(() => {
     async function getUsuarios() {
       try {
-        const usuarios = await AsyncStorage.getItem("usuarios");
-        if (usuarios !== null) {
-          setListaChurras(JSON.parse(usuarios)[id].churras);
+        const usuariosLocal = await AsyncStorage.getItem("usuarios");
+        if (usuariosLocal !== null) {
+          setUsuarios(JSON.parse(usuariosLocal));
+          setListaChurras(JSON.parse(usuariosLocal)[id].churras);
         }
       } catch (e) {
         console.log(e);
@@ -60,7 +71,7 @@ export default function ListarChurras({ navigation, route }) {
     });
 
     getUsuarios();
-  }, [navigation, deletarCardChurras]); //eslint-disable-line
+  }, [navigation]); //eslint-disable-line
 
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
@@ -81,7 +92,7 @@ export default function ListarChurras({ navigation, route }) {
                     key={index}
                     churras={churras}
                     goTo={(e) => goToCustos(e)}
-                    delChurras={() => deletarCardChurras(index)}
+                    delChurras={() => alertaDeletar(index)}
                   />
                 );
               })

@@ -1,10 +1,4 @@
-import {
-  TouchableOpacity,
-  Image,
-  Text,
-  StyleSheet,
-  View,
-} from "react-native";
+import { TouchableOpacity, Image, Text, StyleSheet, View } from "react-native";
 import { useFonts, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import { useState, useEffect } from "react";
 import ModalChurras from "../ModalChurras";
@@ -15,20 +9,28 @@ export default function CardChurras({ churras, goTo, delChurras }) {
 
   const [modal, setModal] = useState(null);
 
+  function handleDeletarChurras() {
+    setStatusModal(false);
+    delChurras();
+  }
+
+  function handleCompartilharChurras() {
+    setStatusModal(false);
+    GerarPDF(churras.custos_outros, churras.data, churras.responsavel);
+  }
+
   useEffect(() => {
     if (statusModal) {
       setModal(
         <ModalChurras
-          genPdf={() =>
-            GerarPDF(churras.custos_outros, churras.data, churras.responsavel)
-          }
-          delChurras={() => delChurras()}
+          genPdf={handleCompartilharChurras}
+          delChurras={handleDeletarChurras}
         />
       );
     } else {
       setModal(null);
     }
-  }, [statusModal]); // eslint-disable-line
+  }, [statusModal]);
 
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
@@ -65,10 +67,10 @@ export default function CardChurras({ churras, goTo, delChurras }) {
               statusModal ? setStatusModal(false) : setStatusModal(true)
             }
           >
-            {/* <Image
+            <Image
               source={require("../../../assets/pontos.png")}
               style={{ width: 30, height: 30 }}
-            /> */}
+            />
           </TouchableOpacity>
         </View>
         {modal}

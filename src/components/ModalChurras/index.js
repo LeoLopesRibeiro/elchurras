@@ -4,22 +4,29 @@ export default function ModalChurras({ genPdf, delChurras }) {
   return (
     <View style={styles.modalChurras}>
       <View>
-        <TouchableOpacity style={styles.botaoCompartilhar}>
-          <Text style={styles.textBotoes} onPress={() => genPdf()}>
-            Compartilhar{" "}
+        <TouchableOpacity style={styles.botao}>
+          <View style={styles.viewBotao}>
+            <Text style={styles.textBotoes} onPress={() => genPdf()}>
+              Compartilhar{" "}
+            </Text>
             <Image
               source={require("../../../assets/share.png")}
-              style={{ width: 15, height: 15 }}
+              style={{ width: 15, height: 15, marginBottom: 5 }}
             />
-          </Text>
+          </View>
         </TouchableOpacity>
       </View>
       <View>
-        <TouchableOpacity
-          style={styles.botaoCompartilhar}
-          onPress={() => delChurras()}
-        >
-          <Text style={styles.textBotoes}>Deletar churras</Text>
+        <TouchableOpacity style={styles.botao} onPress={() => delChurras()}>
+          <View style={styles.viewBotao}>
+            <Text style={styles.textBotoes}>Deletar churras
+            
+            </Text>
+            <Image
+              source={require("../../../assets/lixo.png")}
+              style={{ width: 15, height: 15, marginBottom: 5 }}
+            />
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -35,20 +42,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "space-between",
   },
-  botaoCompartilhar: {
+  botao: {
     backgroundColor: "#DF1D1D",
     borderRadius: 10,
     padding: 5,
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
     width: "100%",
-    justifyContent: "center",
+  },
+  viewBotao: {
+    flexDirection: "row",
+    width: '100%',
+    alignItems: "center",
+    justifyContent: "center"
   },
   textBotoes: {
     color: "#FFF",
     fontFamily: "Poppins_700Bold",
-    width: "100%",
-    textAlign: "center",
+    marginRight: 8
   },
 });
