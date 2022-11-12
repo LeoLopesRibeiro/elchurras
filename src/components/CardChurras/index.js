@@ -65,10 +65,10 @@ export default function CardChurras({ churras, goTo, delChurras }) {
               statusModal ? setStatusModal(false) : setStatusModal(true)
             }
           >
-            <Image
+            {/* <Image
               source={require("../../../assets/pontos.png")}
               style={{ width: 30, height: 30 }}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
         {modal}

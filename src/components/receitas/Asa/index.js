@@ -1,4 +1,7 @@
 import { View, Text, Image, StyleSheet } from "react-native";
+import React, {useRef} from 'react';
+import YoutubePlayer from "react-native-youtube-iframe";
+
 import {
   useFonts,
   Poppins_700Bold,
@@ -6,6 +9,8 @@ import {
 } from "@expo-google-fonts/poppins";
 
 export default function Asa() {
+  const playerRef = useRef();
+
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -15,67 +20,62 @@ export default function Asa() {
   }
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.title}>Asinha Frango</Text>
-      <View style={styles.divIcons}>
-        <View style={styles.divTempo}>
-          <Image
-            source={require("../../../../assets/watch.png")}
-            style={styles.icon}
-          />
-          <Text style={styles.textIcon}>10min</Text>
+    <View>
+      <View style={styles.card}>
+        <Text style={styles.title}>Asinha Frango</Text>
+        <View style={styles.divIcons}>
+          <View style={styles.divTempo}>
+            <Image
+              source={require("../../../../assets/watch.png")}
+              style={styles.icon}
+            />
+            <Text style={styles.textIcon}>10min</Text>
+          </View>
+          <View style={styles.divPorcao}>
+            <Image
+              source={require("../../../../assets/prato.png")}
+              style={styles.icon}
+            />
+            <Text style={styles.textIcon}>1 porções</Text>
+          </View>
         </View>
-        <View style={styles.divPorcao}>
-          <Image
-            source={require("../../../../assets/prato.png")}
-            style={styles.icon}
-          />
-          <Text style={styles.textIcon}>1 porções</Text>
+        <Text style={styles.titleIngredientes}>Ingredientes</Text>
+        <View style={styles.listIngredientes}>
+          <Text>• 1 kg de asinhas de frango com coxinhas ou tulipas </Text>
+          <Text>• sal a gosto </Text>
+          <Text>• 1 colher pimenta rosa </Text>
+          <Text>• meio maço de salsinha </Text>
+          <Text>• suco de 1 limão </Text>
+          <Text>• 8 dentes de alho </Text>
+          <Text>• 1 colher de pimenta do reino </Text>
+          <Text>• 1/2 xicara de azeite </Text>
+          <Text>• 1 colher de paprica ou colorau </Text>
+          <Text>• 1 cebola grande </Text>
+        </View>
+        <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
+        <View style={styles.listmodoPreparo}>
+          <Text style={styles.textListModoPreparo}>
+            1 No liquidificado coloque todos os ingredientes, menos o suco do
+            limão. Bata até ficar bem pastoso.
+          </Text>
+          <Text style={styles.textListModoPreparo}>2 Limpe as asinhas.</Text>
+          <Text style={styles.textListModoPreparo}>3 Passe o suco de limão.</Text>
+          <Text style={styles.textListModoPreparo}>
+            4 Em uma vasilha coloque as asinhas e a mistura.
+          </Text>
+          <Text style={styles.textListModoPreparo}>
+            5 Colocar na churrasqueira e deixar assando por cerca de 10minutos. É
+            importante virar a asa, para que ele asse por completo.
+          </Text>
         </View>
       </View>
-      <Text style={styles.titleIngredientes}>Ingredientes</Text>
-      <View style={styles.listIngredientes}>
-        <Text style={styles.textIngredientes}>
-          • 1 kg de asinhas de frango com coxinhas ou tulipas{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>• sal a gosto </Text>
-        <Text style={styles.textIngredientes}>• 1 colher pimenta rosa </Text>
-        <Text style={styles.textIngredientes}>• meio maço de salsinha </Text>
-        <Text style={styles.textIngredientes}>• suco de 1 limão </Text>
-        <Text style={styles.textIngredientes}>• 8 dentes de alho </Text>
-        <Text style={styles.textIngredientes}>
-          • 1 colher de pimenta do reino{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>• 1/2 xicara de azeite </Text>
-        <Text style={styles.textIngredientes}>
-          • 1 colher de paprica ou colorau{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>• 1 cebola grande </Text>
-      </View>
-      <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
-      <View style={styles.listmodoPreparo}>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          No liquidificado coloque todos os ingredientes, menos o suco do limão.
-          Bata até ficar bem pastoso.
-        </Text>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Limpe as asinhas.
-        </Text>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Passe o suco de limão.
-        </Text>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Em uma vasilha coloque as asinhas e a mistura.
-        </Text>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Colocar na churrasqueira e deixar assando por cerca de 10minutos. É
-          importante virar a asa, para que ele asse por completo.
-        </Text>
+      <View style={styles.video}>
+        <YoutubePlayer
+          ref={playerRef}
+          height={330}
+          width={330}
+          videoId={'lsqLeI_EQYE'}
+        />
       </View>
     </View>
   );
