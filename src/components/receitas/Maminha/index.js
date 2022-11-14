@@ -1,10 +1,15 @@
 import { View, Text, Image, StyleSheet } from "react-native";
+import React, {useRef} from 'react';
+import YoutubePlayer from "react-native-youtube-iframe";
 import {
   useFonts,
   Poppins_700Bold,
   Poppins_500Medium,
 } from "@expo-google-fonts/poppins";
 export default function Maminha() {
+
+  const playerRef = useRef();
+
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -13,59 +18,69 @@ export default function Maminha() {
     return null;
   }
   return (
-    <View style={styles.card}>
-      <Text style={styles.title}>Maminha</Text>
-      <View style={styles.divIcons}>
-        <View style={styles.divTempo}>
-          <Image
-            source={require("../../../../assets/watch.png")}
-            style={styles.icon}
-          />
-          <Text style={styles.textIcon}>20min</Text>
+    <View>
+      <View style={styles.card}>
+        <Text style={styles.title}>Maminha</Text>
+        <View style={styles.divIcons}>
+          <View style={styles.divTempo}>
+            <Image
+              source={require("../../../../assets/watch.png")}
+              style={styles.icon}
+            />
+            <Text style={styles.textIcon}>20min</Text>
+          </View>
+          <View style={styles.divPorcao}>
+            <Image
+              source={require("../../../../assets/prato.png")}
+              style={styles.icon}
+            />
+            <Text style={styles.textIcon}>4 porções</Text>
+          </View>
         </View>
-        <View style={styles.divPorcao}>
-          <Image
-            source={require("../../../../assets/prato.png")}
-            style={styles.icon}
-          />
-          <Text style={styles.textIcon}>4 porções</Text>
+        <Text style={styles.titleIngredientes}>Ingredientes</Text>
+        <View style={styles.listIngredientes}>
+          <Text style={styles.textIngredientes}>
+            • 250 g de alcatra em cubos{" "}
+          </Text>
+          <Text style={styles.textIngredientes}>
+            • 1 colher (chá) de MAGGI® Gril
+          </Text>
+          <Text style={styles.textIngredientes}>
+            • 2 colheres (sopa) de molho inglês
+          </Text>
+          <Text style={styles.textIngredientes}>
+            • 1 cenoura cozida em rodelas
+          </Text>
+          <Text style={styles.textIngredientes}>• 1 batata cozida em cubos</Text>
+          <Text style={styles.textIngredientes}>
+            • 4 azeitonas verdes sem caroço
+          </Text>
+        </View>
+        <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
+        <View style={styles.listmodoPreparo}>
+          <Text style={styles.textListModoPreparo}>
+            <Text style={styles.strong}>• </Text>
+            Em um recipiente tempere a carne com o MAGGI Gril e o molho inglês.{" "}
+          </Text>
+          <Text style={styles.textListModoPreparo}>
+            <Text style={styles.strong}>• </Text>
+            Espete, alternadamente, cubos de carne, cenoura, batata e azeitona em
+            palitos para churrasco.{" "}
+          </Text>
+          <Text style={styles.textListModoPreparo}>
+            <Text style={styles.strong}>• </Text>
+            Coloque-os em uma forma refratária e leve-os para assar no micro-ondas
+            por 10 minutos, em potência alta. Sirva a seguir
+          </Text>
         </View>
       </View>
-      <Text style={styles.titleIngredientes}>Ingredientes</Text>
-      <View style={styles.listIngredientes}>
-        <Text style={styles.textIngredientes}>
-          • 250 g de alcatra em cubos{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>
-          • 1 colher (chá) de MAGGI® Gril
-        </Text>
-        <Text style={styles.textIngredientes}>
-          • 2 colheres (sopa) de molho inglês
-        </Text>
-        <Text style={styles.textIngredientes}>
-          • 1 cenoura cozida em rodelas
-        </Text>
-        <Text style={styles.textIngredientes}>• 1 batata cozida em cubos</Text>
-        <Text style={styles.textIngredientes}>
-          • 4 azeitonas verdes sem caroço
-        </Text>
-      </View>
-      <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
-      <View style={styles.listmodoPreparo}>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Em um recipiente tempere a carne com o MAGGI Gril e o molho inglês.{" "}
-        </Text>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Espete, alternadamente, cubos de carne, cenoura, batata e azeitona em
-          palitos para churrasco.{" "}
-        </Text>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Coloque-os em uma forma refratária e leve-os para assar no micro-ondas
-          por 10 minutos, em potência alta. Sirva a seguir
-        </Text>
+      <View style={styles.video}>
+        <YoutubePlayer
+          ref={playerRef}
+          height={330}
+          width={330}
+          videoId={'ebVV2_QauDY'}
+        />
       </View>
     </View>
   );

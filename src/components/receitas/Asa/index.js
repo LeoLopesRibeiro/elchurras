@@ -9,6 +9,7 @@ import {
 } from "@expo-google-fonts/poppins";
 
 export default function Asa() {
+
   const playerRef = useRef();
 
   let [fontsLoaded] = useFonts({

@@ -1,4 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native";
+import React, {useRef} from 'react';
+import YoutubePlayer from "react-native-youtube-iframe";
 import {
   useFonts,
   Poppins_700Bold,
@@ -6,6 +8,9 @@ import {
 } from "@expo-google-fonts/poppins";
 
 export default function Coxa() {
+
+  const playerRef = useRef();
+  
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -14,52 +19,62 @@ export default function Coxa() {
     return null;
   }
   return (
-    <View style={styles.card}>
-      <Text style={styles.title}>Coxa Frango</Text>
-      <View style={styles.divIcons}>
-        <View style={styles.divTempo}>
-          <Image
-            source={require("../../../../assets/watch.png")}
-            style={styles.icon}
-          />
-          <Text style={styles.textIcon}>50min</Text>
+    <View>
+      <View style={styles.card}>
+        <Text style={styles.title}>Coxa Frango</Text>
+        <View style={styles.divIcons}>
+          <View style={styles.divTempo}>
+            <Image
+              source={require("../../../../assets/watch.png")}
+              style={styles.icon}
+            />
+            <Text style={styles.textIcon}>50min</Text>
+          </View>
+          <View style={styles.divPorcao}>
+            <Image
+              source={require("../../../../assets/prato.png")}
+              style={styles.icon}
+            />
+            <Text style={styles.textIcon}>6 porções</Text>
+          </View>
         </View>
-        <View style={styles.divPorcao}>
-          <Image
-            source={require("../../../../assets/prato.png")}
-            style={styles.icon}
-          />
-          <Text style={styles.textIcon}>6 porções</Text>
+        <Text style={styles.titleIngredientes}>Ingredientes</Text>
+        <View style={styles.listIngredientes}>
+          <Text style={styles.textIngredientes}>
+            • 1 kg coxinha da asa do frango{" "}
+          </Text>
+          <Text style={styles.textIngredientes}>
+            • 1 saquinho de sopa de cebola{" "}
+          </Text>
+          <Text style={styles.textIngredientes}>
+            • 300 g de alho bem picadinho{" "}
+          </Text>
+          <Text style={styles.textIngredientes}>
+            • 1 frasco de mostarda mostarda{" "}
+          </Text>
+          <Text style={styles.textIngredientes}>• Sal a gosto </Text>
+          <Text style={styles.textIngredientes}>• Molho de pimenta </Text>
+        </View>
+        <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
+        <View style={styles.listmodoPreparo}>
+          <Text style={styles.textListModoPreparo}>
+            <Text style={styles.strong}>• </Text>
+            Tempere as coxas a gosto.
+          </Text>
+          <Text style={styles.textListModoPreparo}>
+            <Text style={styles.strong}>• </Text>
+            Colocar na churrasqueira e deixar assando por cerca de 20minutos. É
+            importante virar o frango, para que ele asse por completo.
+          </Text>
         </View>
       </View>
-      <Text style={styles.titleIngredientes}>Ingredientes</Text>
-      <View style={styles.listIngredientes}>
-        <Text style={styles.textIngredientes}>
-          • 1 kg coxinha da asa do frango{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>
-          • 1 saquinho de sopa de cebola{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>
-          • 300 g de alho bem picadinho{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>
-          • 1 frasco de mostarda mostarda{" "}
-        </Text>
-        <Text style={styles.textIngredientes}>• Sal a gosto </Text>
-        <Text style={styles.textIngredientes}>• Molho de pimenta </Text>
-      </View>
-      <Text style={styles.titleModoPreparo}>Modo de preparo</Text>
-      <View style={styles.listmodoPreparo}>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Tempere as coxas a gosto.
-        </Text>
-        <Text style={styles.textListModoPreparo}>
-          <Text style={styles.strong}>• </Text>
-          Colocar na churrasqueira e deixar assando por cerca de 20minutos. É
-          importante virar o frango, para que ele asse por completo.
-        </Text>
+      <View style={styles.video}>
+        <YoutubePlayer
+          ref={playerRef}
+          height={330}
+          width={330}
+          videoId={'ZE3jH_QvSf8'}
+        />
       </View>
     </View>
   );
