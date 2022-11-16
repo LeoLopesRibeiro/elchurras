@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import React, {useRef} from 'react';
+import React, { useRef } from "react";
 import YoutubePlayer from "react-native-youtube-iframe";
 import {
   useFonts,
@@ -8,9 +8,8 @@ import {
 } from "@expo-google-fonts/poppins";
 
 export default function Coxa() {
-
   const playerRef = useRef();
-  
+
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
     Poppins_500Medium,
@@ -19,7 +18,6 @@ export default function Coxa() {
     return null;
   }
   return (
-    <View>
       <View style={styles.card}>
         <Text style={styles.title}>Coxa Frango</Text>
         <View style={styles.divIcons}>
@@ -67,17 +65,16 @@ export default function Coxa() {
             importante virar o frango, para que ele asse por completo.
           </Text>
         </View>
+        <View style={styles.video}>
+          <YoutubePlayer
+            ref={playerRef}
+            height={200}
+            width={300}
+            videoId={"ZE3jH_QvSf8"}
+            webViewStyle={{ opacity: 0.99 }}
+          />
+        </View>
       </View>
-      <View style={styles.video}>
-        <YoutubePlayer
-          ref={playerRef}
-          height={330}
-          width={330}
-          videoId={'ZE3jH_QvSf8'}
-          webViewStyle={ {opacity:0.99} }
-        />
-      </View>
-    </View>
   );
 }
 
@@ -141,4 +138,10 @@ const styles = StyleSheet.create({
   textIngredientes: {
     fontFamily: "Poppins_500Medium",
   },
+  video: {
+    marginTop: 50,
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

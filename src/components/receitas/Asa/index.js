@@ -21,7 +21,6 @@ export default function Asa() {
   }
 
   return (
-    <View>
       <View style={styles.card}>
         <Text style={styles.title}>Asinha Frango</Text>
         <View style={styles.divIcons}>
@@ -69,17 +68,17 @@ export default function Asa() {
             importante virar a asa, para que ele asse por completo.
           </Text>
         </View>
+        <View style={styles.video}>
+          <YoutubePlayer
+            ref={playerRef}
+            height={200}
+            width={300}
+            videoId={'lsqLeI_EQYE'}
+            webViewStyle={ {opacity:0.99} }
+          />
+        </View>
       </View>
-      <View style={styles.video}>
-        <YoutubePlayer
-          ref={playerRef}
-          height={330}
-          width={330}
-          videoId={'lsqLeI_EQYE'}
-          webViewStyle={ {opacity:0.99} }
-        />
-      </View>
-    </View>
+    
   );
 }
 
@@ -143,4 +142,10 @@ const styles = StyleSheet.create({
   textIngredientes: {
     fontFamily: "Poppins_500Medium",
   },
+  video : {
+    marginTop: 50,
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

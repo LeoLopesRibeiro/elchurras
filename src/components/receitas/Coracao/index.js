@@ -20,7 +20,6 @@ export default function Coracao() {
     return null;
   }
   return (
-    <View>
       <View style={styles.card}>
         <Text style={styles.title}>Coração</Text>
         <View style={styles.divIcons}>
@@ -72,18 +71,18 @@ export default function Coracao() {
           <Text style={styles.textListModoPreparo}>
             5 Retirar e fazer espetinhos na hora de colocar no fogo.
           </Text>
+        </View>  
+        <View style={styles.video}>
+          <YoutubePlayer
+            ref={playerRef}
+            height={200}
+            width={300}
+            videoId={'ePSsJ88_TSw'}
+            webViewStyle={ {opacity:0.99} }
+          />
         </View>
       </View>
-      <View style={styles.video}>
-        <YoutubePlayer
-          ref={playerRef}
-          height={330}
-          width={330}
-          videoId={'ePSsJ88_TSw'}
-          webViewStyle={ {opacity:0.99} }
-        />
-      </View>
-    </View>
+
   );
 }
 
@@ -147,4 +146,10 @@ const styles = StyleSheet.create({
   textIngredientes: {
     fontFamily: "Poppins_500Medium",
   },
+  video: {
+    marginTop: 50,
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

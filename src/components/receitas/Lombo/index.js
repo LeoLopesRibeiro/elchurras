@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import React, {useRef} from 'react';
+import React, { useRef } from "react";
 import YoutubePlayer from "react-native-youtube-iframe";
 import {
   useFonts,
@@ -7,7 +7,6 @@ import {
   Poppins_500Medium,
 } from "@expo-google-fonts/poppins";
 export default function Lombo() {
-
   const playerRef = useRef();
 
   let [fontsLoaded] = useFonts({
@@ -18,7 +17,6 @@ export default function Lombo() {
     return null;
   }
   return (
-    <View>
       <View style={styles.card}>
         <Text style={styles.title}>Lombo</Text>
         <View style={styles.divIcons}>
@@ -50,21 +48,20 @@ export default function Lombo() {
             <Text style={styles.strong}>• </Text>
             Tempere o lombo com sal grosso e coloque-o no espeto. Leve à
             churrasqueira em fogo médio e deixe dourar. Depois retire o sal
-            grosso, pincele com óleo e cubra-o com queijo ralado. Leve de volta a
-            churrasqueira, até que fique crocante.
+            grosso, pincele com óleo e cubra-o com queijo ralado. Leve de volta
+            a churrasqueira, até que fique crocante.
           </Text>
         </View>
+        <View style={styles.video}>
+          <YoutubePlayer
+            ref={playerRef}
+            height={200}
+            width={300}
+            videoId={"xdoos4cqWvg"}
+            webViewStyle={{ opacity: 0.99 }}
+          />
+        </View>
       </View>
-      <View style={styles.video}>
-        <YoutubePlayer
-          ref={playerRef}
-          height={330}
-          width={330}
-          videoId={'xdoos4cqWvg'}
-          webViewStyle={ {opacity:0.99} }
-        />
-      </View>
-    </View>
   );
 }
 
@@ -127,5 +124,11 @@ const styles = StyleSheet.create({
   },
   textIngredientes: {
     fontFamily: "Poppins_500Medium",
+  },
+  video: {
+    marginTop: 50,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
