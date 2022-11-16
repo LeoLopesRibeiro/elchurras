@@ -1,5 +1,5 @@
-import * as Print from 'expo-print';
-import { shareAsync } from 'expo-sharing';
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
 
 export default async function GerarPDF(resultados, data, responsavel) {
   const htmlPDF = `
@@ -26,16 +26,16 @@ export default async function GerarPDF(resultados, data, responsavel) {
                     return `
                     <tr>
                       <td>${carne.nome}</td>
-                      <td>${Intl.NumberFormat('pt-BR').format(carne.kg)} kg</td>
-                      <td>${Intl.NumberFormat('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
+                      <td>${Intl.NumberFormat("pt-BR").format(carne.kg)} kg</td>
+                      <td>${Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
                       }).format(carne.preco)}
                       </td>
                     </tr>
                   `;
                   })
-                  .join('')}
+                  .join("")}
               </table>
             </div>
           </div>
@@ -57,16 +57,16 @@ export default async function GerarPDF(resultados, data, responsavel) {
                       bebida.litragem < 1000
                         ? bebida.litragem
                         : bebida.litragem / 1000
-                    }${bebida.litragem < 1000 ? 'ml' : 'L'})</td>
-                      <td>${Intl.NumberFormat('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
+                    }${bebida.litragem < 1000 ? "ml" : "L"})</td>
+                      <td>${Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
                       }).format(bebida.preco)}
                       </td>
                     </tr>
                   `;
                   })
-                  .join('')}
+                  .join("")}
               </table>
             </div>
           </div>
@@ -86,18 +86,18 @@ export default async function GerarPDF(resultados, data, responsavel) {
                       return `
                       <tr>
                         <td>${item.nome}</td>
-                        <td>${Intl.NumberFormat('pt-BR').format(
+                        <td>${Intl.NumberFormat("pt-BR").format(
                           item.kg
                         )} kg</td>
-                        <td>${Intl.NumberFormat('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
+                        <td>${Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
                         }).format(item.preco)}
                         </td>
                       </tr>
                     `;
                     })
-                    .join('')}
+                    .join("")}
                 </table>
               </div>
               <div>
@@ -113,31 +113,45 @@ export default async function GerarPDF(resultados, data, responsavel) {
                       return `
                       <tr>
                         <td>${item.nome}</td>
-                        <td>${Intl.NumberFormat('pt-BR').format(
+                        <td>${Intl.NumberFormat("pt-BR").format(
                           item.kg
                         )} kg</td>
-                        <td>${Intl.NumberFormat('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
+                        <td>${Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
                         }).format(item.preco)}
                         </td>
                       </tr>
                     `;
                     })
-                    .join('')}
+                    .join("")}
                 </table>
               </div>
             </div>
           </div>
           <div>
-            <p><strong style="font-size: 20px">Total:</strong> ${Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            }).format(resultados.preco_total)}</p>
-            <p><strong style="font-size: 20px">Rateio:</strong> ${Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            }).format(resultados.rateio)}</p>
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 50%">
+                  <p style="font-size: 26px"><strong>Total:</strong> ${Intl.NumberFormat(
+                    "pt-BR",
+                    {
+                      style: "currency",
+                      currency: "BRL",
+                    }
+                  ).format(resultados.preco_total)}</p>
+                </td>
+                <td style="width: 50%">
+                  <p style="font-size: 26px"><strong>Rateio:</strong> ${Intl.NumberFormat(
+                    "pt-BR",
+                    {
+                      style: "currency",
+                      currency: "BRL",
+                    }
+                  ).format(resultados.rateio)}</p>
+                </td>
+              </tr>
+            </table>
           </div>
           <div>
             <h2>Informações do evento</h2>
@@ -150,7 +164,6 @@ export default async function GerarPDF(resultados, data, responsavel) {
         </body>
       </html>
   `;
-
 
   const file = await Print.printToFileAsync({
     html: htmlPDF,

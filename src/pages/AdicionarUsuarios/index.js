@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderBottomColor: "#000",
     borderWidth: 2,
-    padding: 10,
+    paddingLeft: 10,
     bottom: 10,
     fontFamily: "Poppins_700Bold"
   },
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
 
   TextoCard: {
     color: "#fff",
-    fontSize: 32,
+    fontSize: 29,
     fontFamily: "Poppins_700Bold"
   },
 
