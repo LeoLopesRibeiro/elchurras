@@ -84,6 +84,7 @@ export default function Cupim() {
           height={330}
           width={330}
           videoId={'oozfbXjIn8M'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

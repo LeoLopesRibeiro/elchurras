@@ -80,6 +80,7 @@ export default function Maminha() {
           height={330}
           width={330}
           videoId={'ebVV2_QauDY'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

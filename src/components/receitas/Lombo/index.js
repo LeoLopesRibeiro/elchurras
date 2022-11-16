@@ -61,6 +61,7 @@ export default function Lombo() {
           height={330}
           width={330}
           videoId={'xdoos4cqWvg'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

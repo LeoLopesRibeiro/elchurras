@@ -26,6 +26,7 @@
     "expo-status-bar": "~1.4.0",
     "expo-updates": "~0.14.7",
     "intl": "*",
+    "metro-core": "^0.73.3",
     "react": "18.0.0",
     "react-native": "0.69.6",
     "react-native-maps": "0.31.1",

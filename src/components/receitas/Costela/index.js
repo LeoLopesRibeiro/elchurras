@@ -87,6 +87,7 @@ export default function Costela() {
           height={330}
           width={330}
           videoId={'iNcxb8yZrvk'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

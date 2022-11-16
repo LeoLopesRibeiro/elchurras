@@ -76,6 +76,7 @@ export default function Asa() {
           height={330}
           width={330}
           videoId={'lsqLeI_EQYE'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

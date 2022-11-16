@@ -67,6 +67,7 @@ export default function Picanha() {
           height={330}
           width={330}
           videoId={'L-DTcYqe4nI'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

@@ -64,6 +64,7 @@ export default function Linguica() {
           height={330}
           width={330}
           videoId={'Q5VAd2lbN_c'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

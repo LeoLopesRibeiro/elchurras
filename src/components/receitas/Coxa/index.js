@@ -74,6 +74,7 @@ export default function Coxa() {
           height={330}
           width={330}
           videoId={'ZE3jH_QvSf8'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>

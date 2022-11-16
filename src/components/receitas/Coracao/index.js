@@ -80,6 +80,7 @@ export default function Coracao() {
           height={330}
           width={330}
           videoId={'ePSsJ88_TSw'}
+          webViewStyle={ {opacity:0.99} }
         />
       </View>
     </View>
