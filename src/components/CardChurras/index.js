@@ -16,7 +16,7 @@ export default function CardChurras({ churras, goTo, delChurras }) {
 
   function handleCompartilharChurras() {
     setStatusModal(false);
-    GerarPDF(churras.custos_outros, churras.data, churras.responsavel);
+    GerarPDF(churras.custos_outros, churras.data, churras.responsavel, churras.contato);
   }
 
   useEffect(() => {
@@ -48,6 +48,10 @@ export default function CardChurras({ churras, goTo, delChurras }) {
       />
       <Text style={styles.dataChurras}>
         Data do evento: {churras.data.dia}/{churras.data.mes}/{churras.data.ano}
+      </Text>
+      <Text style={styles.responsavelChurras}>
+        Contato: ({churras.contato.substr(0, 2)}) {churras.contato.substr(2, 5)}
+        -{churras.contato.substr(7, 10)}
       </Text>
       <Text style={styles.responsavelChurras}>
         Responsável: {churras.responsavel}

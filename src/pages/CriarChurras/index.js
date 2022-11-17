@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
+  Modal,
 } from "react-native";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,6 +21,9 @@ export default function CriarChurras({ navigation, route }) {
   const parametros = route.params;
   const [goBack, setGoBack] = useState(false);
   const [responsavel, setResponsavel] = useState(null);
+  const [modalCarnesAtivo, setModalCarnesAtivo] = useState(false);
+
+  const [contato, setContato] = useState("");
 
   const [countHomem, setCountHomem] = useState(0);
   const [countMulher, setCountMulher] = useState(0);
@@ -33,6 +36,8 @@ export default function CriarChurras({ navigation, route }) {
     setExibirCalendario(false);
     setDate(selectedDate);
   }
+
+  function mudarPrecoHandler(valor, index) {}
 
   async function setChurrasStorage(churras) {
     try {
@@ -298,6 +303,14 @@ export default function CriarChurras({ navigation, route }) {
       return;
     }
 
+    if (contato.length !== 11) {
+      Toast.show({
+        type: "error",
+        text1: "Informe um telefone de contato válido.",
+      });
+      return;
+    }
+
     const items = {
       carnesSelecionadas,
       bebidasSelecionadas,
@@ -313,6 +326,7 @@ export default function CriarChurras({ navigation, route }) {
       responsavel: responsavel,
       data: dataSelecionada,
       custos_outros: custos,
+      contato: contato,
     };
 
     setChurrasStorage(resultado);
@@ -424,6 +438,180 @@ export default function CriarChurras({ navigation, route }) {
                 </View>
               </View>
             </View>
+            <View style={styles.configCarnes}>
+              <TouchableOpacity onPress={() => setModalCarnesAtivo(true)}>
+                <Image
+                  source={require("../../../assets/engrenagem.png")}
+                  style={{ width: 25, height: 25 }}
+                />
+              </TouchableOpacity>
+              <Modal
+                visible={modalCarnesAtivo}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={() => setModalCarnesAtivo(false)}
+              >
+                <View style={styles.outerView}>
+                  <View style={styles.modalCarnes}>
+                    <Text style={styles.tituloPrecos}>
+                      Precificação das carnes
+                    </Text>
+                    <View style={styles.viewCarnesInputs}>
+                      <ScrollView>
+                        <View style={styles.viewScrollCarnes}>
+                          <View style={styles.viewCarnesPreco}>
+                            <Text style={styles.textoCarnePreco}>Bovinos</Text>
+                            <View>
+                              {bovino.map((carne) => {
+                                return (
+                                  <View
+                                    key={carne.id}
+                                    style={styles.cardTipoCarne}
+                                  >
+                                    <View style={styles.tipoCarne}>
+                                      <Text style={styles.textoTipoCarne}>
+                                        {carne.nome}
+                                      </Text>
+                                      <Text style={styles.textoTipoCarne}>
+                                        (Kg):
+                                      </Text>
+                                    </View>
+                                    <View style={styles.viewInputPreco}>
+                                      <Text style={styles.textoTipoCarne}>
+                                        R$
+                                      </Text>
+                                      <TextInput
+                                        style={styles.inputPreco}
+                                        value={`${carne.preco * 1000}`}
+                                        onChangeText={(valor) =>
+                                          setBovino(
+                                            bovino.map((data) => {
+                                              if (data.id === carne.id) {
+                                                return {
+                                                  ...data,
+                                                  preco: Number(valor) / 1000,
+                                                };
+                                              } else {
+                                                return { ...data };
+                                              }
+                                            })
+                                          )
+                                        }
+                                        keyboardType="number-pad"
+                                      />
+                                    </View>
+                                  </View>
+                                );
+                              })}
+                            </View>
+                          </View>
+                          <View style={styles.viewCarnesPreco}>
+                            <Text style={styles.textoCarnePreco}>Suínos</Text>
+                            <View>
+                              {suino.map((carne) => {
+                                return (
+                                  <View
+                                    key={carne.id}
+                                    style={styles.cardTipoCarne}
+                                  >
+                                    <View style={styles.tipoCarne}>
+                                      <Text style={styles.textoTipoCarne}>
+                                        {carne.nome}
+                                      </Text>
+                                      <Text style={styles.textoTipoCarne}>
+                                        (Kg):
+                                      </Text>
+                                    </View>
+                                    <View style={styles.viewInputPreco}>
+                                      <Text style={styles.textoTipoCarne}>
+                                        R$
+                                      </Text>
+                                      <TextInput
+                                        style={styles.inputPreco}
+                                        value={`${carne.preco * 1000}`}
+                                        onChangeText={(valor) =>
+                                          setSuino(
+                                            suino.map((data) => {
+                                              if (data.id === carne.id) {
+                                                return {
+                                                  ...data,
+                                                  preco: Number(valor) / 1000,
+                                                };
+                                              } else {
+                                                return { ...data };
+                                              }
+                                            })
+                                          )
+                                        }
+                                        keyboardType="number-pad"
+                                      />
+                                    </View>
+                                  </View>
+                                );
+                              })}
+                            </View>
+                          </View>
+                          <View style={styles.viewCarnesPreco}>
+                            <Text style={styles.textoCarnePreco}>Frango</Text>
+                            <View>
+                              {frango.map((carne) => {
+                                return (
+                                  <View
+                                    key={carne.id}
+                                    style={styles.cardTipoCarne}
+                                  >
+                                    <View style={styles.tipoCarne}>
+                                      <Text style={styles.textoTipoCarne}>
+                                        {carne.nome}
+                                      </Text>
+                                      <Text style={styles.textoTipoCarne}>
+                                        (Kg):
+                                      </Text>
+                                    </View>
+                                    <View style={styles.viewInputPreco}>
+                                      <Text style={styles.textoTipoCarne}>
+                                        R$
+                                      </Text>
+                                      <TextInput
+                                        style={styles.inputPreco}
+                                        value={`${carne.preco * 1000}`}
+                                        onChangeText={(valor) =>
+                                          setFrango(
+                                            frango.map((data) => {
+                                              if (data.id === carne.id) {
+                                                return {
+                                                  ...data,
+                                                  preco: Number(valor) / 1000,
+                                                };
+                                              } else {
+                                                return { ...data };
+                                              }
+                                            })
+                                          )
+                                        }
+                                        keyboardType="number-pad"
+                                      />
+                                    </View>
+                                  </View>
+                                );
+                              })}
+                            </View>
+                          </View>
+                        </View>
+                      </ScrollView>
+                    </View>
+                    <View style={styles.viewBotaoPrecos}>
+                      <TouchableOpacity
+                        style={styles.botaoFechar}
+                        onPress={() => setModalCarnesAtivo(false)}
+                      >
+                        <Text style={styles.textoBotaoFechar}>Fechar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+            </View>
           </View>
           <View style={styles.viewBebidas}>
             <Text style={styles.viewTitulo}>Bebidas</Text>
@@ -480,9 +668,15 @@ export default function CriarChurras({ navigation, route }) {
                 style={styles.buttonDate}
                 onPress={() => setExibirCalendario(true)}
               >
-                <Text style={styles.textButtonDate}>
-                  Selecionar data do evento
-                </Text>
+                <View style={styles.viewCalendario}>
+                  <Text style={styles.textButtonDate}>
+                    Selecionar data do evento
+                  </Text>
+                  <Image
+                    style={{ width: 15, height: 15, marginBottom: 5 }}
+                    source={require("../../../assets/calendario.png")}
+                  />
+                </View>
               </TouchableOpacity>
               {exibirCalendario && (
                 <DateTimePicker
@@ -532,6 +726,19 @@ export default function CriarChurras({ navigation, route }) {
                   onChangeText={(valor) =>
                     setLocalidade({ ...localidade, cidade: valor })
                   }
+                />
+              </View>
+            </View>
+            <View style={styles.viewContato}>
+              <Text style={styles.textLocalidade}>Contato:</Text>
+              <View style={styles.viewInputContato}>
+                <TextInput
+                  style={styles.inputsLocal}
+                  placeholder="Tel Ex: 11987654321"
+                  value={contato}
+                  onChangeText={(valor) => setContato(valor)}
+                  keyboardType="number-pad"
+                  maxLength={11}
                 />
               </View>
             </View>
@@ -625,6 +832,96 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
+  configCarnes: {
+    position: "absolute",
+    right: 15,
+    top: 20,
+  },
+  outerView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.3)",
+  },
+  modalCarnes: {
+    width: "95%",
+    height: "70%",
+    backgroundColor: "#FFF",
+    padding: 20,
+    borderRadius: 15,
+  },
+  tituloPrecos: {
+    fontSize: 22,
+    fontFamily: "Poppins_700Bold",
+    textAlign: "center",
+  },
+  viewCarnesInputs: {
+    height: "80%",
+  },
+  viewScrollCarnes: {
+    paddingTop: 15,
+  },
+  viewCarnesPreco: {
+    marginBottom: 20,
+  },
+  textoCarnePreco: {
+    fontFamily: "Poppins_700Bold",
+    fontSize: 18,
+  },
+  cardTipoCarne: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  tipoCarne: {
+    display: "flex",
+    flexDirection: "row",
+    width: "36%",
+    justifyContent: "space-between",
+  },
+  textoTipoCarne: {
+    fontFamily: "Poppins_700Bold",
+  },
+  viewInputPreco: {
+    display: "flex",
+    flexDirection: "row",
+    width: "60%",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  inputPreco: {
+    backgroundColor: "#EEEDE7",
+    width: "85%",
+    textAlign: "center",
+    padding: 3,
+    borderRadius: 10,
+    fontFamily: "Poppins_700Bold",
+  },
+  viewBotaoPrecos: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  botaoFechar: {
+    width: "85%",
+    height: 35,
+    backgroundColor: "#DF1D1D",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#FFF",
+    borderRadius: 20,
+    paddingTop: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 10,
+    marginTop: 20,
+  },
+  textoBotaoFechar: {
+    fontFamily: "Poppins_700Bold",
+    color: "#FFF",
+  },
   viewBebidas: {
     display: "flex",
     width: "90%",
@@ -663,9 +960,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#DF1D1D",
     borderRadius: 10,
   },
+  viewCalendario: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
   textButtonDate: {
     color: "#FFF",
     fontFamily: "Poppins_700Bold",
+    marginRight: 8,
   },
   viewData: {
     marginTop: 15,
@@ -722,5 +1025,13 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_700Bold",
     color: "#FFF",
     fontSize: 18,
+  },
+  viewContato: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  viewInputContato: {
+    marginTop: 10,
+    marginBottom: 10,
   },
 });

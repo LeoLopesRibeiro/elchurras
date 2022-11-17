@@ -19,8 +19,7 @@ export default function ModalChurras({ genPdf, delChurras }) {
       <View>
         <TouchableOpacity style={styles.botao} onPress={() => delChurras()}>
           <View style={styles.viewBotao}>
-            <Text style={styles.textBotoes}>Deletar churras
-            
+            <Text style={styles.textBotoes}>Deletar churras    
             </Text>
             <Image
               source={require("../../../assets/lixo.png")}

@@ -1,7 +1,7 @@
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
 
-export default async function GerarPDF(resultados, data, responsavel) {
+export default async function GerarPDF(resultados, data, responsavel, contato) {
   const htmlPDF = `
       <!DOCTYPE html>
       <html lang="pt-br">
@@ -160,6 +160,10 @@ export default async function GerarPDF(resultados, data, responsavel) {
   }, ${resultados.locacao.bairro}, ${resultados.locacao.cidade}</p>
             <p><strong>Data:</strong> ${data.dia}/${data.mes}/${data.ano}</p>
             <p><strong>Responsável:</strong> ${responsavel}</p>
+            <p><strong>Contato:</strong> (${contato.substr(
+              0,
+              2
+            )}) ${contato.substr(2, 5)}-${contato.substr(7, 10)}</p>
           </div>
         </body>
       </html>
