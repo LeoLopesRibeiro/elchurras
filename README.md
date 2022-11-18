@@ -42,4 +42,4 @@ Funcionalidades
 Estilos
 =======
 
-[Guia de Estilos](assets/Texto do seu parágrafo(1).pdf)
+[Guia de Estilos](assets/GuiaEstilos.pdf)
