@@ -1,4 +1,4 @@
-![Logo](assets/logo.png)
+![Logo](assets/icon.png)
 
 Desenvolvido com React-Native 🚀
 
